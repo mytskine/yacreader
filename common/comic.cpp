@@ -10,6 +10,7 @@
 
 #include "bookmarks.h" //TODO desacoplar la dependencia con bookmarks
 #include "comic_db.h"
+#include "configuration.h"
 #include "compressed_archive.h"
 #include "qnaturalsorting.h"
 
@@ -221,7 +222,9 @@ void Comic::saveBookmarks()
 {
     QImage p;
     p.loadFromData(_pages[_index]);
-    bm->setLastPage(_index, p);
+    if (Configuration::getConfiguration().getBookmarksAuto()) {
+        bm->setLastPage(_index, p);
+    }
     bm->save();
 }
 //-----------------------------------------------------------------------------

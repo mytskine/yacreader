@@ -59,6 +59,8 @@ void Configuration::load(QSettings* settings)
         settings->setValue(SHOW_TOOLBARS, true);
     if (!settings->contains(QUICK_NAVI_MODE))
         settings->setValue(QUICK_NAVI_MODE, false);
+    if (!settings->contains(BOOKMARKS_AUTO))
+        settings->setValue(BOOKMARKS_AUTO, true);
     //old fit stuff
     /*if(!settings->contains(FIT))
 		settings->setValue(FIT,false);
