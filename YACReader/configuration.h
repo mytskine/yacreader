@@ -33,6 +33,7 @@ private:
     QPoint windowPos;
     QSize windowSize;
     bool maximized;
+    int scrollDuration;
     bool doublePage;
     bool doubleMangaPage;
     bool alwaysOnTop;
@@ -84,6 +85,8 @@ public:
     void setFlowType(FlowType type) { settings->setValue(FLOW_TYPE_SW, type); }
     bool getFullScreen() { return settings->value(FULLSCREEN).toBool(); }
     void setFullScreen(bool f) { settings->setValue(FULLSCREEN, f); }
+    int getScrollDuration() { return settings->value(SCROLL_DURATION).toInt(); }
+    void setScrollDuration(int d) { settings->setValue(SCROLL_DURATION, d); }
 
     QPoint getPos() { return settings->value(Y_WINDOW_POS).toPoint(); }
     void setPos(QPoint p) { settings->setValue(Y_WINDOW_POS, p); }

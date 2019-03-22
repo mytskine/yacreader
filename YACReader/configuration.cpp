@@ -45,6 +45,8 @@ void Configuration::load(QSettings* settings)
         settings->setValue(Y_WINDOW_SIZE, QSize(0, 0));
     if (!settings->contains(MAXIMIZED))
         settings->setValue(MAXIMIZED, false);
+    if (!settings->contains(SCROLL_DURATION))
+        settings->setValue(SCROLL_DURATION, 250);
     if (!settings->contains(DOUBLE_PAGE))
         settings->setValue(DOUBLE_PAGE, false);
     if (!settings->contains(BACKGROUND_COLOR))
