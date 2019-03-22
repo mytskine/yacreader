@@ -42,33 +42,32 @@
 #define TREEMODEL_H
 
 #include <QAbstractItemModel>
-#include <QSortFilterProxyModel>
 #include <QModelIndex>
-#include <QVariant>
-#include <QSqlQuery>
+#include <QSortFilterProxyModel>
 #include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QVariant>
 
 #include "yacreader_global.h"
 
 class FolderItem;
 
-class FolderModelProxy : public QSortFilterProxyModel
-{
+class FolderModelProxy : public QSortFilterProxyModel {
     Q_OBJECT
 public:
-    explicit FolderModelProxy(QObject *parent = 0);
+    explicit FolderModelProxy(QObject* parent = 0);
     ~FolderModelProxy();
 
     void setFilter(const YACReader::SearchModifiers modifier, QString filter, bool includeComics);
-    void setupFilteredModelData( QSqlQuery &sqlquery, FolderItem *parent);
+    void setupFilteredModelData(QSqlQuery& sqlquery, FolderItem* parent);
     void setupFilteredModelData();
     void clear();
 
-    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
+    bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const;
 
 protected:
-    FolderItem *rootItem;
-    QMap<unsigned long long int, FolderItem *> filteredItems; //relación entre folders
+    FolderItem* rootItem;
+    QMap<unsigned long long int, FolderItem*> filteredItems; //relación entre folders
 
     bool includeComics;
     QString filter;
@@ -77,53 +76,51 @@ protected:
     YACReader::SearchModifiers modifier;
 };
 
-class FolderModel : public QAbstractItemModel
-{
+class FolderModel : public QAbstractItemModel {
 
-	Q_OBJECT
+    Q_OBJECT
 
     friend class FolderModelProxy;
 
 public:
-    FolderModel(QObject *parent = 0);
-    FolderModel( QSqlQuery &sqlquery, QObject *parent = 0);
+    FolderModel(QObject* parent = 0);
+    FolderModel(QSqlQuery& sqlquery, QObject* parent = 0);
     ~FolderModel();
 
     //QAbstractItemModel methods
-	QVariant data(const QModelIndex &index, int role) const;
-	Qt::ItemFlags flags(const QModelIndex &index) const;
-	QVariant headerData(int section, Qt::Orientation orientation,
-						int role = Qt::DisplayRole) const;
-	QModelIndex index(int row, int column,
-					  const QModelIndex &parent = QModelIndex()) const;
-	QModelIndex parent(const QModelIndex &index) const;
-	int rowCount(const QModelIndex &parent = QModelIndex()) const;
-	int columnCount(const QModelIndex &parent = QModelIndex()) const;
+    QVariant data(const QModelIndex& index, int role) const;
+    Qt::ItemFlags flags(const QModelIndex& index) const;
+    QVariant headerData(int section, Qt::Orientation orientation,
+        int role = Qt::DisplayRole) const;
+    QModelIndex index(int row, int column,
+        const QModelIndex& parent = QModelIndex()) const;
+    QModelIndex parent(const QModelIndex& index) const;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const;
+    int columnCount(const QModelIndex& parent = QModelIndex()) const;
 
     //Convenience methods
     void setupModelData(QString path);
     QString getDatabase();
-	QString getFolderPath(const QModelIndex &folder);
+    QString getFolderPath(const QModelIndex& folder);
     //QModelIndex indexFromItem(FolderItem * item, int column);
-
 
     //bool isFilterEnabled(){return filterEnabled;};
 
-    void updateFolderCompletedStatus(const QModelIndexList & list, bool status);
-    void updateFolderFinishedStatus(const QModelIndexList & list, bool status);
+    void updateFolderCompletedStatus(const QModelIndexList& list, bool status);
+    void updateFolderFinishedStatus(const QModelIndexList& list, bool status);
 
-    QStringList getSubfoldersNames(const QModelIndex & mi);
+    QStringList getSubfoldersNames(const QModelIndex& mi);
 
-    void fetchMoreFromDB(const QModelIndex & parent);
+    void fetchMoreFromDB(const QModelIndex& parent);
 
-    QModelIndex addFolderAtParent(const QString & folderName, const QModelIndex & parent);
+    QModelIndex addFolderAtParent(const QString& folderName, const QModelIndex& parent);
 
     enum Columns {
         Name = 0,
         Path = 1,
         Finished = 2,
         Completed = 3
-    };//id INTEGER PRIMARY KEY, parentId INTEGER NOT NULL, name TEXT NOT NULL, path TEXT NOT NULL
+    }; //id INTEGER PRIMARY KEY, parentId INTEGER NOT NULL, name TEXT NOT NULL, path TEXT NOT NULL
 
     enum Roles {
         FinishedRole = Qt::UserRole + 1,
@@ -132,21 +129,21 @@ public:
     };
 
 public slots:
-    void deleteFolder(const QModelIndex & mi);
+    void deleteFolder(const QModelIndex& mi);
     void updateFolderChildrenInfo(qulonglong folderId);
 
 private:
-	void setupModelData( QSqlQuery &sqlquery, FolderItem *parent);
-    void updateFolderModelData( QSqlQuery &sqlquery, FolderItem *parent);
+    void setupModelData(QSqlQuery& sqlquery, FolderItem* parent);
+    void updateFolderModelData(QSqlQuery& sqlquery, FolderItem* parent);
 
-	FolderItem *rootItem; //el árbol
-	QMap<unsigned long long int, FolderItem *> items; //relación entre folders
+    FolderItem* rootItem; //el árbol
+    QMap<unsigned long long int, FolderItem*> items; //relación entre folders
 
-	QString _databasePath;
+    QString _databasePath;
 
 signals:
-	void beforeReset();
-	void reset();
+    void beforeReset();
+    void reset();
 };
 //! [0]
 

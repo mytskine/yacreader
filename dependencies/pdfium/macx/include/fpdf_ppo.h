@@ -24,9 +24,9 @@ extern "C" {
 //
 // Returns TRUE on success.
 DLLEXPORT FPDF_BOOL STDCALL FPDF_ImportPages(FPDF_DOCUMENT dest_doc,
-                                             FPDF_DOCUMENT src_doc,
-                                             FPDF_BYTESTRING pagerange,
-                                             int index);
+    FPDF_DOCUMENT src_doc,
+    FPDF_BYTESTRING pagerange,
+    int index);
 
 // Copy the viewer preferences from |src_doc| into |dest_doc|.
 //
@@ -35,10 +35,10 @@ DLLEXPORT FPDF_BOOL STDCALL FPDF_ImportPages(FPDF_DOCUMENT dest_doc,
 //
 // Returns TRUE on success.
 DLLEXPORT FPDF_BOOL STDCALL FPDF_CopyViewerPreferences(FPDF_DOCUMENT dest_doc,
-                                                       FPDF_DOCUMENT src_doc);
+    FPDF_DOCUMENT src_doc);
 
 #ifdef __cplusplus
-}  // extern "C"
-#endif  // __cplusplus
+} // extern "C"
+#endif // __cplusplus
 
-#endif  // PUBLIC_FPDF_PPO_H_
+#endif // PUBLIC_FPDF_PPO_H_

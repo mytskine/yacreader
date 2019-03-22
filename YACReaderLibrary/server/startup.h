@@ -13,21 +13,21 @@ class HttpListener;
   Helper class to install and run the application as a windows
   service.
 */
-class Startup
-{
+class Startup {
 private:
-	//QTcpServer
-	HttpListener * listener;
+    //QTcpServer
+    HttpListener* listener;
+
 public:
+    /** Constructor */
+    Startup();
+    /** Start the server */
+    void start();
+    /** Stop the server */
+    void stop();
 
-	/** Constructor */
-	Startup();
-	/** Start the server */
-	void start();
-	/** Stop the server */
-	void stop();
+    QString getPort();
 
-	QString getPort();
 protected:
 };
 

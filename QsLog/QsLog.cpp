@@ -26,25 +26,24 @@
 #include "QsLog.h"
 #include "QsLogDest.h"
 #ifdef QS_LOG_SEPARATE_THREAD
-#include <QThreadPool>
 #include <QRunnable>
+#include <QThreadPool>
 #endif
+#include <QDateTime>
 #include <QMutex>
 #include <QVector>
-#include <QDateTime>
 #include <QtGlobal>
 #include <cassert>
 #include <cstdlib>
 #include <stdexcept>
 
-namespace QsLogging
-{
+namespace QsLogging {
 typedef QVector<DestinationPtr> DestinationList;
 
 static const char TraceString[] = "TRACE";
 static const char DebugString[] = "DEBUG";
-static const char InfoString[]  = "INFO ";
-static const char WarnString[]  = "WARN ";
+static const char InfoString[] = "INFO ";
+static const char WarnString[] = "WARN ";
 static const char ErrorString[] = "ERROR";
 static const char FatalString[] = "FATAL";
 
@@ -56,30 +55,29 @@ static Logger* sInstance = 0;
 static const char* LevelToText(Level theLevel)
 {
     switch (theLevel) {
-        case TraceLevel:
-            return TraceString;
-        case DebugLevel:
-            return DebugString;
-        case InfoLevel:
-            return InfoString;
-        case WarnLevel:
-            return WarnString;
-        case ErrorLevel:
-            return ErrorString;
-        case FatalLevel:
-            return FatalString;
-        case OffLevel:
-            return "";
-        default: {
-            assert(!"bad log level");
-            return InfoString;
-        }
+    case TraceLevel:
+        return TraceString;
+    case DebugLevel:
+        return DebugString;
+    case InfoLevel:
+        return InfoString;
+    case WarnLevel:
+        return WarnString;
+    case ErrorLevel:
+        return ErrorString;
+    case FatalLevel:
+        return FatalString;
+    case OffLevel:
+        return "";
+    default: {
+        assert(!"bad log level");
+        return InfoString;
+    }
     }
 }
 
 #ifdef QS_LOG_SEPARATE_THREAD
-class LogWriterRunnable : public QRunnable
-{
+class LogWriterRunnable : public QRunnable {
 public:
     LogWriterRunnable(QString message, Level level);
     virtual void run();
@@ -90,8 +88,7 @@ private:
 };
 #endif
 
-class LoggerImpl
-{
+class LoggerImpl {
 public:
     LoggerImpl();
 
@@ -117,7 +114,6 @@ void LogWriterRunnable::run()
 }
 #endif
 
-
 LoggerImpl::LoggerImpl()
     : level(InfoLevel)
 {
@@ -128,7 +124,6 @@ LoggerImpl::LoggerImpl()
     threadPool.setExpiryTimeout(-1);
 #endif
 }
-
 
 Logger::Logger()
     : d(new LoggerImpl)
@@ -204,10 +199,9 @@ void Logger::Helper::writeToLog()
 {
     const char* const levelName = LevelToText(level);
     const QString completeMessage(QString("%1 %2 %3")
-                                  .arg(levelName)
-                                  .arg(QDateTime::currentDateTime().toString(fmtDateTime))
-                                  .arg(buffer)
-                                  );
+                                      .arg(levelName)
+                                      .arg(QDateTime::currentDateTime().toString(fmtDateTime))
+                                      .arg(buffer));
 
     Logger::instance().enqueueWrite(completeMessage, level);
 }
@@ -216,8 +210,7 @@ Logger::Helper::~Helper()
 {
     try {
         writeToLog();
-    }
-    catch(std::exception&) {
+    } catch (std::exception&) {
         // you shouldn't throw exceptions from a sink
         assert(!"exception in logger helper destructor");
         //CHANGED throw;
@@ -228,7 +221,7 @@ Logger::Helper::~Helper()
 void Logger::enqueueWrite(const QString& message, Level level)
 {
 #ifdef QS_LOG_SEPARATE_THREAD
-    LogWriterRunnable *r = new LogWriterRunnable(message, level);
+    LogWriterRunnable* r = new LogWriterRunnable(message, level);
     d->threadPool.start(r);
 #else
     write(message, level);
@@ -241,7 +234,8 @@ void Logger::write(const QString& message, Level level)
 {
     QMutexLocker lock(&d->logMutex);
     for (DestinationList::iterator it = d->destList.begin(),
-        endIt = d->destList.end();it != endIt;++it) {
+                                   endIt = d->destList.end();
+         it != endIt; ++it) {
         (*it)->write(message, level);
     }
 }

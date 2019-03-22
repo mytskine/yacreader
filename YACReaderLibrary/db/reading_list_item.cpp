@@ -5,10 +5,9 @@
 
 #include "QsLog.h"
 
-ListItem::ListItem(const QList<QVariant> &data)
-    :itemData(data)
+ListItem::ListItem(const QList<QVariant>& data)
+    : itemData(data)
 {
-
 }
 
 int ListItem::columnCount()
@@ -28,16 +27,14 @@ qulonglong ListItem::getId() const
 
 //------------------------------------------------------
 
-SpecialListItem::SpecialListItem(const QList<QVariant> &data)
-    :ListItem(data)
+SpecialListItem::SpecialListItem(const QList<QVariant>& data)
+    : ListItem(data)
 {
-
 }
 
 QIcon SpecialListItem::getIcon() const
 {
-    if(itemData.count()>Id)
-    {
+    if (itemData.count() > Id) {
         QString id = itemData.at(Id).toString();
         return YACReader::noHighlightedIcon(QString(":/images/lists/default_%1.png").arg(id));
     }
@@ -49,8 +46,7 @@ QIcon SpecialListItem::getIcon() const
 
 ReadingListModel::TypeSpecialList SpecialListItem::getType() const
 {
-    if(itemData.count()>Id)
-    {
+    if (itemData.count() > Id) {
         int id = itemData.at(Id).toInt();
         return (ReadingListModel::TypeSpecialList)id;
     }
@@ -62,16 +58,14 @@ ReadingListModel::TypeSpecialList SpecialListItem::getType() const
 
 //------------------------------------------------------
 
-LabelItem::LabelItem(const QList<QVariant> &data)
-    :ListItem(data)
+LabelItem::LabelItem(const QList<QVariant>& data)
+    : ListItem(data)
 {
-
 }
 
 QIcon LabelItem::getIcon() const
 {
-    if(itemData.count()>Color)
-    {
+    if (itemData.count() > Color) {
         QString color = itemData.at(Color).toString();
         return YACReader::noHighlightedIcon(QString(":/images/lists/label_%1.png").arg(color).toLower());
     }
@@ -83,8 +77,7 @@ QIcon LabelItem::getIcon() const
 
 YACReader::LabelColors LabelItem::colorid() const
 {
-    if(itemData.count()>Ordering)
-    {
+    if (itemData.count() > Ordering) {
         return YACReader::LabelColors(itemData.at(Ordering).toInt());
     }
 
@@ -95,8 +88,7 @@ YACReader::LabelColors LabelItem::colorid() const
 
 QString LabelItem::name() const
 {
-    if(itemData.count()>Name)
-    {
+    if (itemData.count() > Name) {
         return itemData.at(Name).toString();
     }
 
@@ -105,18 +97,16 @@ QString LabelItem::name() const
     return "";
 }
 
-void LabelItem::setName(const QString &name)
+void LabelItem::setName(const QString& name)
 {
-    if(itemData.count()>Name)
-    {
+    if (itemData.count() > Name) {
         itemData[Name] = name;
     }
 }
 
 qulonglong LabelItem::getId() const
 {
-    if(itemData.count()>Id)
-    {
+    if (itemData.count() > Id) {
         return YACReader::LabelColors(itemData.at(Id).toULongLong());
     }
 
@@ -127,15 +117,15 @@ qulonglong LabelItem::getId() const
 
 //------------------------------------------------------
 
-ReadingListItem::ReadingListItem(const QList<QVariant> &data, ReadingListItem *p)
-    :ListItem(data), parent(p)
+ReadingListItem::ReadingListItem(const QList<QVariant>& data, ReadingListItem* p)
+    : ListItem(data)
+    , parent(p)
 {
-
 }
 
 QIcon ReadingListItem::getIcon() const
 {
-    if(parent->getId() == 0)
+    if (parent->getId() == 0)
         return YACReader::noHighlightedIcon(":/images/lists/list.png"); //top level list
     else
 #ifdef Q_OS_MAC
@@ -150,33 +140,30 @@ int ReadingListItem::childCount() const
     return childItems.count();
 }
 
-ReadingListItem *ReadingListItem::child(int row)
+ReadingListItem* ReadingListItem::child(int row)
 {
     return childItems.at(row);
 }
 
 //items are sorted by order
-void ReadingListItem::appendChild(ReadingListItem *item)
+void ReadingListItem::appendChild(ReadingListItem* item)
 {
     item->parent = this;
 
-    if(childItems.isEmpty())
+    if (childItems.isEmpty())
         childItems.append(item);
-    else
-    {
-        if(item->parent->getId()==0) //sort by name, top level child
+    else {
+        if (item->parent->getId() == 0) //sort by name, top level child
         {
-            int i= 0;
-            while(i<childItems.length() && naturalSortLessThanCI(childItems.at(i)->name(),item->name()))
+            int i = 0;
+            while (i < childItems.length() && naturalSortLessThanCI(childItems.at(i)->name(), item->name()))
                 i++;
-            childItems.insert(i,item);
-        }
-        else
-        {
-            int i= 0;
-            while(i<childItems.length() && (childItems.at(i)->getOrdering()<item->getOrdering()))
+            childItems.insert(i, item);
+        } else {
+            int i = 0;
+            while (i < childItems.length() && (childItems.at(i)->getOrdering() < item->getOrdering()))
                 i++;
-            childItems.insert(i,item);
+            childItems.insert(i, item);
         }
 
         /*ReadingListItem * last = childItems.back();
@@ -194,24 +181,22 @@ void ReadingListItem::appendChild(ReadingListItem *item)
             childItems.insert(++i,item);
         else
             childItems.insert(i,item);*/
-
     }
-
 }
 
-void ReadingListItem::appendChild(ReadingListItem *item, int pos)
+void ReadingListItem::appendChild(ReadingListItem* item, int pos)
 {
     childItems.insert(pos, item);
 }
 
-void ReadingListItem::removeChild(ReadingListItem *item)
+void ReadingListItem::removeChild(ReadingListItem* item)
 {
     childItems.removeOne(item);
 }
 
 qulonglong ReadingListItem::getId() const
 {
-    if(itemData.count()>Id)
+    if (itemData.count() > Id)
         return itemData.at(Id).toULongLong();
 
     QLOG_WARN() << "Name for reading list item not available";
@@ -221,7 +206,7 @@ qulonglong ReadingListItem::getId() const
 
 QString ReadingListItem::name() const
 {
-    if(itemData.count()>Name)
+    if (itemData.count() > Name)
         return itemData.at(Name).toString();
 
     QLOG_WARN() << "Name for reading list item not available";
@@ -229,15 +214,15 @@ QString ReadingListItem::name() const
     return "";
 }
 
-void ReadingListItem::setName(const QString &name)
+void ReadingListItem::setName(const QString& name)
 {
-    if(itemData.count()>Name)
+    if (itemData.count() > Name)
         itemData[Name] = name;
 }
 
 int ReadingListItem::getOrdering() const
 {
-    if(itemData.count()>Ordering)
+    if (itemData.count() > Ordering)
         return itemData[Ordering].toInt();
 
     QLOG_WARN() << "Ordering for Item not available";
@@ -246,11 +231,11 @@ int ReadingListItem::getOrdering() const
 
 void ReadingListItem::setOrdering(const int ordering)
 {
-    if(itemData.count()>Ordering)
+    if (itemData.count() > Ordering)
         itemData[Ordering] = ordering;
 }
 
-QList<ReadingListItem *> ReadingListItem::children()
+QList<ReadingListItem*> ReadingListItem::children()
 {
     return childItems;
 }
@@ -263,11 +248,9 @@ int ReadingListItem::row() const
     return 0;
 }
 
-
 ReadingListSeparatorItem::ReadingListSeparatorItem()
-    :ListItem(QList<QVariant>())
+    : ListItem(QList<QVariant>())
 {
-
 }
 
 QIcon ReadingListSeparatorItem::getIcon() const

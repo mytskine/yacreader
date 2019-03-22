@@ -2,12 +2,13 @@
 #define COMICDOWNLOADINFOCONTROLLER_H
 
 #include "httprequest.h"
-#include "httpresponse.h"
 #include "httprequesthandler.h"
+#include "httpresponse.h"
 
 class ComicDownloadInfoController : public HttpRequestHandler {
     Q_OBJECT
     Q_DISABLE_COPY(ComicDownloadInfoController);
+
 public:
     /** Constructor **/
     ComicDownloadInfoController();

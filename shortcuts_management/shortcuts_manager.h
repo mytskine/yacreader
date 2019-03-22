@@ -1,36 +1,35 @@
 #ifndef SHORTCUTS_MANAGER_H
 #define SHORTCUTS_MANAGER_H
 
-#include <QObject>
 #include <QKeySequence>
-#include <QString>
 #include <QMap>
-
+#include <QObject>
+#include <QString>
 
 class QAction;
 
 //QAction: used setData() and data() for storing (userData) an identifier for each QAction. This value is ussed in QSettings
 
-class ShortcutsManager
-{
+class ShortcutsManager {
 private:
     ShortcutsManager();
-    QMap<QString,QKeySequence> defaultShorcuts;
-    QList<QAction *> actions; //all actions registered, used for checking conflicts
+    QMap<QString, QKeySequence> defaultShorcuts;
+    QList<QAction*> actions; //all actions registered, used for checking conflicts
 
     void initDefaultShorcuts();
+
 public:
-    static ShortcutsManager & getShortcutsManager()
+    static ShortcutsManager& getShortcutsManager()
     {
         static ShortcutsManager manager;
         return manager;
     }
 
     void resetToDefaults();
-    QString getShortcut(const QString & name);
-    void saveShortcut(QAction * action);
-    void registerActions(const QList<QAction *> & actions);
-    bool checkConflicts(const QKeySequence &shortcut, const QAction *dest);
+    QString getShortcut(const QString& name);
+    void saveShortcut(QAction* action);
+    void registerActions(const QList<QAction*>& actions);
+    bool checkConflicts(const QKeySequence& shortcut, const QAction* dest);
 };
 
 //ACTION NAMES YACReaderLibrary
@@ -82,7 +81,6 @@ public:
 #define ADD_TO_FAVORITES_ACTION_YL "ADD_TO_FAVORITES_ACTION_YL"
 #define SAVE_COVERS_TO_ACTION_YL "SAVE_COVERS_TO_ACTION_YL"
 //COMMANDS YACReaderLibrary
-
 
 //ACTION NAMES YACReader
 #define OPEN_ACTION_Y "OPEN_ACTION_Y"

@@ -30,26 +30,24 @@
 #include "QsLogDest.h"
 #include <QObject>
 
-namespace QsLogging
-{
+namespace QsLogging {
 // Offers various types of function-like sinks.
 // This is an advanced destination type. Depending on your configuration, LogFunction might be
 // called from a different thread or even a different binary. You should not access QsLog from
 // inside LogFunction and should not perform any time-consuming operations.
 // logMessageReady is connected through a queued connection and trace messages are not included
-class FunctorDestination : public QObject, public Destination
-{
+class FunctorDestination : public QObject, public Destination {
     Q_OBJECT
 public:
     explicit FunctorDestination(LogFunction f);
-    FunctorDestination(QObject *receiver, const char *member);
+    FunctorDestination(QObject* receiver, const char* member);
 
-    virtual void write(const QString &message, Level level);
+    virtual void write(const QString& message, Level level);
     virtual bool isValid();
 
 protected:
     // int used to avoid registering a new enum type
-    Q_SIGNAL void logMessageReady(const QString &message, int level);
+    Q_SIGNAL void logMessageReady(const QString& message, int level);
 
 private:
     LogFunction mLogFunction;

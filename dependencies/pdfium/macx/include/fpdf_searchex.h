@@ -12,7 +12,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif  // __cplusplus
+#endif // __cplusplus
 
 // Get the character index in |text_page| internal character list.
 //
@@ -33,7 +33,7 @@ DLLEXPORT int STDCALL
 FPDFText_GetTextIndexFromCharIndex(FPDF_TEXTPAGE text_page, int nCharIndex);
 
 #ifdef __cplusplus
-}  // extern "C"
-#endif  // __cplusplus
+} // extern "C"
+#endif // __cplusplus
 
-#endif  // PUBLIC_FPDF_SEARCHEX_H_
+#endif // PUBLIC_FPDF_SEARCHEX_H_

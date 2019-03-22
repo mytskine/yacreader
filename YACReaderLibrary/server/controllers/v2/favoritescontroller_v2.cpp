@@ -1,13 +1,13 @@
 #include "favoritescontroller_v2.h"
 
-#include "db_helper.h"
 #include "comic_db.h"
+#include "db_helper.h"
 
 #include "yacreader_server_data_helper.h"
 
 FavoritesControllerV2::FavoritesControllerV2() {}
 
-void FavoritesControllerV2::service(HttpRequest &request, HttpResponse &response)
+void FavoritesControllerV2::service(HttpRequest& request, HttpResponse& response)
 {
     response.setHeader("Content-Type", "text/plain; charset=utf-8");
 
@@ -17,23 +17,20 @@ void FavoritesControllerV2::service(HttpRequest &request, HttpResponse &response
 
     serviceContent(libraryId, response);
 
-    response.write("",true);
+    response.write("", true);
 }
 
-void FavoritesControllerV2::serviceContent(const int library, HttpResponse &response)
+void FavoritesControllerV2::serviceContent(const int library, HttpResponse& response)
 {
     QList<ComicDB> comics = DBHelper::getFavorites(library);
 
     QJsonArray items;
-    
-    for(const ComicDB &comic : comics)
-    {
+
+    for (const ComicDB& comic : comics) {
         items.append(YACReaderServerDataHelper::comicToJSON(library, comic));
     }
-    
+
     QJsonDocument output(items);
-    
+
     response.write(output.toJson(QJsonDocument::Compact));
 }
-
-

@@ -4,10 +4,9 @@
 
 #include "httpsessionstore.h"
 
-
-
-YACReaderHttpSessionStore::YACReaderHttpSessionStore(HttpSessionStore *sessionStore, QObject *parent)
-    : QObject(parent), sessionStore(sessionStore)
+YACReaderHttpSessionStore::YACReaderHttpSessionStore(HttpSessionStore* sessionStore, QObject* parent)
+    : QObject(parent)
+    , sessionStore(sessionStore)
 {
     //sessions are no longer http sessions in v2, we need another mechanism for cleaning
 
@@ -15,14 +14,14 @@ YACReaderHttpSessionStore::YACReaderHttpSessionStore(HttpSessionStore *sessionSt
     //cleanupTimer.start(60000);
 }
 
-void YACReaderHttpSessionStore::addYACReaderHttpSession(const QByteArray &httpSessionId, YACReaderHttpSession *yacreaderHttpSession)
+void YACReaderHttpSessionStore::addYACReaderHttpSession(const QByteArray& httpSessionId, YACReaderHttpSession* yacreaderHttpSession)
 {
     QMutexLocker locker(&mutex);
 
     sessions.insert(httpSessionId, yacreaderHttpSession);
 }
 
-YACReaderHttpSession *YACReaderHttpSessionStore::getYACReaderSessionHttpSession(const QByteArray &httpSessionId)
+YACReaderHttpSession* YACReaderHttpSessionStore::getYACReaderSessionHttpSession(const QByteArray& httpSessionId)
 {
     QMutexLocker locker(&mutex);
 

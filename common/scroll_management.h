@@ -4,21 +4,20 @@
 #include <QTime>
 #include <QWheelEvent>
 
-class ScrollManagement
-{
+class ScrollManagement {
 public:
-    enum Movement{
+    enum Movement {
         None,
         Forward,
         Backward
     };
 
     ScrollManagement();
-    ScrollManagement::Movement getMovement(QWheelEvent * event);
+    ScrollManagement::Movement getMovement(QWheelEvent* event);
     ~ScrollManagement();
 
 private:
-    QTime * wheelTimer;
+    QTime* wheelTimer;
     int wheelAccumulator;
 };
 

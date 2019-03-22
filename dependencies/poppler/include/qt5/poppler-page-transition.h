@@ -40,45 +40,43 @@ class PageTransitionData;
    used to extract the information from a PDF object.
 */
 
-
 class POPPLER_QT5_EXPORT PageTransition {
- public:
+public:
+    /** \brief transition effect that shall be used
+   */
+    // if changed remember to keep in sync with PageTransition.h enum
+    enum Type {
+        Replace = 0,
+        Split,
+        Blinds,
+        Box,
+        Wipe,
+        Dissolve,
+        Glitter,
+        Fly,
+        Push,
+        Cover,
+        Uncover,
+        Fade
+    };
 
-  /** \brief transition effect that shall be used
+    /** \brief alignment of the transition effect that shall be used
    */
-  // if changed remember to keep in sync with PageTransition.h enum
-  enum Type {
-    Replace = 0,
-    Split,
-    Blinds,
-    Box,
-    Wipe,
-    Dissolve,
-    Glitter,
-    Fly,
-    Push,
-    Cover,
-    Uncover,
-    Fade
-  };
-  
-  /** \brief alignment of the transition effect that shall be used
+    // if changed remember to keep in sync with PageTransition.h enum
+    enum Alignment {
+        Horizontal = 0,
+        Vertical
+    };
+
+    /** \brief direction of the transition effect that shall be used
    */
-  // if changed remember to keep in sync with PageTransition.h enum
-  enum Alignment {
-    Horizontal = 0,
-    Vertical
-  };
-  
-  /** \brief direction of the transition effect that shall be used
-   */
-  // if changed remember to keep in sync with PageTransition.h enum
-  enum Direction {
-    Inward = 0,
-    Outward
-  };
-  
-  /** \brief Construct a new PageTransition object from a page dictionary.
+    // if changed remember to keep in sync with PageTransition.h enum
+    enum Direction {
+        Inward = 0,
+        Outward
+    };
+
+    /** \brief Construct a new PageTransition object from a page dictionary.
 
   Users of the library will rarely need to construct a
   PageTransition object themselves. Instead, the method
@@ -93,54 +91,54 @@ class POPPLER_QT5_EXPORT PageTransition {
    accessed by the constructor. The object is only accessed by this
    constructor, and may be deleted after the constructor returns.
   */
-  PageTransition(const PageTransitionParams &params);
+    PageTransition(const PageTransitionParams& params);
 
-  /** \brief copy constructor */
-  PageTransition(const PageTransition &pt);
-  
-  /**
+    /** \brief copy constructor */
+    PageTransition(const PageTransition& pt);
+
+    /**
      Destructor
   */
-  ~PageTransition();
-  
-  /**
+    ~PageTransition();
+
+    /**
      \brief Get type of the transition.
   */
-  Type type() const;
-  
-  /**
+    Type type() const;
+
+    /**
      \brief Get duration of the transition in seconds.
   */
-  int duration() const;
-  
-  /**
+    int duration() const;
+
+    /**
      \brief Get dimension in which the transition effect occurs.
   */
-  Alignment alignment() const;
-  
-  /**
+    Alignment alignment() const;
+
+    /**
      \brief Get direction of motion of the transition effect.
   */
-  Direction direction() const;
-  
-  /**
+    Direction direction() const;
+
+    /**
      \brief Get direction in which the transition effect moves.
   */
-  int angle() const;
-  
-  /**
+    int angle() const;
+
+    /**
      \brief Get starting or ending scale.
   */
-  double scale() const;
-  
-  /**
+    double scale() const;
+
+    /**
      \brief Returns true if the area to be flown is rectangular and
      opaque.
   */
-  bool isRectangular() const;
-  
- private:
-  PageTransitionData *data;
+    bool isRectangular() const;
+
+private:
+    PageTransitionData* data;
 };
 
 }

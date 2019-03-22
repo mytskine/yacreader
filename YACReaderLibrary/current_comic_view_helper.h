@@ -3,6 +3,6 @@
 
 #include "comic_model.h"
 
-ComicDB currentComicFromModel(ComicModel *model, bool &found);
+ComicDB currentComicFromModel(ComicModel* model, bool& found);
 
 #endif // CURRENT_COMIC_VIEW_HELPER_H

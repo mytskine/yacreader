@@ -38,12 +38,12 @@ extern "C" {
  *          Interface for getting system font information and font mapping
  */
 typedef struct _FPDF_SYSFONTINFO {
-  /**
+    /**
    * Version number of the interface. Currently must be 1.
    **/
-  int version;
+    int version;
 
-  /**
+    /**
    * Method: Release
    *          Give implementation a chance to release any data after the
    * interface is no longer used
@@ -58,9 +58,9 @@ typedef struct _FPDF_SYSFONTINFO {
    * Return Value:
    *          None
    */
-  void (*Release)(struct _FPDF_SYSFONTINFO* pThis);
+    void (*Release)(struct _FPDF_SYSFONTINFO* pThis);
 
-  /**
+    /**
    * Method: EnumFonts
    *          Enumerate all fonts installed on the system
    * Interface Version:
@@ -78,9 +78,9 @@ typedef struct _FPDF_SYSFONTINFO {
    * Return Value:
    *          None
    */
-  void (*EnumFonts)(struct _FPDF_SYSFONTINFO* pThis, void* pMapper);
+    void (*EnumFonts)(struct _FPDF_SYSFONTINFO* pThis, void* pMapper);
 
-  /**
+    /**
    * Method: MapFont
    *          Use the system font mapper to get a font handle from requested
    *parameters
@@ -114,15 +114,15 @@ typedef struct _FPDF_SYSFONTINFO {
    *          An opaque pointer for font handle, or NULL if system mapping is
    *not supported.
    **/
-  void* (*MapFont)(struct _FPDF_SYSFONTINFO* pThis,
-                   int weight,
-                   FPDF_BOOL bItalic,
-                   int charset,
-                   int pitch_family,
-                   const char* face,
-                   FPDF_BOOL* bExact);
+    void* (*MapFont)(struct _FPDF_SYSFONTINFO* pThis,
+        int weight,
+        FPDF_BOOL bItalic,
+        int charset,
+        int pitch_family,
+        const char* face,
+        FPDF_BOOL* bExact);
 
-  /**
+    /**
    * Method: GetFont
    *          Get a handle to a particular font by its internal ID
    * Interface Version:
@@ -139,9 +139,9 @@ typedef struct _FPDF_SYSFONTINFO {
    * Return Value:
    *          An opaque pointer for font handle.
    **/
-  void* (*GetFont)(struct _FPDF_SYSFONTINFO* pThis, const char* face);
+    void* (*GetFont)(struct _FPDF_SYSFONTINFO* pThis, const char* face);
 
-  /**
+    /**
    * Method: GetFontData
    *          Get font data from a font
    * Interface Version:
@@ -165,13 +165,13 @@ typedef struct _FPDF_SYSFONTINFO {
    *enough,
    *          or number of bytes written into buffer otherwise.
    **/
-  unsigned long (*GetFontData)(struct _FPDF_SYSFONTINFO* pThis,
-                               void* hFont,
-                               unsigned int table,
-                               unsigned char* buffer,
-                               unsigned long buf_size);
+    unsigned long (*GetFontData)(struct _FPDF_SYSFONTINFO* pThis,
+        void* hFont,
+        unsigned int table,
+        unsigned char* buffer,
+        unsigned long buf_size);
 
-  /**
+    /**
    * Method: GetFaceName
    *          Get face name from a font handle
    * Interface Version:
@@ -189,12 +189,12 @@ typedef struct _FPDF_SYSFONTINFO {
    *enough,
    *          or number of bytes written into buffer otherwise.
    **/
-  unsigned long (*GetFaceName)(struct _FPDF_SYSFONTINFO* pThis,
-                               void* hFont,
-                               char* buffer,
-                               unsigned long buf_size);
+    unsigned long (*GetFaceName)(struct _FPDF_SYSFONTINFO* pThis,
+        void* hFont,
+        char* buffer,
+        unsigned long buf_size);
 
-  /**
+    /**
    * Method: GetFontCharset
    *          Get character set information for a font handle
    * Interface Version:
@@ -207,9 +207,9 @@ typedef struct _FPDF_SYSFONTINFO {
    * Return Value:
    *          Character set identifier. See defined constants above.
    **/
-  int (*GetFontCharset)(struct _FPDF_SYSFONTINFO* pThis, void* hFont);
+    int (*GetFontCharset)(struct _FPDF_SYSFONTINFO* pThis, void* hFont);
 
-  /**
+    /**
    * Method: DeleteFont
    *          Delete a font handle
    * Interface Version:
@@ -222,7 +222,7 @@ typedef struct _FPDF_SYSFONTINFO {
    * Return Value:
    *          None
    **/
-  void (*DeleteFont)(struct _FPDF_SYSFONTINFO* pThis, void* hFont);
+    void (*DeleteFont)(struct _FPDF_SYSFONTINFO* pThis, void* hFont);
 } FPDF_SYSFONTINFO;
 
 /**
@@ -230,8 +230,8 @@ typedef struct _FPDF_SYSFONTINFO {
  *    Provides the name of a font to use for a given charset value.
  **/
 typedef struct FPDF_CharsetFontMap_ {
-  int charset;  // Character Set Enum value, see FXFONT_*_CHARSET above.
-  const char* fontname;  // Name of default font to use with that charset.
+    int charset; // Character Set Enum value, see FXFONT_*_CHARSET above.
+    const char* fontname; // Name of default font to use with that charset.
 } FPDF_CharsetFontMap;
 
 /**
@@ -260,8 +260,8 @@ DLLEXPORT const FPDF_CharsetFontMap* STDCALL FPDF_GetDefaultTTFMap();
  *          None.
  **/
 DLLEXPORT void STDCALL FPDF_AddInstalledFont(void* mapper,
-                                             const char* face,
-                                             int charset);
+    const char* face,
+    int charset);
 
 /**
  * Function: FPDF_SetSystemFontInfo
@@ -313,4 +313,4 @@ DLLEXPORT void FPDF_FreeDefaultSystemFontInfo(FPDF_SYSFONTINFO* pFontInfo);
 }
 #endif
 
-#endif  // PUBLIC_FPDF_SYSFONTINFO_H_
+#endif // PUBLIC_FPDF_SYSFONTINFO_H_

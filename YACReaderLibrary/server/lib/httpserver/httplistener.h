@@ -6,13 +6,13 @@
 #ifndef HTTPLISTENER_H
 #define HTTPLISTENER_H
 
-#include <QTcpServer>
-#include <QSettings>
-#include <QBasicTimer>
-#include "httpglobal.h"
 #include "httpconnectionhandler.h"
 #include "httpconnectionhandlerpool.h"
+#include "httpglobal.h"
 #include "httprequesthandler.h"
+#include <QBasicTimer>
+#include <QSettings>
+#include <QTcpServer>
 
 /**
   Listens for incoming TCP connections and and passes all incoming HTTP requests to your implementation of HttpRequestHandler,
@@ -43,7 +43,6 @@ class DECLSPEC HttpListener : public QTcpServer {
     Q_OBJECT
     Q_DISABLE_COPY(HttpListener)
 public:
-
     /**
       Constructor.
       Creates a connection pool and starts listening on the configured host and port.
@@ -69,12 +68,10 @@ public:
     void close();
 
 protected:
-
     /** Serves new incoming connection requests */
     void incomingConnection(tSocketDescriptor socketDescriptor);
 
 private:
-
     /** Configuration settings for the HTTP server */
     QSettings* settings;
 
@@ -92,7 +89,6 @@ signals:
     */
 
     void handleConnection(tSocketDescriptor socketDescriptor);
-
 };
 
 #endif // HTTPLISTENER_H

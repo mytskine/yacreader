@@ -4,21 +4,16 @@
 #include <QObject>
 #include <QtCore>
 
-
-
 class HttpSessionStore;
 class YACReaderHttpSession;
 
-
-
-class YACReaderHttpSessionStore : public QObject
-{
+class YACReaderHttpSessionStore : public QObject {
     Q_OBJECT
 public:
-    explicit YACReaderHttpSessionStore(HttpSessionStore *sessionStore, QObject *parent = 0);
+    explicit YACReaderHttpSessionStore(HttpSessionStore* sessionStore, QObject* parent = 0);
 
-    void addYACReaderHttpSession(const QByteArray & httpSessionId, YACReaderHttpSession *yacreaderHttpSession);
-    YACReaderHttpSession *getYACReaderSessionHttpSession(const QByteArray & httpSessionId);
+    void addYACReaderHttpSession(const QByteArray& httpSessionId, YACReaderHttpSession* yacreaderHttpSession);
+    YACReaderHttpSession* getYACReaderSessionHttpSession(const QByteArray& httpSessionId);
 
 signals:
 
@@ -26,7 +21,7 @@ public slots:
 
 private:
     QMap<QByteArray, YACReaderHttpSession*> sessions;
-    HttpSessionStore *sessionStore;
+    HttpSessionStore* sessionStore;
     QTimer cleanupTimer;
 
     QMutex mutex;

@@ -6,11 +6,11 @@
 #ifndef HTTPRESPONSE_H
 #define HTTPRESPONSE_H
 
+#include "httpcookie.h"
+#include "httpglobal.h"
 #include <QMap>
 #include <QString>
 #include <QTcpSocket>
-#include "httpglobal.h"
-#include "httpcookie.h"
 
 /**
   This object represents a HTTP response, used to return something to the web client.
@@ -34,7 +34,6 @@
 class DECLSPEC HttpResponse {
     Q_DISABLE_COPY(HttpResponse)
 public:
-
     /**
       Constructor.
       @param socket used to write the response
@@ -58,16 +57,16 @@ public:
     void setHeader(QByteArray name, int value);
 
     /** Get the map of HTTP response headers */
-    QMap<QByteArray,QByteArray>& getHeaders();
+    QMap<QByteArray, QByteArray>& getHeaders();
 
     /** Get the map of cookies */
-    QMap<QByteArray,HttpCookie>& getCookies();
+    QMap<QByteArray, HttpCookie>& getCookies();
 
     /**
       Set status code and description. The default is 200,OK.
       You must call this method before the first write().
     */
-    void setStatus(int statusCode, QByteArray description=QByteArray());
+    void setStatus(int statusCode, QByteArray description = QByteArray());
 
     /** Return the status code. */
     int getStatusCode() const;
@@ -85,7 +84,7 @@ public:
       @param data Data bytes of the body
       @param lastPart Indicates that this is the last chunk of data and flushes the output buffer.
     */
-    void write(QByteArray data, bool lastPart=false);
+    void write(QByteArray data, bool lastPart = false);
 
     /**
       Indicates whether the body has been sent completely (write() has been called with lastPart=true).
@@ -119,9 +118,8 @@ public:
     bool isConnected() const;
 
 private:
-
     /** Request headers */
-    QMap<QByteArray,QByteArray> headers;
+    QMap<QByteArray, QByteArray> headers;
 
     /** Socket for writing output */
     QTcpSocket* socket;
@@ -142,7 +140,7 @@ private:
     bool chunkedMode;
 
     /** Cookies */
-    QMap<QByteArray,HttpCookie> cookies;
+    QMap<QByteArray, HttpCookie> cookies;
 
     /** Write raw data to the socket. This method blocks until all bytes have been passed to the TCP buffer */
     bool writeToSocket(QByteArray data);
@@ -153,7 +151,6 @@ private:
       it automatically when required.
     */
     void writeHeaders();
-
 };
 
 #endif // HTTPRESPONSE_H

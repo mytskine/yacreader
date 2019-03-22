@@ -5,17 +5,16 @@
 
 class QMouseEvent;
 
-class YACReaderFlow : public PictureFlow
-{
-Q_OBJECT
+class YACReaderFlow : public PictureFlow {
+    Q_OBJECT
 public:
-	YACReaderFlow(QWidget * parent,FlowType flowType = CoverFlowLike);
+    YACReaderFlow(QWidget* parent, FlowType flowType = CoverFlowLike);
 
-	void mousePressEvent(QMouseEvent* event);
-	void mouseDoubleClickEvent(QMouseEvent* event);
+    void mousePressEvent(QMouseEvent* event);
+    void mouseDoubleClickEvent(QMouseEvent* event);
 
 signals:
-	void selected(unsigned int centerIndex);
+    void selected(unsigned int centerIndex);
 };
 
 #endif // YACREADER_FLOW_H

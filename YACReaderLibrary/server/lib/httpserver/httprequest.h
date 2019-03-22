@@ -6,15 +6,15 @@
 #ifndef HTTPREQUEST_H
 #define HTTPREQUEST_H
 
+#include "httpglobal.h"
 #include <QByteArray>
 #include <QHostAddress>
-#include <QTcpSocket>
 #include <QMap>
 #include <QMultiMap>
 #include <QSettings>
+#include <QTcpSocket>
 #include <QTemporaryFile>
 #include <QUuid>
-#include "httpglobal.h"
 
 /**
   This object represents a single HTTP request. It reads the request
@@ -38,9 +38,12 @@ class DECLSPEC HttpRequest {
     friend class HttpSessionStore;
 
 public:
-
     /** Values for getStatus() */
-    enum RequestStatus {waitForRequest, waitForHeader, waitForBody, complete, abort};
+    enum RequestStatus { waitForRequest,
+        waitForHeader,
+        waitForBody,
+        complete,
+        abort };
 
     /**
       Constructor.
@@ -97,7 +100,7 @@ public:
      * Get all HTTP request headers. Note that the header names
      * are returned in lower-case.
      */
-    QMultiMap<QByteArray,QByteArray> getHeaderMap() const;
+    QMultiMap<QByteArray, QByteArray> getHeaderMap() const;
 
     /**
       Get the value of a HTTP request parameter.
@@ -114,7 +117,7 @@ public:
     QList<QByteArray> getParameters(const QByteArray& name) const;
 
     /** Get all HTTP request parameters. */
-    QMultiMap<QByteArray,QByteArray> getParameterMap() const;
+    QMultiMap<QByteArray, QByteArray> getParameterMap() const;
 
     /** Get the HTTP request body.  */
     QByteArray getBody() const;
@@ -144,7 +147,7 @@ public:
     QByteArray getCookie(const QByteArray& name) const;
 
     /** Get all cookies. */
-    QMap<QByteArray,QByteArray>& getCookieMap();
+    QMap<QByteArray, QByteArray>& getCookieMap();
 
     /**
       Get the address of the connected client.
@@ -154,18 +157,17 @@ public:
     QHostAddress getPeerAddress() const;
 
 private:
-
     /** Request headers */
-    QMultiMap<QByteArray,QByteArray> headers;
+    QMultiMap<QByteArray, QByteArray> headers;
 
     /** Parameters of the request */
-    QMultiMap<QByteArray,QByteArray> parameters;
+    QMultiMap<QByteArray, QByteArray> parameters;
 
     /** Uploaded files of the request, key is the field name. */
-    QMap<QByteArray,QTemporaryFile*> uploadedFiles;
+    QMap<QByteArray, QTemporaryFile*> uploadedFiles;
 
     /** Received cookies */
-    QMap<QByteArray,QByteArray> cookies;
+    QMap<QByteArray, QByteArray> cookies;
 
     /** Storage for raw body data */
     QByteArray bodyData;
@@ -229,7 +231,6 @@ private:
 
     /** Buffer for collecting characters of request and header lines */
     QByteArray lineBuffer;
-
 };
 
 #endif // HTTPREQUEST_H

@@ -27,19 +27,18 @@ class QIODevice;
 
 namespace Poppler {
 
-class QIODeviceOutStream : public OutStream
-{
-  public:
+class QIODeviceOutStream : public OutStream {
+public:
     QIODeviceOutStream(QIODevice* device);
     virtual ~QIODeviceOutStream();
 
     virtual void close();
     virtual Goffset getPos();
     virtual void put(char c);
-    virtual void printf(const char *format, ...);
+    virtual void printf(const char* format, ...);
 
-  private:
-    QIODevice *m_device;
+private:
+    QIODevice* m_device;
 };
 
 }

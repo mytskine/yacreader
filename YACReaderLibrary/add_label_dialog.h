@@ -5,11 +5,10 @@
 
 #include "yacreader_global.h"
 
-class AddLabelDialog : public QDialog
-{
+class AddLabelDialog : public QDialog {
     Q_OBJECT
 public:
-    explicit AddLabelDialog(QWidget *parent = 0);
+    explicit AddLabelDialog(QWidget* parent = 0);
     YACReader::LabelColors selectedColor();
     QString name();
 signals:
@@ -18,14 +17,14 @@ public slots:
     int exec();
 
 protected slots:
-    void validateName(const QString & name);
+    void validateName(const QString& name);
 
 protected:
-    QLineEdit * edit;
-    QListWidget * list;
+    QLineEdit* edit;
+    QListWidget* list;
 
-    QPushButton * acceptButton;
-    QPushButton * cancelButton;
+    QPushButton* acceptButton;
+    QPushButton* cancelButton;
 };
 
 #endif // ADD_LABEL_DIALOG_H

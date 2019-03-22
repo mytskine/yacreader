@@ -6,14 +6,14 @@
 #ifndef HTTPSESSIONSTORE_H
 #define HTTPSESSIONSTORE_H
 
-#include <QObject>
-#include <QMap>
-#include <QTimer>
-#include <QMutex>
 #include "httpglobal.h"
-#include "httpsession.h"
-#include "httpresponse.h"
 #include "httprequest.h"
+#include "httpresponse.h"
+#include "httpsession.h"
+#include <QMap>
+#include <QMutex>
+#include <QObject>
+#include <QTimer>
 
 /**
   Stores HTTP sessions and deletes them when they have expired.
@@ -34,9 +34,8 @@ class DECLSPEC HttpSessionStore : public QObject {
     Q_OBJECT
     Q_DISABLE_COPY(HttpSessionStore)
 public:
-
     /** Constructor. */
-    HttpSessionStore(QSettings* settings, QObject* parent=NULL);
+    HttpSessionStore(QSettings* settings, QObject* parent = NULL);
 
     /** Destructor */
     virtual ~HttpSessionStore();
@@ -62,7 +61,7 @@ public:
        @return If autoCreate is disabled, the function returns a null session if there is no session.
        @see HttpSession::isNull()
     */
-    HttpSession getSession(HttpRequest& request, HttpResponse& response, bool allowCreate=true);
+    HttpSession getSession(HttpRequest& request, HttpResponse& response, bool allowCreate = true);
 
     /**
        Get a HTTP session by it's ID number.
@@ -78,10 +77,9 @@ public:
 
 protected:
     /** Storage for the sessions */
-    QMap<QByteArray,HttpSession> sessions;
+    QMap<QByteArray, HttpSession> sessions;
 
 private:
-
     /** Configuration settings */
     QSettings* settings;
 

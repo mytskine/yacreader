@@ -6,20 +6,19 @@
 class QAction;
 class QFocusEvent;
 
+class YACReaderFieldPlainTextEdit : public QPlainTextEdit {
+    Q_OBJECT
+public:
+    YACReaderFieldPlainTextEdit(QWidget* parent = 0);
+    void clear();
+    void setDisabled(bool disabled);
 
-class YACReaderFieldPlainTextEdit : public QPlainTextEdit
-{
-  Q_OBJECT
-	public:
-		YACReaderFieldPlainTextEdit(QWidget * parent = 0);
-		void clear();
-		void setDisabled(bool disabled);
-	protected:
-		void focusInEvent(QFocusEvent* e);
-		void focusOutEvent(QFocusEvent* e);
+protected:
+    void focusInEvent(QFocusEvent* e);
+    void focusOutEvent(QFocusEvent* e);
+
 private:
-	QAction * restore;
-
+    QAction* restore;
 };
 
 #endif // YACREADER_FIELD_PLAIN_TEXT_EDIT_H

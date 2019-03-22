@@ -28,21 +28,20 @@
 class MediaRendition;
 class QIODevice;
 
-namespace Poppler
-{
-  class MediaRenditionPrivate;
+namespace Poppler {
+class MediaRenditionPrivate;
 
-  /**
+/**
     Qt wrapper for MediaRendition.
 
     \since 0.20
    */
-  class POPPLER_QT5_EXPORT MediaRendition {
-   public:
+class POPPLER_QT5_EXPORT MediaRendition {
+public:
     /**
       Constructs a MediaRendition. Takes ownership of the passed rendition
      */
-    MediaRendition(::MediaRendition *rendition);
+    MediaRendition(::MediaRendition* rendition);
     ~MediaRendition();
 
     /**
@@ -90,11 +89,11 @@ namespace Poppler
      */
     QSize size() const;
 
-   private:
-    Q_DECLARE_PRIVATE( MediaRendition )
-    MediaRenditionPrivate *d_ptr;
-    Q_DISABLE_COPY( MediaRendition )
-  };
+private:
+    Q_DECLARE_PRIVATE(MediaRendition)
+    MediaRenditionPrivate* d_ptr;
+    Q_DISABLE_COPY(MediaRendition)
+};
 }
 
 #endif /* __POPPLER_MEDIARENDITION_H__ */

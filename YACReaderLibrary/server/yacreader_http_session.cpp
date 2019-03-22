@@ -1,53 +1,56 @@
 #include "yacreader_http_session.h"
 
-YACReaderHttpSession::YACReaderHttpSession(QObject *parent)
-    : QObject(parent), comicId(0), remoteComicId(0), comic(nullptr), remoteComic(nullptr)
+YACReaderHttpSession::YACReaderHttpSession(QObject* parent)
+    : QObject(parent)
+    , comicId(0)
+    , remoteComicId(0)
+    , comic(nullptr)
+    , remoteComic(nullptr)
 {
-
 }
 
 YACReaderHttpSession::~YACReaderHttpSession()
 {
-    if(comic != nullptr)
+    if (comic != nullptr)
         delete comic;
 
-    if(remoteComic != nullptr)
+    if (remoteComic != nullptr)
         delete remoteComic;
 }
 
-bool YACReaderHttpSession::isComicOnDevice(const QString & hash)
+bool YACReaderHttpSession::isComicOnDevice(const QString& hash)
 {
     return comicsOnDevice.contains(hash);
 }
 
-bool YACReaderHttpSession::isComicDownloaded(const QString & hash)
+bool YACReaderHttpSession::isComicDownloaded(const QString& hash)
 {
     return downloadedComics.contains(hash);
 }
 
-void YACReaderHttpSession::setComicOnDevice(const QString & hash)
+void YACReaderHttpSession::setComicOnDevice(const QString& hash)
 {
     comicsOnDevice.insert(hash);
 }
 
-void YACReaderHttpSession::setComicsOnDevice(const QSet<QString> & set)
+void YACReaderHttpSession::setComicsOnDevice(const QSet<QString>& set)
 {
     comicsOnDevice = set;
 }
 
-void YACReaderHttpSession::setDownloadedComic(const QString & hash)
+void YACReaderHttpSession::setDownloadedComic(const QString& hash)
 {
     downloadedComics.insert(hash);
 }
 
 QSet<QString> YACReaderHttpSession::getComicsOnDevice()
 {
-    return comicsOnDevice ;
+    return comicsOnDevice;
 }
 
 QSet<QString> YACReaderHttpSession::getDownloadedComics()
 {
-    return downloadedComics ;
+    return downloadedComics;
 }
 
 void YACReaderHttpSession::clearComics()
@@ -68,14 +71,13 @@ Comic* YACReaderHttpSession::getCurrentComic()
 
 void YACReaderHttpSession::dismissCurrentComic()
 {
-    if(comic != nullptr)
-    {
+    if (comic != nullptr) {
         comic->deleteLater();
         comic = nullptr;
     }
 }
 
-void YACReaderHttpSession::setCurrentComic(qulonglong id, Comic * comic)
+void YACReaderHttpSession::setCurrentComic(qulonglong id, Comic* comic)
 {
     dismissCurrentComic();
     comicId = id;
@@ -85,24 +87,23 @@ void YACReaderHttpSession::setCurrentComic(qulonglong id, Comic * comic)
 //current comic (read)
 qulonglong YACReaderHttpSession::getCurrentRemoteComicId()
 {
-    return remoteComicId ;
+    return remoteComicId;
 }
 
 Comic* YACReaderHttpSession::getCurrentRemoteComic()
 {
-    return remoteComic ;
+    return remoteComic;
 }
 
 void YACReaderHttpSession::dismissCurrentRemoteComic()
 {
-    if(remoteComic != nullptr)
-    {
+    if (remoteComic != nullptr) {
         remoteComic->deleteLater();
         remoteComic = nullptr;
     }
 }
 
-void YACReaderHttpSession::setCurrentRemoteComic(qulonglong id, Comic * comic)
+void YACReaderHttpSession::setCurrentRemoteComic(qulonglong id, Comic* comic)
 {
     dismissCurrentRemoteComic();
     remoteComicId = id;
@@ -119,14 +120,14 @@ QString YACReaderHttpSession::getDisplayType()
     return display;
 }
 
-void YACReaderHttpSession::setDeviceType(const QString & device)
+void YACReaderHttpSession::setDeviceType(const QString& device)
 {
     //comicsOnDevice.clear(); //TODO crear un m�todo clear que limpie la sesi�n completamente
     //downloadedComics.clear();
     this->device = device;
 }
 
-void YACReaderHttpSession::setDisplayType(const QString & display)
+void YACReaderHttpSession::setDisplayType(const QString& display)
 {
     this->display = display;
 }
@@ -138,37 +139,34 @@ void YACReaderHttpSession::clearNavigationPath()
 
 QPair<qulonglong, quint32> YACReaderHttpSession::popNavigationItem()
 {
-    if(navigationPath.isEmpty() == false)
+    if (navigationPath.isEmpty() == false)
         return navigationPath.pop();
     return QPair<qulonglong, quint32>();
 }
 
 QPair<qulonglong, quint32> YACReaderHttpSession::topNavigationItem()
 {
-    if(navigationPath.isEmpty() == false)
+    if (navigationPath.isEmpty() == false)
         return navigationPath.top();
     return QPair<qulonglong, quint32>();
 }
 
-void YACReaderHttpSession::pushNavigationItem(const QPair<qulonglong, quint32> &item)
+void YACReaderHttpSession::pushNavigationItem(const QPair<qulonglong, quint32>& item)
 {
     navigationPath.push(item);
 }
 
-void YACReaderHttpSession::updateTopItem(const QPair<qulonglong, quint32> &item)
+void YACReaderHttpSession::updateTopItem(const QPair<qulonglong, quint32>& item)
 {
-     if(navigationPath.isEmpty() == false)
-     {
+    if (navigationPath.isEmpty() == false) {
         navigationPath.pop();
         navigationPath.push(item);
-     }
-     else
-     {
-         navigationPath.push(item);
-     }
+    } else {
+        navigationPath.push(item);
+    }
 }
 
-QStack<QPair<qulonglong, quint32> > YACReaderHttpSession::getNavigationPath()
+QStack<QPair<qulonglong, quint32>> YACReaderHttpSession::getNavigationPath()
 {
     return navigationPath;
 }

@@ -24,7 +24,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif  // __cplusplus
+#endif // __cplusplus
 
 // Flatten annotations and form fields into the page contents.
 //
@@ -38,7 +38,7 @@ extern "C" {
 DLLEXPORT int STDCALL FPDFPage_Flatten(FPDF_PAGE page, int nFlag);
 
 #ifdef __cplusplus
-}  // extern "C"
-#endif  // __cplusplus
+} // extern "C"
+#endif // __cplusplus
 
-#endif  // PUBLIC_FPDF_FLATTEN_H_
+#endif // PUBLIC_FPDF_FLATTEN_H_

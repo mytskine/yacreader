@@ -12,9 +12,8 @@
 // NOLINTNEXTLINE(build/include)
 #include "fpdfview.h"
 
-#define FPDF_ARGB(a, r, g, b)                                      \
-  ((uint32_t)(((uint32_t)(b)&0xff) | (((uint32_t)(g)&0xff) << 8) | \
-              (((uint32_t)(r)&0xff) << 16) | (((uint32_t)(a)&0xff) << 24)))
+#define FPDF_ARGB(a, r, g, b) \
+    ((uint32_t)(((uint32_t)(b)&0xff) | (((uint32_t)(g)&0xff) << 8) | (((uint32_t)(r)&0xff) << 16) | (((uint32_t)(a)&0xff) << 24)))
 #define FPDF_GetBValue(argb) ((uint8_t)(argb))
 #define FPDF_GetGValue(argb) ((uint8_t)(((uint16_t)(argb)) >> 8))
 #define FPDF_GetRValue(argb) ((uint8_t)((argb) >> 16))
@@ -36,7 +35,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif  // __cplusplus
+#endif // __cplusplus
 
 // Create a new PDF document.
 //
@@ -57,9 +56,9 @@ DLLEXPORT FPDF_DOCUMENT STDCALL FPDF_CreateNewDocument();
 // The page should be closed with CPDF_ClosePage() when finished as
 // with any other page in the document.
 DLLEXPORT FPDF_PAGE STDCALL FPDFPage_New(FPDF_DOCUMENT document,
-                                         int page_index,
-                                         double width,
-                                         double height);
+    int page_index,
+    double width,
+    double height);
 
 // Delete the page at |page_index|.
 //
@@ -94,7 +93,7 @@ DLLEXPORT void STDCALL FPDFPage_SetRotation(FPDF_PAGE page, int rotate);
 //   page_obj - handle to a page object. The |page_obj| will be automatically
 //              freed.
 DLLEXPORT void STDCALL FPDFPage_InsertObject(FPDF_PAGE page,
-                                             FPDF_PAGEOBJECT page_obj);
+    FPDF_PAGEOBJECT page_obj);
 
 // Get number of page objects inside |page|.
 //
@@ -159,12 +158,12 @@ DLLEXPORT int STDCALL FPDFPageObj_GetType(FPDF_PAGEOBJECT pageObject);
 //   |b d f|
 // and can be used to scale, rotate, shear and translate the |page_object|.
 DLLEXPORT void STDCALL FPDFPageObj_Transform(FPDF_PAGEOBJECT page_object,
-                                             double a,
-                                             double b,
-                                             double c,
-                                             double d,
-                                             double e,
-                                             double f);
+    double a,
+    double b,
+    double c,
+    double d,
+    double e,
+    double f);
 
 // Transform all annotations in |page|.
 //
@@ -181,12 +180,12 @@ DLLEXPORT void STDCALL FPDFPageObj_Transform(FPDF_PAGEOBJECT page_object,
 //   |b d f|
 // and can be used to scale, rotate, shear and translate the |page| annotations.
 DLLEXPORT void STDCALL FPDFPage_TransformAnnots(FPDF_PAGE page,
-                                                double a,
-                                                double b,
-                                                double c,
-                                                double d,
-                                                double e,
-                                                double f);
+    double a,
+    double b,
+    double c,
+    double d,
+    double e,
+    double f);
 
 // Create a new image object.
 //
@@ -221,9 +220,9 @@ FPDFPageObj_NewImgeObj(FPDF_DOCUMENT document);
 // valid |pages| value.
 DLLEXPORT FPDF_BOOL STDCALL
 FPDFImageObj_LoadJpegFile(FPDF_PAGE* pages,
-                          int nCount,
-                          FPDF_PAGEOBJECT image_object,
-                          FPDF_FILEACCESS* fileAccess);
+    int nCount,
+    FPDF_PAGEOBJECT image_object,
+    FPDF_FILEACCESS* fileAccess);
 
 // Load an image from a JPEG image file and then set it into |image_object|.
 //
@@ -243,9 +242,9 @@ FPDFImageObj_LoadJpegFile(FPDF_PAGE* pages,
 // data to be deleted after this function returns.
 DLLEXPORT FPDF_BOOL STDCALL
 FPDFImageObj_LoadJpegFileInline(FPDF_PAGE* pages,
-                                int nCount,
-                                FPDF_PAGEOBJECT image_object,
-                                FPDF_FILEACCESS* fileAccess);
+    int nCount,
+    FPDF_PAGEOBJECT image_object,
+    FPDF_FILEACCESS* fileAccess);
 
 // Set the transform matrix of |image_object|.
 //
@@ -264,12 +263,12 @@ FPDFImageObj_LoadJpegFileInline(FPDF_PAGE* pages,
 //
 // Returns TRUE on success.
 DLLEXPORT FPDF_BOOL STDCALL FPDFImageObj_SetMatrix(FPDF_PAGEOBJECT image_object,
-                                                   double a,
-                                                   double b,
-                                                   double c,
-                                                   double d,
-                                                   double e,
-                                                   double f);
+    double a,
+    double b,
+    double c,
+    double d,
+    double e,
+    double f);
 
 // Set |bitmap| to |image_object|.
 //
@@ -280,9 +279,9 @@ DLLEXPORT FPDF_BOOL STDCALL FPDFImageObj_SetMatrix(FPDF_PAGEOBJECT image_object,
 //
 // Returns TRUE on success.
 DLLEXPORT FPDF_BOOL STDCALL FPDFImageObj_SetBitmap(FPDF_PAGE* pages,
-                                                   int nCount,
-                                                   FPDF_PAGEOBJECT image_object,
-                                                   FPDF_BITMAP bitmap);
+    int nCount,
+    FPDF_PAGEOBJECT image_object,
+    FPDF_BITMAP bitmap);
 
 // Create a new path object at an initial position.
 //
@@ -301,9 +300,9 @@ DLLEXPORT FPDF_PAGEOBJECT STDCALL FPDFPageObj_CreateNewPath(float x, float y);
 //
 // Returns a handle to the new path object.
 DLLEXPORT FPDF_PAGEOBJECT STDCALL FPDFPageObj_CreateNewRect(float x,
-                                                            float y,
-                                                            float w,
-                                                            float h);
+    float y,
+    float w,
+    float h);
 
 // Set the stroke RGBA of a path. Range of values: 0 - 255.
 //
@@ -315,10 +314,10 @@ DLLEXPORT FPDF_PAGEOBJECT STDCALL FPDFPageObj_CreateNewRect(float x,
 //
 // Returns TRUE on success.
 DLLEXPORT FPDF_BOOL FPDFPath_SetStrokeColor(FPDF_PAGEOBJECT path,
-                                            unsigned int R,
-                                            unsigned int G,
-                                            unsigned int B,
-                                            unsigned int A);
+    unsigned int R,
+    unsigned int G,
+    unsigned int B,
+    unsigned int A);
 
 // Set the stroke width of a path.
 //
@@ -338,10 +337,10 @@ DLLEXPORT FPDF_BOOL FPDFPath_SetStrokeWidth(FPDF_PAGEOBJECT path, float width);
 //
 // Returns TRUE on success.
 DLLEXPORT FPDF_BOOL FPDFPath_SetFillColor(FPDF_PAGEOBJECT path,
-                                          unsigned int R,
-                                          unsigned int G,
-                                          unsigned int B,
-                                          unsigned int A);
+    unsigned int R,
+    unsigned int G,
+    unsigned int B,
+    unsigned int A);
 
 // Get the fill RGBA of a path. Range of values: 0 - 255.
 //
@@ -353,10 +352,10 @@ DLLEXPORT FPDF_BOOL FPDFPath_SetFillColor(FPDF_PAGEOBJECT path,
 //
 // Returns TRUE on success.
 DLLEXPORT FPDF_BOOL FPDFPath_GetFillColor(FPDF_PAGEOBJECT path,
-                                          unsigned int* R,
-                                          unsigned int* G,
-                                          unsigned int* B,
-                                          unsigned int* A);
+    unsigned int* R,
+    unsigned int* G,
+    unsigned int* B,
+    unsigned int* A);
 
 // Move a path's current point.
 //
@@ -393,12 +392,12 @@ DLLEXPORT FPDF_BOOL FPDFPath_LineTo(FPDF_PAGEOBJECT path, float x, float y);
 //
 // Returns TRUE on success
 DLLEXPORT FPDF_BOOL FPDFPath_BezierTo(FPDF_PAGEOBJECT path,
-                                      float x1,
-                                      float y1,
-                                      float x2,
-                                      float y2,
-                                      float x3,
-                                      float y3);
+    float x1,
+    float y1,
+    float x2,
+    float y2,
+    float x3,
+    float y3);
 
 // Close the current subpath of a given path.
 //
@@ -419,8 +418,8 @@ DLLEXPORT FPDF_BOOL FPDFPath_Close(FPDF_PAGEOBJECT path);
 //
 // Returns TRUE on success
 DLLEXPORT FPDF_BOOL FPDFPath_SetDrawMode(FPDF_PAGEOBJECT path,
-                                         int fillmode,
-                                         FPDF_BOOL stroke);
+    int fillmode,
+    FPDF_BOOL stroke);
 
 // Create a new text object using one of the standard PDF fonts.
 //
@@ -430,8 +429,8 @@ DLLEXPORT FPDF_BOOL FPDFPath_SetDrawMode(FPDF_PAGEOBJECT path,
 //
 // Returns a handle to a new text object, or NULL on failure
 DLLEXPORT FPDF_PAGEOBJECT STDCALL FPDFPageObj_NewTextObj(FPDF_DOCUMENT document,
-                                                         FPDF_BYTESTRING font,
-                                                         float font_size);
+    FPDF_BYTESTRING font,
+    float font_size);
 
 // Set the text for a textobject. If it had text, it will be replaced.
 //
@@ -440,7 +439,7 @@ DLLEXPORT FPDF_PAGEOBJECT STDCALL FPDFPageObj_NewTextObj(FPDF_DOCUMENT document,
 //
 // Returns TRUE on success
 DLLEXPORT FPDF_BOOL STDCALL FPDFText_SetText(FPDF_PAGEOBJECT text_object,
-                                             FPDF_BYTESTRING text);
+    FPDF_BYTESTRING text);
 
 // Returns a font object loaded from a stream of data. The font is loaded
 // into the document. The caller does not need to free the returned object.
@@ -454,13 +453,13 @@ DLLEXPORT FPDF_BOOL STDCALL FPDFText_SetText(FPDF_PAGEOBJECT text_object,
 //
 // Returns NULL on failure
 DLLEXPORT FPDF_FONT STDCALL FPDFText_LoadFont(FPDF_DOCUMENT document,
-                                              const uint8_t* data,
-                                              uint32_t size,
-                                              int font_type,
-                                              FPDF_BOOL cid);
+    const uint8_t* data,
+    uint32_t size,
+    int font_type,
+    FPDF_BOOL cid);
 
 #ifdef __cplusplus
-}  // extern "C"
-#endif  // __cplusplus
+} // extern "C"
+#endif // __cplusplus
 
-#endif  // PUBLIC_FPDF_EDIT_H_
+#endif // PUBLIC_FPDF_EDIT_H_

@@ -12,7 +12,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif  // __cplusplus
+#endif // __cplusplus
 
 // Unsupported XFA form.
 #define FPDF_UNSP_DOC_XFAFORM 1
@@ -47,16 +47,16 @@ extern "C" {
 
 // Interface for unsupported feature notifications.
 typedef struct _UNSUPPORT_INFO {
-  // Version number of the interface. Must be 1.
-  int version;
+    // Version number of the interface. Must be 1.
+    int version;
 
-  // Unsupported object notification function.
-  // Interface Version: 1
-  // Implementation Required: Yes
-  //
-  //   pThis - pointer to the interface structure.
-  //   nType - the type of unsupported object. One of the |FPDF_UNSP_*| entries.
-  void (*FSDK_UnSupport_Handler)(struct _UNSUPPORT_INFO* pThis, int nType);
+    // Unsupported object notification function.
+    // Interface Version: 1
+    // Implementation Required: Yes
+    //
+    //   pThis - pointer to the interface structure.
+    //   nType - the type of unsupported object. One of the |FPDF_UNSP_*| entries.
+    void (*FSDK_UnSupport_Handler)(struct _UNSUPPORT_INFO* pThis, int nType);
 } UNSUPPORT_INFO;
 
 // Setup an unsupported object handler.
@@ -92,7 +92,7 @@ FSDK_SetUnSpObjProcessHandler(UNSUPPORT_INFO* unsp_info);
 DLLEXPORT int STDCALL FPDFDoc_GetPageMode(FPDF_DOCUMENT document);
 
 #ifdef __cplusplus
-}  // extern "C"
-#endif  // __cplusplus
+} // extern "C"
+#endif // __cplusplus
 
-#endif  // PUBLIC_FPDF_EXT_H_
+#endif // PUBLIC_FPDF_EXT_H_

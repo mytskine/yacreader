@@ -70,8 +70,8 @@ FPDF_StructTree_GetChildAtIndex(FPDF_STRUCTTREE struct_tree, int index);
 //          |buffer| will not be modified.
 DLLEXPORT unsigned long STDCALL
 FPDF_StructElement_GetAltText(FPDF_STRUCTELEMENT struct_element,
-                              void* buffer,
-                              unsigned long buflen);
+    void* buffer,
+    unsigned long buflen);
 
 // Function: FPDF_StructElement_CountChildren
 //          Count the number of children for the structure element.
@@ -94,10 +94,10 @@ FPDF_StructElement_CountChildren(FPDF_STRUCTELEMENT struct_element);
 //          return NULL. This will also return NULL for out of bounds indices.
 DLLEXPORT FPDF_STRUCTELEMENT STDCALL
 FPDF_StructElement_GetChildAtIndex(FPDF_STRUCTELEMENT struct_element,
-                                   int index);
+    int index);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif  // PUBLIC_FPDF_STRUCTTREE_H_
+#endif // PUBLIC_FPDF_STRUCTTREE_H_

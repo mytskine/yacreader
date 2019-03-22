@@ -1,13 +1,9 @@
 #ifndef COMICFULLINFOCONTROLLER_V2_H
 #define COMICFULLINFOCONTROLLER_V2_H
 
-
-
 #include "httprequest.h"
-#include "httpresponse.h"
 #include "httprequesthandler.h"
-
-
+#include "httpresponse.h"
 
 class ComicFullinfoController_v2 : public HttpRequestHandler {
     Q_OBJECT
@@ -18,7 +14,7 @@ public:
     void service(HttpRequest& request, HttpResponse& response);
 
 private:
-    void serviceContent(const int &library, const qulonglong &comicId, HttpResponse &response);
+    void serviceContent(const int& library, const qulonglong& comicId, HttpResponse& response);
 };
 
 #endif // COMICFULLINFOCONTROLLER_V2_H

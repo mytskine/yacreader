@@ -2,8 +2,8 @@
 #define READINGLISTCONTENTCONTROLLER_V2_H
 
 #include "httprequest.h"
-#include "httpresponse.h"
 #include "httprequesthandler.h"
+#include "httpresponse.h"
 
 class ReadingListContentControllerV2 : public HttpRequestHandler {
     Q_OBJECT
@@ -14,7 +14,7 @@ public:
     void service(HttpRequest& request, HttpResponse& response);
 
 private:
-    void serviceContent(const int &library, const qulonglong &readingListId, HttpResponse &response);
+    void serviceContent(const int& library, const qulonglong& readingListId, HttpResponse& response);
 };
 
 #endif // READINGLISTCONTENTCONTROLLER_H

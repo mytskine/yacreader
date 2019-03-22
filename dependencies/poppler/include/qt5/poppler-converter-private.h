@@ -28,20 +28,19 @@ namespace Poppler {
 
 class DocumentData;
 
-class BaseConverterPrivate
-{
-	public:
-		BaseConverterPrivate();
-		virtual ~BaseConverterPrivate();
+class BaseConverterPrivate {
+public:
+    BaseConverterPrivate();
+    virtual ~BaseConverterPrivate();
 
-		QIODevice* openDevice();
-		void closeDevice();
+    QIODevice* openDevice();
+    void closeDevice();
 
-		DocumentData *document;
-		QString outputFileName;
-		QIODevice *iodev;
-		bool ownIodev : 1;
-		BaseConverter::Error lastError;
+    DocumentData* document;
+    QString outputFileName;
+    QIODevice* iodev;
+    bool ownIodev : 1;
+    BaseConverter::Error lastError;
 };
 
 }

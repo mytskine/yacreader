@@ -29,24 +29,23 @@ class LinkAction;
 class Page;
 class TextPage;
 
-namespace Poppler
-{
+namespace Poppler {
 
 class DocumentData;
 class PageTransition;
 
 class PageData {
 public:
-  Link* convertLinkActionToLink(::LinkAction * a, const QRectF &linkArea);
+    Link* convertLinkActionToLink(::LinkAction* a, const QRectF& linkArea);
 
-  DocumentData *parentDoc;
-  ::Page *page;
-  int index;
-  PageTransition *transition;
+    DocumentData* parentDoc;
+    ::Page* page;
+    int index;
+    PageTransition* transition;
 
-  static Link* convertLinkActionToLink(::LinkAction * a, DocumentData *parentDoc, const QRectF &linkArea);
-  
-  TextPage *prepareTextSearch(const QString &text, Page::SearchMode caseSensitive, Page::Rotation rotate, GBool *sCase, QVector<Unicode> *u);
+    static Link* convertLinkActionToLink(::LinkAction* a, DocumentData* parentDoc, const QRectF& linkArea);
+
+    TextPage* prepareTextSearch(const QString& text, Page::SearchMode caseSensitive, Page::Rotation rotate, GBool* sCase, QVector<Unicode>* u);
 };
 
 }
