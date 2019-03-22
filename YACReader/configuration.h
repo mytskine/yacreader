@@ -34,6 +34,7 @@ private:
     QSize windowSize;
     bool maximized;
     int scrollDuration;
+    bool scrollThroughCovers;
     bool doublePage;
     bool doubleMangaPage;
     bool alwaysOnTop;
@@ -87,6 +88,8 @@ public:
     void setFullScreen(bool f) { settings->setValue(FULLSCREEN, f); }
     int getScrollDuration() { return settings->value(SCROLL_DURATION).toInt(); }
     void setScrollDuration(int d) { settings->setValue(SCROLL_DURATION, d); }
+    bool getScrollThroughCovers() { return settings->value(SCROLL_THROUGH_COVERS).toBool(); }
+    void setScrollThroughCovers(bool d) { settings->setValue(SCROLL_THROUGH_COVERS, d); }
 
     QPoint getPos() { return settings->value(Y_WINDOW_POS).toPoint(); }
     void setPos(QPoint p) { settings->setValue(Y_WINDOW_POS, p); }
