@@ -613,13 +613,13 @@ void Viewer::keyPressEvent(QKeyEvent* event)
 
         if (key == ShortcutsManager::getShortcutsManager().getShortcut(AUTO_SCROLL_FORWARD_ACTION_Y)) {
             posByStep = height() / numScrollSteps;
-            nextPos = verticalScrollBar()->sliderPosition() + static_cast<int>((height() * 0.80));
+            nextPos = verticalScrollBar()->sliderPosition() + static_cast<int>((height() * 0.70));
             scrollDown();
         }
 
         else if (key == ShortcutsManager::getShortcutsManager().getShortcut(AUTO_SCROLL_BACKWARD_ACTION_Y)) {
             posByStep = height() / numScrollSteps;
-            nextPos = verticalScrollBar()->sliderPosition() - static_cast<int>((height() * 0.80));
+            nextPos = verticalScrollBar()->sliderPosition() - static_cast<int>((height() * 0.70));
             scrollUp();
         }
 
