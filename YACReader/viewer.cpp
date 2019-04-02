@@ -203,6 +203,7 @@ void Viewer::prepareForOpening()
     //render->update();
 
     verticalScrollBar()->setSliderPosition(verticalScrollBar()->minimum());
+    verticalScrollBar()->setSingleStep(100);
 
     if (Configuration::getConfiguration().getShowInformation() && !information) {
         QTimer* timer = new QTimer();
