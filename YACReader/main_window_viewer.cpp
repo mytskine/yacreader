@@ -1444,8 +1444,10 @@ void MainWindowViewer::closeEvent(QCloseEvent* event)
     if (isClient)
         sendComic();
 
-    viewer->save();
     Configuration& conf = Configuration::getConfiguration();
+    if (conf.getBookmarksAuto()) {
+        viewer->save();
+    }
     if (!fullscreen && !isMaximized()) {
         conf.setPos(pos());
         conf.setSize(size());

@@ -194,7 +194,7 @@ void Viewer::createConnections()
 //Deprecated
 void Viewer::prepareForOpening()
 {
-    if (render->hasLoadedComic())
+    if (Configuration::getConfiguration().getBookmarksAuto() && render->hasLoadedComic())
         save();
     //bd->setBookmarks(*bm);
 
