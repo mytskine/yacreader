@@ -91,6 +91,8 @@ public:
     void setSize(QSize s) { settings->setValue(Y_WINDOW_SIZE, s); }
     bool getMaximized() { return settings->value(MAXIMIZED).toBool(); }
     void setMaximized(bool b) { settings->setValue(MAXIMIZED, b); }
+    int getScrollDuration() { return settings->value(SCROLL_DURATION).toInt(); }
+    void setScrollDuration(int d) { settings->setValue(SCROLL_DURATION, d); }
     bool getDoublePage() { return settings->value(DOUBLE_PAGE).toBool(); }
     void setDoublePage(bool b) { settings->setValue(DOUBLE_PAGE, b); }
     bool getDoubleMangaPage() { return settings->value(DOUBLE_MANGA_PAGE).toBool(); }

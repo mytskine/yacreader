@@ -414,7 +414,7 @@ void Viewer::scrollDown()
         next();
     } else {
         int currentPos = verticalScrollBar()->sliderPosition();
-        verticalScroller->setDuration(250);
+        verticalScroller->setDuration(Configuration::getConfiguration().getScrollDuration());
         verticalScroller->setStartValue(currentPos);
         verticalScroller->setEndValue(nextPos);
 
@@ -430,7 +430,7 @@ void Viewer::scrollUp()
         prev();
     } else {
         int currentPos = verticalScrollBar()->sliderPosition();
-        verticalScroller->setDuration(250);
+        verticalScroller->setDuration(Configuration::getConfiguration().getScrollDuration());
         verticalScroller->setStartValue(currentPos);
         verticalScroller->setEndValue(nextPos);
 
@@ -549,10 +549,10 @@ void Viewer::scrollTo(int x, int y)
 {
     if (groupScroller->state() == QAbstractAnimation::Running)
         return;
-    horizontalScroller->setDuration(250);
+    horizontalScroller->setDuration(Configuration::getConfiguration().getScrollDuration());
     horizontalScroller->setStartValue(horizontalScrollBar()->sliderPosition());
     horizontalScroller->setEndValue(x);
-    verticalScroller->setDuration(250);
+    verticalScroller->setDuration(Configuration::getConfiguration().getScrollDuration());
     verticalScroller->setStartValue(verticalScrollBar()->sliderPosition());
     verticalScroller->setEndValue(y);
     groupScroller->start();
@@ -667,7 +667,7 @@ void Viewer::wheelEvent(QWheelEvent* event)
         }
 
         int currentPos = verticalScrollBar()->sliderPosition();
-        verticalScroller->setDuration(250);
+        verticalScroller->setDuration(Configuration::getConfiguration().getScrollDuration());
         verticalScroller->setStartValue(currentPos);
         verticalScroller->setEndValue(currentPos - event->delta() - deltaNotFinished);
 
