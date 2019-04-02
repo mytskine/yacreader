@@ -1045,7 +1045,7 @@ void Viewer::showIsCoverMessage()
     if (!shouldOpenPrevious) {
         notificationsLabel->setText(tr("Cover!"));
         notificationsLabel->flash();
-        shouldOpenPrevious = true;
+        shouldOpenPrevious = Configuration::getConfiguration().getScrollThroughCovers();
     } else {
         shouldOpenPrevious = false;
         emit(openPreviousComic());
@@ -1059,7 +1059,7 @@ void Viewer::showIsLastMessage()
     if (!shouldOpenNext) {
         notificationsLabel->setText(tr("Last page!"));
         notificationsLabel->flash();
-        shouldOpenNext = true;
+        shouldOpenNext = Configuration::getConfiguration().getScrollThroughCovers();
     } else {
         shouldOpenNext = false;
         emit(openNextComic());
