@@ -4,32 +4,32 @@
 #include <QDialog>
 #include <QLabel>
 #include <QLineEdit>
+#include <QProgressBar>
 #include <QPushButton>
 #include <QString>
 #include <QThread>
 #include <QTimer>
-#include <QProgressBar>
 
-class ExportLibraryDialog : public QDialog 
-{
-	Q_OBJECT
+class ExportLibraryDialog : public QDialog {
+    Q_OBJECT
 public:
-		ExportLibraryDialog(QWidget * parent = 0);
+    ExportLibraryDialog(QWidget* parent = 0);
 public slots:
-		void exportLibrary();
-		void findPath();
-		void close();
+    void exportLibrary();
+    void findPath();
+    void close();
+
 private:
-		int progressCount;
-		QProgressBar *progressBar;
-		QLabel * textLabel;
-		QLineEdit * path;
-		QPushButton * find;
-		QPushButton * accept;
-		QPushButton * cancel;
-		void run();
+    int progressCount;
+    QProgressBar* progressBar;
+    QLabel* textLabel;
+    QLineEdit* path;
+    QPushButton* find;
+    QPushButton* accept;
+    QPushButton* cancel;
+    void run();
 signals:
-		void exportPath(QString);
+    void exportPath(QString);
 };
 
 #endif

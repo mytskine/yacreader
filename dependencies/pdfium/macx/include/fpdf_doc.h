@@ -12,7 +12,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif  // __cplusplus
+#endif // __cplusplus
 
 // Unsupported action type.
 #define PDFACTION_UNSUPPORTED 0
@@ -26,14 +26,14 @@ extern "C" {
 #define PDFACTION_LAUNCH 4
 
 typedef struct _FS_QUADPOINTSF {
-  FS_FLOAT x1;
-  FS_FLOAT y1;
-  FS_FLOAT x2;
-  FS_FLOAT y2;
-  FS_FLOAT x3;
-  FS_FLOAT y3;
-  FS_FLOAT x4;
-  FS_FLOAT y4;
+    FS_FLOAT x1;
+    FS_FLOAT y1;
+    FS_FLOAT x2;
+    FS_FLOAT y2;
+    FS_FLOAT x3;
+    FS_FLOAT y3;
+    FS_FLOAT x4;
+    FS_FLOAT y4;
 } FS_QUADPOINTSF;
 
 // Get the first child of |bookmark|, or the first top-level bookmark item.
@@ -71,8 +71,8 @@ FPDFBookmark_GetNextSibling(FPDF_DOCUMENT document, FPDF_BOOKMARK bookmark);
 // string is terminated by a UTF16 NUL character. If |buflen| is less than the
 // required length, or |buffer| is NULL, |buffer| will not be modified.
 DLLEXPORT unsigned long STDCALL FPDFBookmark_GetTitle(FPDF_BOOKMARK bookmark,
-                                                      void* buffer,
-                                                      unsigned long buflen);
+    void* buffer,
+    unsigned long buflen);
 
 // Find the bookmark with |title| in |document|.
 //
@@ -84,7 +84,7 @@ DLLEXPORT unsigned long STDCALL FPDFBookmark_GetTitle(FPDF_BOOKMARK bookmark,
 // |FPDFBookmark_Find| will always return the first bookmark found even if
 // multiple bookmarks have the same |title|.
 DLLEXPORT FPDF_BOOKMARK STDCALL FPDFBookmark_Find(FPDF_DOCUMENT document,
-                                                  FPDF_WIDESTRING title);
+    FPDF_WIDESTRING title);
 
 // Get the destination associated with |bookmark|.
 //
@@ -94,7 +94,7 @@ DLLEXPORT FPDF_BOOKMARK STDCALL FPDFBookmark_Find(FPDF_DOCUMENT document,
 // Returns the handle to the destination data,  NULL if no destination is
 // associated with |bookmark|.
 DLLEXPORT FPDF_DEST STDCALL FPDFBookmark_GetDest(FPDF_DOCUMENT document,
-                                                 FPDF_BOOKMARK bookmark);
+    FPDF_BOOKMARK bookmark);
 
 // Get the action associated with |bookmark|.
 //
@@ -129,7 +129,7 @@ DLLEXPORT unsigned long STDCALL FPDFAction_GetType(FPDF_ACTION action);
 // |FPDFAction_GetFilePath| then load that document, the document handle from
 // that document should pass as |document| to |FPDFAction_GetDest|.
 DLLEXPORT FPDF_DEST STDCALL FPDFAction_GetDest(FPDF_DOCUMENT document,
-                                               FPDF_ACTION action);
+    FPDF_ACTION action);
 
 // Get file path of a |PDFACTION_REMOTEGOTO| |action|.
 //
@@ -159,9 +159,9 @@ FPDFAction_GetFilePath(FPDF_ACTION action, void* buffer, unsigned long buflen);
 // The |buffer| is always encoded in 7-bit ASCII. If |buflen| is less than the
 // returned length, or |buffer| is NULL, |buffer| will not be modified.
 DLLEXPORT unsigned long STDCALL FPDFAction_GetURIPath(FPDF_DOCUMENT document,
-                                                      FPDF_ACTION action,
-                                                      void* buffer,
-                                                      unsigned long buflen);
+    FPDF_ACTION action,
+    void* buffer,
+    unsigned long buflen);
 
 // Get the page index of |dest|.
 //
@@ -170,7 +170,7 @@ DLLEXPORT unsigned long STDCALL FPDFAction_GetURIPath(FPDF_DOCUMENT document,
 //
 // Returns the page index containing |dest|. Page indices start from 0.
 DLLEXPORT unsigned long STDCALL FPDFDest_GetPageIndex(FPDF_DOCUMENT document,
-                                                      FPDF_DEST dest);
+    FPDF_DEST dest);
 
 // Get the (x, y, zoom) location of |dest| in the destination page, if the
 // destination is in [page /XYZ x y zoom] syntax.
@@ -187,12 +187,12 @@ DLLEXPORT unsigned long STDCALL FPDFDest_GetPageIndex(FPDF_DOCUMENT document,
 // Note the [x, y, zoom] values are only set if the corresponding hasXVal,
 // hasYVal or hasZoomVal flags are true.
 DLLEXPORT FPDF_BOOL STDCALL FPDFDest_GetLocationInPage(FPDF_DEST dest,
-                                                       FPDF_BOOL* hasXCoord,
-                                                       FPDF_BOOL* hasYCoord,
-                                                       FPDF_BOOL* hasZoom,
-                                                       FS_FLOAT* x,
-                                                       FS_FLOAT* y,
-                                                       FS_FLOAT* zoom);
+    FPDF_BOOL* hasXCoord,
+    FPDF_BOOL* hasYCoord,
+    FPDF_BOOL* hasZoom,
+    FS_FLOAT* x,
+    FS_FLOAT* y,
+    FS_FLOAT* zoom);
 
 // Find a link at point (|x|,|y|) on |page|.
 //
@@ -205,8 +205,8 @@ DLLEXPORT FPDF_BOOL STDCALL FPDFDest_GetLocationInPage(FPDF_DEST dest,
 // You can convert coordinates from screen coordinates to page coordinates using
 // |FPDF_DeviceToPage|.
 DLLEXPORT FPDF_LINK STDCALL FPDFLink_GetLinkAtPoint(FPDF_PAGE page,
-                                                    double x,
-                                                    double y);
+    double x,
+    double y);
 
 // Find the Z-order of link at point (|x|,|y|) on |page|.
 //
@@ -231,7 +231,7 @@ FPDFLink_GetLinkZOrderAtPoint(FPDF_PAGE page, double x, double y);
 // associated with the link. In this case, you should call |FPDFLink_GetAction|
 // to retrieve the action associated with |link|.
 DLLEXPORT FPDF_DEST STDCALL FPDFLink_GetDest(FPDF_DOCUMENT document,
-                                             FPDF_LINK link);
+    FPDF_LINK link);
 
 // Get action info for |link|.
 //
@@ -249,8 +249,8 @@ DLLEXPORT FPDF_ACTION STDCALL FPDFLink_GetAction(FPDF_LINK link);
 //
 // Returns TRUE on success.
 DLLEXPORT FPDF_BOOL STDCALL FPDFLink_Enumerate(FPDF_PAGE page,
-                                               int* startPos,
-                                               FPDF_LINK* linkAnnot);
+    int* startPos,
+    FPDF_LINK* linkAnnot);
 
 // Get the rectangle for |linkAnnot|.
 //
@@ -259,7 +259,7 @@ DLLEXPORT FPDF_BOOL STDCALL FPDFLink_Enumerate(FPDF_PAGE page,
 //
 // Returns true on success.
 DLLEXPORT FPDF_BOOL STDCALL FPDFLink_GetAnnotRect(FPDF_LINK linkAnnot,
-                                                  FS_RECTF* rect);
+    FS_RECTF* rect);
 
 // Get the count of quadrilateral points to the |linkAnnot|.
 //
@@ -276,8 +276,8 @@ DLLEXPORT int STDCALL FPDFLink_CountQuadPoints(FPDF_LINK linkAnnot);
 //
 // Returns true on success.
 DLLEXPORT FPDF_BOOL STDCALL FPDFLink_GetQuadPoints(FPDF_LINK linkAnnot,
-                                                   int quadIndex,
-                                                   FS_QUADPOINTSF* quadPoints);
+    int quadIndex,
+    FS_QUADPOINTSF* quadPoints);
 
 // Get meta-data |tag| content from |document|.
 //
@@ -297,9 +297,9 @@ DLLEXPORT FPDF_BOOL STDCALL FPDFLink_GetQuadPoints(FPDF_LINK linkAnnot,
 // bytes of zeros indicating the end of the string.  If |buflen| is less than
 // the returned length, or |buffer| is NULL, |buffer| will not be modified.
 DLLEXPORT unsigned long STDCALL FPDF_GetMetaText(FPDF_DOCUMENT document,
-                                                 FPDF_BYTESTRING tag,
-                                                 void* buffer,
-                                                 unsigned long buflen);
+    FPDF_BYTESTRING tag,
+    void* buffer,
+    unsigned long buflen);
 
 // Get the page label for |page_index| from |document|.
 //
@@ -314,12 +314,12 @@ DLLEXPORT unsigned long STDCALL FPDF_GetMetaText(FPDF_DOCUMENT document,
 // bytes of zeros indicating the end of the string.  If |buflen| is less than
 // the returned length, or |buffer| is NULL, |buffer| will not be modified.
 DLLEXPORT unsigned long STDCALL FPDF_GetPageLabel(FPDF_DOCUMENT document,
-                                                  int page_index,
-                                                  void* buffer,
-                                                  unsigned long buflen);
+    int page_index,
+    void* buffer,
+    unsigned long buflen);
 
 #ifdef __cplusplus
-}  // extern "C"
-#endif  // __cplusplus
+} // extern "C"
+#endif // __cplusplus
 
-#endif  // PUBLIC_FPDF_DOC_H_
+#endif // PUBLIC_FPDF_DOC_H_

@@ -6,13 +6,12 @@
 #ifndef TEMPLATE_H
 #define TEMPLATE_H
 
-#include <QString>
-#include <QRegExp>
-#include <QIODevice>
-#include <QTextCodec>
-#include <QFile>
-#include <QString>
 #include "templateglobal.h"
+#include <QFile>
+#include <QIODevice>
+#include <QRegExp>
+#include <QString>
+#include <QTextCodec>
 
 /**
  Enhanced version of QString for template processing. Templates
@@ -89,7 +88,6 @@
 
 class DECLSPEC Template : public QString {
 public:
-
     /**
       Constructor that reads the template from a string.
       @param source The template source text
@@ -154,10 +152,9 @@ public:
      Enable warnings for missing tags
      @param enable Warnings are enabled, if true
     */
-    void enableWarnings(bool enable=true);
+    void enableWarnings(bool enable = true);
 
 private:
-
     /** Name of the source file */
     QString sourceName;
 

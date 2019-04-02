@@ -3,12 +3,11 @@
 
 #include <QtCore>
 
-class BundleCreator : public QObject
-{
-Q_OBJECT
+class BundleCreator : public QObject {
+    Q_OBJECT
 public:
-	BundleCreator(void);
-	~BundleCreator(void);
+    BundleCreator(void);
+    ~BundleCreator(void);
 };
 
 #endif

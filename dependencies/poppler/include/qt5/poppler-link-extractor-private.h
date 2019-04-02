@@ -24,32 +24,30 @@
 
 #include <QtCore/QList>
 
-namespace Poppler
-{
+namespace Poppler {
 
 class Link;
 class PageData;
 
-class LinkExtractorOutputDev : public OutputDev
-{
-  public:
-    LinkExtractorOutputDev(PageData *data);
+class LinkExtractorOutputDev : public OutputDev {
+public:
+    LinkExtractorOutputDev(PageData* data);
     virtual ~LinkExtractorOutputDev();
 
     // inherited from OutputDev
     virtual GBool upsideDown() { return gFalse; }
     virtual GBool useDrawChar() { return gFalse; }
     virtual GBool interpretType3Chars() { return gFalse; }
-    virtual void processLink(::AnnotLink *link);
+    virtual void processLink(::AnnotLink* link);
 
     // our stuff
-    QList< Link* > links();
+    QList<Link*> links();
 
-  private:
-    PageData *m_data;
+private:
+    PageData* m_data;
     double m_pageCropWidth;
     double m_pageCropHeight;
-    QList< Link* > m_links;
+    QList<Link*> m_links;
 };
 
 }

@@ -3,17 +3,15 @@
 
 #include <QWidget>
 
-class NoLibrariesWidget : public QWidget
-{
-	Q_OBJECT
+class NoLibrariesWidget : public QWidget {
+    Q_OBJECT
 public:
-	explicit NoLibrariesWidget(QWidget *parent = 0);
-	
+    explicit NoLibrariesWidget(QWidget* parent = 0);
+
 signals:
-	void createNewLibrary();
-	void addExistingLibrary();
+    void createNewLibrary();
+    void addExistingLibrary();
 public slots:
-	
 };
 
 #endif // NO_LIBRARIES_WIDGET_H

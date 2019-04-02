@@ -5,19 +5,17 @@
 
 class QRadioButton;
 
-class SeriesQuestion : public QWidget
-{
-	Q_OBJECT
+class SeriesQuestion : public QWidget {
+    Q_OBJECT
 
 public:
-	SeriesQuestion(QWidget * parent = 0);
-	bool getYes();
-	void setYes(bool yes = true);
+    SeriesQuestion(QWidget* parent = 0);
+    bool getYes();
+    void setYes(bool yes = true);
 
 private:
-	QRadioButton * yes;
-	QRadioButton * no;
+    QRadioButton* yes;
+    QRadioButton* no;
 };
-
 
 #endif // SERIES_QUESTION_H

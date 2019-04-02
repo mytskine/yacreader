@@ -3,8 +3,8 @@
 #include "db_helper.h"
 #include "yacreader_libraries.h"
 
-#include "reading_list.h"
 #include "../static.h"
+#include "reading_list.h"
 #include "yacreader_global.h"
 
 #include "yacreader_server_data_helper.h"
@@ -25,12 +25,12 @@ void TagsControllerV2::service(HttpRequest& request, HttpResponse& response)
 
     QJsonArray items;
 
-    for(QList<Label>::const_iterator itr = labels.constBegin();itr!=labels.constEnd();itr++)
-    {
+    for (QList<Label>::const_iterator itr = labels.constBegin(); itr != labels.constEnd(); itr++) {
         items.append(YACReaderServerDataHelper::labelToJSON(libraryId, *itr));
     }
 
     QJsonDocument output(items);
 
-    response.write(output.toJson(QJsonDocument::Compact));;
+    response.write(output.toJson(QJsonDocument::Compact));
+    ;
 }

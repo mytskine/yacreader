@@ -25,10 +25,10 @@
 #ifndef _POPPLER_LINK_H_
 #define _POPPLER_LINK_H_
 
-#include <QtCore/QString>
+#include "poppler-export.h"
 #include <QtCore/QRectF>
 #include <QtCore/QSharedDataPointer>
-#include "poppler-export.h"
+#include <QtCore/QString>
 
 struct Ref;
 class MediaRendition;
@@ -58,108 +58,106 @@ class SoundObject;
  *
  * Coordinates are in 0..1 range
  */
-class POPPLER_QT5_EXPORT LinkDestination
-{
-	public:
-		/**
+class POPPLER_QT5_EXPORT LinkDestination {
+public:
+    /**
 		 * The possible kind of "viewport destination".
 		 */
-		enum Kind
-		{
-			/**
+    enum Kind {
+        /**
 			 * The new viewport is specified in terms of:
 			 * - possibile new left coordinate (see isChangeLeft() )
 			 * - possibile new top coordinate (see isChangeTop() )
 			 * - possibile new zoom level (see isChangeZoom() )
 			 */
-			destXYZ = 1,
-			destFit = 2,
-			destFitH = 3,
-			destFitV = 4,
-			destFitR = 5,
-			destFitB = 6,
-			destFitBH = 7,
-			destFitBV = 8
-		};
+        destXYZ = 1,
+        destFit = 2,
+        destFitH = 3,
+        destFitV = 4,
+        destFitR = 5,
+        destFitB = 6,
+        destFitBH = 7,
+        destFitBV = 8
+    };
 
-		/// \cond PRIVATE
-		LinkDestination(const LinkDestinationData &data);
-		LinkDestination(const QString &description);
-		/// \endcond
-		/**
+    /// \cond PRIVATE
+    LinkDestination(const LinkDestinationData& data);
+    LinkDestination(const QString& description);
+    /// \endcond
+    /**
 		 * Copy constructor.
 		 */
-		LinkDestination(const LinkDestination &other);
-		/**
+    LinkDestination(const LinkDestination& other);
+    /**
 		 * Destructor.
 		 */
-		~LinkDestination();
+    ~LinkDestination();
 
-		// Accessors.
-		/**
+    // Accessors.
+    /**
 		 * The kind of destination.
 		 */
-		Kind kind() const;
-		/**
+    Kind kind() const;
+    /**
 		 * Which page is the target of this destination.
 		 *
 		 * \note this number is 1-based, so for a 5 pages document the
 		 *       valid page numbers go from 1 to 5 (both included).
 		 */
-		int pageNumber() const;
-		/**
+    int pageNumber() const;
+    /**
 		 * The new left for the viewport of the target page, in case
 		 * it is specified to be changed (see isChangeLeft() )
 		 */
-		double left() const;
-		double bottom() const;
-		double right() const;
-		/**
+    double left() const;
+    double bottom() const;
+    double right() const;
+    /**
 		 * The new top for the viewport of the target page, in case
 		 * it is specified to be changed (see isChangeTop() )
 		 */
-		double top() const;
-		double zoom() const;
-		/**
+    double top() const;
+    double zoom() const;
+    /**
 		 * Whether the left of the viewport on the target page should
 		 * be changed.
 		 *
 		 * \see left()
 		 */
-		bool isChangeLeft() const;
-		/**
+    bool isChangeLeft() const;
+    /**
 		 * Whether the top of the viewport on the target page should
 		 * be changed.
 		 *
 		 * \see top()
 		 */
-		bool isChangeTop() const;
-		/**
+    bool isChangeTop() const;
+    /**
 		 * Whether the zoom level should be changed.
 		 *
 		 * \see zoom()
 		 */
-		bool isChangeZoom() const;
+    bool isChangeZoom() const;
 
-		/**
+    /**
 		 * Return a string repesentation of this destination.
 		 */
-		QString toString() const;
+    QString toString() const;
 
-		/**
+    /**
 		 * Return the name of this destination.
 		 *
 		 * \since 0.12
 		 */
-		QString destinationName() const;
+    QString destinationName() const;
 
-		/**
+    /**
 		 * Assignment operator.
 		 */
-		LinkDestination& operator=(const LinkDestination &other);
+    LinkDestination& operator=(const LinkDestination& other);
 
-	private:
-		QSharedDataPointer< LinkDestinationPrivate > d;
+private:
+    QSharedDataPointer<LinkDestinationPrivate> d;
 };
 
 /**
@@ -169,60 +167,57 @@ class POPPLER_QT5_EXPORT LinkDestination
  * kind of links to reimplement the linkType() method and return the type of
  * the link described by the reimplemented class.
  */
-class POPPLER_QT5_EXPORT Link
-{
-	public:
-		/// \cond PRIVATE
-		Link( const QRectF &linkArea );
-		/// \endcond
-		
-		/**
+class POPPLER_QT5_EXPORT Link {
+public:
+    /// \cond PRIVATE
+    Link(const QRectF& linkArea);
+    /// \endcond
+
+    /**
 		 * The possible kinds of link.
 		 *
 		 * Inherited classes must return an unique identifier
 		 */
-		enum LinkType
-		{
-		    None,     ///< Unknown link
-		    Goto,     ///< A "Go To" link
-		    Execute,  ///< A command to be executed
-		    Browse,   ///< An URL to be browsed (eg "http://poppler.freedesktop.org")
-		    Action,   ///< A "standard" action to be executed in the viewer
-		    Sound,    ///< A link representing a sound to be played
-		    Movie,    ///< An action to be executed on a movie
-		    Rendition,    ///< A rendition link \since 0.20
-		    JavaScript    ///< A JavaScript code to be interpreted \since 0.10
-		};
+    enum LinkType {
+        None, ///< Unknown link
+        Goto, ///< A "Go To" link
+        Execute, ///< A command to be executed
+        Browse, ///< An URL to be browsed (eg "http://poppler.freedesktop.org")
+        Action, ///< A "standard" action to be executed in the viewer
+        Sound, ///< A link representing a sound to be played
+        Movie, ///< An action to be executed on a movie
+        Rendition, ///< A rendition link \since 0.20
+        JavaScript ///< A JavaScript code to be interpreted \since 0.10
+    };
 
-		/**
+    /**
 		 * The type of this link.
 		 */
-		virtual LinkType linkType() const;
+    virtual LinkType linkType() const;
 
-		/**
+    /**
 		 * Destructor.
 		 */
-		virtual ~Link();
-		
-		/**
+    virtual ~Link();
+
+    /**
 		 * The area of a Page where the link should be active.
 		 *
 		 * \note this can be a null rect, in this case the link represents
 		 * a general action. The area is given in 0..1 range
 		 */
-		QRectF linkArea() const;
-		
-	protected:
-		/// \cond PRIVATE
-		Link( LinkPrivate &dd );
-		Q_DECLARE_PRIVATE( Link )
-		LinkPrivate *d_ptr;
-		/// \endcond
-		
-	private:
-		Q_DISABLE_COPY( Link )
-};
+    QRectF linkArea() const;
 
+protected:
+    /// \cond PRIVATE
+    Link(LinkPrivate& dd);
+    Q_DECLARE_PRIVATE(Link)
+    LinkPrivate* d_ptr;
+    /// \endcond
+
+private:
+    Q_DISABLE_COPY(Link)
+};
 
 /**
  * \brief Viewport reaching request.
@@ -232,42 +227,41 @@ class POPPLER_QT5_EXPORT Link
  * then the destination refers to that document (and not to the document the
  * current LinkGoto belongs to).
  */
-class POPPLER_QT5_EXPORT LinkGoto : public Link
-{
-	public:
-		/**
+class POPPLER_QT5_EXPORT LinkGoto : public Link {
+public:
+    /**
 		 * Create a new Goto link.
 		 *
 		 * \param linkArea the active area of the link
 		 * \param extFileName if not empty, the file name to be open
 		 * \param destination the destination to be reached
 		 */
-		LinkGoto( const QRectF &linkArea, QString extFileName, const LinkDestination & destination );
-		/**
+    LinkGoto(const QRectF& linkArea, QString extFileName, const LinkDestination& destination);
+    /**
 		 * Destructor.
 		 */
-		~LinkGoto();
+    ~LinkGoto();
 
-		/**
+    /**
 		 * Whether the destination is in an external document
 		 * (i.e. not the current document)
 		 */
-		bool isExternal() const;
-		// query for goto parameters
-		/**
+    bool isExternal() const;
+    // query for goto parameters
+    /**
 		 * The file name of the document the destination() refers to,
 		 * or an empty string in case it refers to the current document.
 		 */
-		QString fileName() const;
-		/**
+    QString fileName() const;
+    /**
 		 * The destination to reach.
 		 */
-		LinkDestination destination() const;
-		LinkType linkType() const;
+    LinkDestination destination() const;
+    LinkType linkType() const;
 
-	private:
-		Q_DECLARE_PRIVATE( LinkGoto )
-		Q_DISABLE_COPY( LinkGoto )
+private:
+    Q_DECLARE_PRIVATE(LinkGoto)
+    Q_DISABLE_COPY(LinkGoto)
 };
 
 /**
@@ -278,35 +272,34 @@ class POPPLER_QT5_EXPORT LinkGoto : public Link
  * - if it is a document, then it is requested to be open
  * - otherwise, it represents an executable to be run with the specified parameters
  */
-class POPPLER_QT5_EXPORT LinkExecute : public Link
-{
-	public:
-		/**
+class POPPLER_QT5_EXPORT LinkExecute : public Link {
+public:
+    /**
 		 * The file name to be executed
 		 */
-		QString fileName() const;
-		/**
+    QString fileName() const;
+    /**
 		 * The parameters for the command.
 		 */
-		QString parameters() const;
+    QString parameters() const;
 
-		/**
+    /**
 		 * Create a new Execute link.
 		 *
 		 * \param linkArea the active area of the link
 		 * \param file the file name to be open, or the program to be execute
 		 * \param params the parameters for the program to execute
 		 */
-		LinkExecute( const QRectF &linkArea, const QString & file, const QString & params );
-		/**
+    LinkExecute(const QRectF& linkArea, const QString& file, const QString& params);
+    /**
 		 * Destructor.
 		 */
-		~LinkExecute();
-		LinkType linkType() const;
+    ~LinkExecute();
+    LinkType linkType() const;
 
-	private:
-		Q_DECLARE_PRIVATE( LinkExecute )
-		Q_DISABLE_COPY( LinkExecute )
+private:
+    Q_DECLARE_PRIVATE(LinkExecute)
+    Q_DISABLE_COPY(LinkExecute)
 };
 
 /**
@@ -317,31 +310,30 @@ class POPPLER_QT5_EXPORT LinkExecute : public Link
  *
  * The format of the URL is specified by RFC 2396 (http://www.ietf.org/rfc/rfc2396.txt)
  */
-class POPPLER_QT5_EXPORT LinkBrowse : public Link
-{
-	public:
-		/**
+class POPPLER_QT5_EXPORT LinkBrowse : public Link {
+public:
+    /**
 		 * The URL to open
 		 */
-		QString url() const;
+    QString url() const;
 
-		/**
+    /**
 		 * Create a new browse link.
 		 *
 		 * \param linkArea the active area of the link
 		 * \param url the URL to be open
 		 */
-		LinkBrowse( const QRectF &linkArea, const QString &url );
-		/**
+    LinkBrowse(const QRectF& linkArea, const QString& url);
+    /**
 		 * Destructor.
 		 */
-		~LinkBrowse();
-		LinkType linkType() const;
+    ~LinkBrowse();
+    LinkType linkType() const;
 
-	private:
-		Q_DECLARE_PRIVATE( LinkBrowse )
-		Q_DISABLE_COPY( LinkBrowse )
-};	
+private:
+    Q_DECLARE_PRIVATE(LinkBrowse)
+    Q_DISABLE_COPY(LinkBrowse)
+};
 
 /**
  * \brief "Standard" action request.
@@ -349,49 +341,48 @@ class POPPLER_QT5_EXPORT LinkBrowse : public Link
  * The LinkAction class represents a link that request a "standard" action
  * to be performed by the viewer on the displayed document.
  */
-class POPPLER_QT5_EXPORT LinkAction : public Link
-{
-	public:
-		/**
+class POPPLER_QT5_EXPORT LinkAction : public Link {
+public:
+    /**
 		 * The possible types of actions
 		 */
-		enum ActionType { PageFirst = 1,
-		                  PagePrev = 2,
-		                  PageNext = 3,
-		                  PageLast = 4,
-		                  HistoryBack = 5,
-		                  HistoryForward = 6,
-		                  Quit = 7,
-		                  Presentation = 8,
-		                  EndPresentation = 9,
-		                  Find = 10,
-		                  GoToPage = 11,
-		                  Close = 12,
-		                  Print = 13    ///< \since 0.16
-		};
+    enum ActionType { PageFirst = 1,
+        PagePrev = 2,
+        PageNext = 3,
+        PageLast = 4,
+        HistoryBack = 5,
+        HistoryForward = 6,
+        Quit = 7,
+        Presentation = 8,
+        EndPresentation = 9,
+        Find = 10,
+        GoToPage = 11,
+        Close = 12,
+        Print = 13 ///< \since 0.16
+    };
 
-		/**
+    /**
 		 * The action of the current LinkAction
 		 */
-		ActionType actionType() const;
+    ActionType actionType() const;
 
-		/**
+    /**
 		 * Create a new Action link, that executes a specified action
 		 * on the document.
 		 *
 		 * \param linkArea the active area of the link
 		 * \param actionType which action should be executed
 		 */
-		LinkAction( const QRectF &linkArea, ActionType actionType );
-		/**
+    LinkAction(const QRectF& linkArea, ActionType actionType);
+    /**
 		 * Destructor.
 		 */
-		~LinkAction();
-		LinkType linkType() const;
+    ~LinkAction();
+    LinkType linkType() const;
 
-	private:
-		Q_DECLARE_PRIVATE( LinkAction )
-		Q_DISABLE_COPY( LinkAction )
+private:
+    Q_DECLARE_PRIVATE(LinkAction)
+    Q_DISABLE_COPY(LinkAction)
 };
 
 /**
@@ -399,52 +390,51 @@ class POPPLER_QT5_EXPORT LinkAction : public Link
  *
  * \since 0.6
  */
-class POPPLER_QT5_EXPORT LinkSound : public Link
-{
-	public:
-		// create a Link_Sound
-		LinkSound( const QRectF &linkArea, double volume, bool sync, bool repeat, bool mix, SoundObject *sound );
-		/**
+class POPPLER_QT5_EXPORT LinkSound : public Link {
+public:
+    // create a Link_Sound
+    LinkSound(const QRectF& linkArea, double volume, bool sync, bool repeat, bool mix, SoundObject* sound);
+    /**
 		 * Destructor.
 		 */
-		virtual ~LinkSound();
+    virtual ~LinkSound();
 
-		LinkType linkType() const;
+    LinkType linkType() const;
 
-		/**
+    /**
 		 * The volume to be used when playing the sound.
 		 *
 		 * The volume is in the range [ -1, 1 ], where:
 		 * - a negative number: no volume (mute)
 		 * - 1: full volume
 		 */
-		double volume() const;
-		/**
+    double volume() const;
+    /**
 		 * Whether the playback of the sound should be synchronous
 		 * (thus blocking, waiting for the end of the sound playback).
 		 */
-		bool synchronous() const;
-		/**
+    bool synchronous() const;
+    /**
 		 * Whether the sound should be played continuously (that is,
 		 * started again when it ends)
 		 */
-		bool repeat() const;
-		/**
+    bool repeat() const;
+    /**
 		 * Whether the playback of this sound can be mixed with
 		 * playbacks with other sounds of the same document.
 		 *
 		 * \note When false, any other playback must be stopped before
 		 *       playing the sound.
 		 */
-		bool mix() const;
-		/**
+    bool mix() const;
+    /**
 		 * The sound object to be played
 		 */
-		SoundObject *sound() const;
+    SoundObject* sound() const;
 
-	private:
-		Q_DECLARE_PRIVATE( LinkSound )
-		Q_DISABLE_COPY( LinkSound )
+private:
+    Q_DECLARE_PRIVATE(LinkSound)
+    Q_DISABLE_COPY(LinkSound)
 };
 
 /**
@@ -452,23 +442,22 @@ class POPPLER_QT5_EXPORT LinkSound : public Link
  *
  * \since 0.20
  */
-class POPPLER_QT5_EXPORT LinkRendition : public Link
-{
-	public:
-		/**
+class POPPLER_QT5_EXPORT LinkRendition : public Link {
+public:
+    /**
 		 * Describes the possible rendition actions.
 		 *
 		 * \since 0.22
 		 */
-		enum RenditionAction {
-			NoRendition,
-			PlayRendition,
-			StopRendition,
-			PauseRendition,
-			ResumeRendition
-		};
+    enum RenditionAction {
+        NoRendition,
+        PlayRendition,
+        StopRendition,
+        PauseRendition,
+        ResumeRendition
+    };
 
-		/**
+    /**
 		 * Create a new rendition link.
 		 *
 		 * \param linkArea the active area of the link
@@ -478,44 +467,44 @@ class POPPLER_QT5_EXPORT LinkRendition : public Link
 		 * \param annotationReference the object reference of the screen annotation associated with this rendition action
 		 * \since 0.22
 		 */
-		LinkRendition( const QRectF &linkArea, ::MediaRendition *rendition, int operation, const QString &script, const Ref &annotationReference );
+    LinkRendition(const QRectF& linkArea, ::MediaRendition* rendition, int operation, const QString& script, const Ref& annotationReference);
 
-		/**
+    /**
 		 * Destructor.
 		 */
-		virtual ~LinkRendition();
+    virtual ~LinkRendition();
 
-		LinkType linkType() const;
+    LinkType linkType() const;
 
-		/**
+    /**
 		 * Returns the media rendition object if the redition provides one, @c 0 otherwise
 		 */
-		MediaRendition *rendition() const;
+    MediaRendition* rendition() const;
 
-		/**
+    /**
 		 * Returns the action that should be executed if a rendition object is provided.
 		 *
 		 * \since 0.22
 		 */
-		RenditionAction action() const;
+    RenditionAction action() const;
 
-		/**
+    /**
 		 * The JS code that shall be executed or an empty string.
 		 *
 		 * \since 0.22
 		 */
-		QString script() const;
+    QString script() const;
 
-		/**
+    /**
 		 * Returns whether the given @p annotation is the referenced screen annotation for this rendition @p link.
 		 *
 		 * \since 0.22
 		 */
-		bool isReferencedAnnotation( const ScreenAnnotation *annotation ) const;
+    bool isReferencedAnnotation(const ScreenAnnotation* annotation) const;
 
-	private:
-		Q_DECLARE_PRIVATE( LinkRendition )
-		Q_DISABLE_COPY( LinkRendition )
+private:
+    Q_DECLARE_PRIVATE(LinkRendition)
+    Q_DISABLE_COPY(LinkRendition)
 };
 
 /**
@@ -523,51 +512,49 @@ class POPPLER_QT5_EXPORT LinkRendition : public Link
  *
  * \since 0.10
  */
-class POPPLER_QT5_EXPORT LinkJavaScript : public Link
-{
-	public:
-		/**
+class POPPLER_QT5_EXPORT LinkJavaScript : public Link {
+public:
+    /**
 		 * Create a new JavaScript link.
 		 *
 		 * \param linkArea the active area of the link
 		 * \param js the JS code to be interpreted
 		 */
-		LinkJavaScript( const QRectF &linkArea, const QString &js );
-		/**
+    LinkJavaScript(const QRectF& linkArea, const QString& js);
+    /**
 		 * Destructor.
 		 */
-		virtual ~LinkJavaScript();
+    virtual ~LinkJavaScript();
 
-		LinkType linkType() const;
+    LinkType linkType() const;
 
-		/**
+    /**
 		 * The JS code
 		 */
-		QString script() const;
+    QString script() const;
 
-	private:
-		Q_DECLARE_PRIVATE( LinkJavaScript )
-		Q_DISABLE_COPY( LinkJavaScript )
-};	
+private:
+    Q_DECLARE_PRIVATE(LinkJavaScript)
+    Q_DISABLE_COPY(LinkJavaScript)
+};
 
 /**
  * Movie: a movie to be played.
  *
  * \since 0.20
  */
-class POPPLER_QT5_EXPORT LinkMovie : public Link
-{
-	public:
-		/**
+class POPPLER_QT5_EXPORT LinkMovie : public Link {
+public:
+    /**
 		 * Describes the operation to be performed on the movie.
 		 */
-		enum Operation { Play,
-		                 Stop,
-		                 Pause,
-		                 Resume
-		};
+    enum Operation { Play,
+        Stop,
+        Pause,
+        Resume
+    };
 
-		/**
+    /**
 		 * Create a new Movie link.
 		 *
 		 * \param linkArea the active area of the link
@@ -577,24 +564,24 @@ class POPPLER_QT5_EXPORT LinkMovie : public Link
 		 *
 		 * Note: This constructor is supposed to be used by Poppler::Page only.
 		 */
-		LinkMovie( const QRectF &linkArea, Operation operation, const QString &annotationTitle, const Ref &annotationReference );
-		/**
+    LinkMovie(const QRectF& linkArea, Operation operation, const QString& annotationTitle, const Ref& annotationReference);
+    /**
 		 * Destructor.
 		 */
-		~LinkMovie();
-		LinkType linkType() const;
-		/**
+    ~LinkMovie();
+    LinkType linkType() const;
+    /**
 		 * Returns the operation to be performed on the movie.
 		 */
-		Operation operation() const;
-		/**
+    Operation operation() const;
+    /**
 		 * Returns whether the given @p annotation is the referenced movie annotation for this movie @p link.
 		 */
-		bool isReferencedAnnotation( const MovieAnnotation *annotation ) const;
+    bool isReferencedAnnotation(const MovieAnnotation* annotation) const;
 
-	private:
-		Q_DECLARE_PRIVATE( LinkMovie )
-		Q_DISABLE_COPY( LinkMovie )
+private:
+    Q_DECLARE_PRIVATE(LinkMovie)
+    Q_DISABLE_COPY(LinkMovie)
 };
 
 }

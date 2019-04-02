@@ -6,10 +6,10 @@
 #ifndef HTTPSESSION_H
 #define HTTPSESSION_H
 
-#include <QByteArray>
-#include <QVariant>
-#include <QReadWriteLock>
 #include "httpglobal.h"
+#include <QByteArray>
+#include <QReadWriteLock>
+#include <QVariant>
 
 /**
   This class stores data for a single HTTP session.
@@ -21,13 +21,12 @@
 class DECLSPEC HttpSession {
 
 public:
-
     /**
       Constructor.
       @param canStore The session can store data, if this parameter is true.
       Otherwise all calls to set() and remove() do not have any effect.
      */
-    HttpSession(bool canStore=false);
+    HttpSession(bool canStore = false);
 
     /**
       Copy constructor. Creates another HttpSession object that shares the
@@ -39,8 +38,7 @@ public:
       Copy operator. Detaches from the current shared data and attaches to
       the data of the other object.
     */
-    HttpSession& operator= (const HttpSession& other);
-
+    HttpSession& operator=(const HttpSession& other);
 
     /**
       Destructor. Detaches from the shared data.
@@ -73,7 +71,7 @@ public:
       Changes to the session do not affect the copy and vice versa.
       This method is thread safe.
     */
-    QMap<QByteArray,QVariant> getAll() const;
+    QMap<QByteArray, QVariant> getAll() const;
 
     /**
       Get the timestamp of last access. That is the time when the last
@@ -90,7 +88,6 @@ public:
     void setLastAccess();
 
 private:
-
     struct HttpSessionData {
 
         /** Unique ID */
@@ -106,13 +103,11 @@ private:
         QReadWriteLock lock;
 
         /** Storage for the key/value pairs; */
-        QMap<QByteArray,QVariant> values;
-
+        QMap<QByteArray, QVariant> values;
     };
 
     /** Pointer to the shared data. */
     HttpSessionData* dataPtr;
-
 };
 
 #endif // HTTPSESSION_H

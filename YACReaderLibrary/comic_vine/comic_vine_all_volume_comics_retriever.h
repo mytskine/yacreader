@@ -3,12 +3,12 @@
 
 #include <QObject>
 
-class ComicVineAllVolumeComicsRetriever : public QObject
-{
+class ComicVineAllVolumeComicsRetriever : public QObject {
     Q_OBJECT
 public:
-    explicit ComicVineAllVolumeComicsRetriever(const QString &volumeURLString, QObject *parent = 0);
+    explicit ComicVineAllVolumeComicsRetriever(const QString& volumeURLString, QObject* parent = 0);
     void getAllVolumeComics();
+
 protected:
     void getAllVolumeComics(const int range);
 signals:
@@ -16,7 +16,7 @@ signals:
     void finished();
     void timeOut();
 protected slots:
-    void appendVolumeComicsInfo(const QByteArray &data);
+    void appendVolumeComicsInfo(const QByteArray& data);
 
 protected:
     QString volumeURLString;

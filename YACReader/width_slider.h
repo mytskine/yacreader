@@ -6,45 +6,40 @@
 class QLabel;
 class QSlider;
 
-class YACReaderSlider : public QWidget
-{
+class YACReaderSlider : public QWidget {
     Q_OBJECT
 private:
-    QLabel * percentageLabel;
-    QSlider * slider;
+    QLabel* percentageLabel;
+    QSlider* slider;
 
 public:
-    YACReaderSlider (QWidget * parent = 0);
+    YACReaderSlider(QWidget* parent = 0);
     void show();
 
 protected:
-    virtual void focusOutEvent(QFocusEvent * event);
-    virtual void paintEvent(QPaintEvent *);
+    virtual void focusOutEvent(QFocusEvent* event);
+    virtual void paintEvent(QPaintEvent*);
 
 public slots:
     void updateText(int value);
     void updateZoomRatio(int value);
     void resetValueToDefault();
 
-
 signals:
     void zoomRatioChanged(int value);
 };
 
-class YACReaderSliderAction : public QWidgetAction 
-{
-	Q_OBJECT
+class YACReaderSliderAction : public QWidgetAction {
+    Q_OBJECT
 private:
-    YACReaderSlider * widget;
+    YACReaderSlider* widget;
 
 public:
-	
-	YACReaderSliderAction (QWidget * parent = 0);
+    YACReaderSliderAction(QWidget* parent = 0);
 
 public slots:
-	void updateText(int value);
+    void updateText(int value);
     void updateZoomRatio(int value);
-
 
 signals:
     void zoomRatioChanged(int value);

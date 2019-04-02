@@ -22,12 +22,12 @@ extern "C" {
 
 // IFPDF_RENDERINFO interface.
 typedef struct _IFSDK_PAUSE {
-  /**
+    /**
   * Version number of the interface. Currently must be 1.
   **/
-  int version;
+    int version;
 
-  /*
+    /*
   * Method: NeedToPauseNow
   *           Check if we need to pause a progressive process now.
   * Interface Version:
@@ -40,10 +40,11 @@ typedef struct _IFSDK_PAUSE {
   *            Non-zero for pause now, 0 for continue.
   *
   */
-  FPDF_BOOL (*NeedToPauseNow)(struct _IFSDK_PAUSE* pThis);
+    FPDF_BOOL (*NeedToPauseNow)
+    (struct _IFSDK_PAUSE* pThis);
 
-  // A user defined data pointer, used by user's application. Can be NULL.
-  void* user;
+    // A user defined data pointer, used by user's application. Can be NULL.
+    void* user;
 } IFSDK_PAUSE;
 
 // Function: FPDF_RenderPageBitmap_Start
@@ -78,14 +79,14 @@ typedef struct _IFSDK_PAUSE {
 //          details.
 //
 DLLEXPORT int STDCALL FPDF_RenderPageBitmap_Start(FPDF_BITMAP bitmap,
-                                                  FPDF_PAGE page,
-                                                  int start_x,
-                                                  int start_y,
-                                                  int size_x,
-                                                  int size_y,
-                                                  int rotate,
-                                                  int flags,
-                                                  IFSDK_PAUSE* pause);
+    FPDF_PAGE page,
+    int start_x,
+    int start_y,
+    int size_x,
+    int size_y,
+    int rotate,
+    int flags,
+    IFSDK_PAUSE* pause);
 
 // Function: FPDF_RenderPage_Continue
 //          Continue rendering a PDF page.
@@ -100,7 +101,7 @@ DLLEXPORT int STDCALL FPDF_RenderPageBitmap_Start(FPDF_BITMAP bitmap,
 //          The rendering status. See flags for progressive process status for
 //          the details.
 DLLEXPORT int STDCALL FPDF_RenderPage_Continue(FPDF_PAGE page,
-                                               IFSDK_PAUSE* pause);
+    IFSDK_PAUSE* pause);
 
 // Function: FPDF_RenderPage_Close
 //          Release the resource allocate during page rendering. Need to be
@@ -117,4 +118,4 @@ DLLEXPORT void STDCALL FPDF_RenderPage_Close(FPDF_PAGE page);
 }
 #endif
 
-#endif  // PUBLIC_FPDF_PROGRESSIVE_H_
+#endif // PUBLIC_FPDF_PROGRESSIVE_H_

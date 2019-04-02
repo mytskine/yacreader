@@ -2,21 +2,21 @@
 #define ERRORCONTROLLER_V2_H
 
 #include "httprequest.h"
-#include "httpresponse.h"
 #include "httprequesthandler.h"
+#include "httpresponse.h"
 
 class ErrorControllerV2 : public HttpRequestHandler {
-	Q_OBJECT
+    Q_OBJECT
     Q_DISABLE_COPY(ErrorControllerV2)
 public:
-
-	/** Constructor */
+    /** Constructor */
     ErrorControllerV2(int errorCode);
 
-	/** Generates the response */
-	void service(HttpRequest& request, HttpResponse& response);
+    /** Generates the response */
+    void service(HttpRequest& request, HttpResponse& response);
+
 private:
-	int error;
+    int error;
 };
 
 #endif // ERRORCONTROLLER_H

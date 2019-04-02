@@ -6,12 +6,12 @@
 #ifndef STATICFILECONTROLLER_H
 #define STATICFILECONTROLLER_H
 
-#include <QCache>
-#include <QMutex>
 #include "httpglobal.h"
 #include "httprequest.h"
-#include "httpresponse.h"
 #include "httprequesthandler.h"
+#include "httpresponse.h"
+#include <QCache>
+#include <QMutex>
 
 /**
   Delivers static files. It is usually called by the applications main request handler when
@@ -40,11 +40,10 @@
   received a related HTTP request.
 */
 
-class DECLSPEC StaticFileController : public HttpRequestHandler  {
+class DECLSPEC StaticFileController : public HttpRequestHandler {
     Q_OBJECT
     Q_DISABLE_COPY(StaticFileController)
 public:
-
     /** Constructor */
     StaticFileController(QSettings* settings, QObject* parent = NULL);
 
@@ -52,7 +51,6 @@ public:
     void service(HttpRequest& request, HttpResponse& response);
 
 private:
-
     /** Encoding of text files */
     QString encoding;
 
@@ -75,7 +73,7 @@ private:
     int maxCachedFileSize;
 
     /** Cache storage */
-    QCache<QString,CacheEntry> cache;
+    QCache<QString, CacheEntry> cache;
 
     /** Used to synchronize cache access for threads */
     QMutex mutex;

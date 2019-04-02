@@ -6,13 +6,13 @@
 #ifndef FILELOGGER_H
 #define FILELOGGER_H
 
-#include <QtGlobal>
-#include <QSettings>
+#include "logger.h"
+#include "logglobal.h"
+#include <QBasicTimer>
 #include <QFile>
 #include <QMutex>
-#include <QBasicTimer>
-#include "logglobal.h"
-#include "logger.h"
+#include <QSettings>
+#include <QtGlobal>
 
 /**
   Logger that uses a text file for output. Settings are read from a
@@ -50,7 +50,6 @@ class DECLSPEC FileLogger : public Logger {
     Q_OBJECT
     Q_DISABLE_COPY(FileLogger)
 public:
-
     /**
       Constructor.
       @param settings Configuration settings, usually stored in an INI file. Must not be 0.
@@ -60,7 +59,7 @@ public:
       @param refreshInterval Interval of checking for changed config settings in msec, or 0=disabled
       @param parent Parent object
     */
-    FileLogger(QSettings* settings, const int refreshInterval=10000, QObject* parent = 0);
+    FileLogger(QSettings* settings, const int refreshInterval = 10000, QObject* parent = 0);
 
     /**
       Destructor. Closes the file.
@@ -71,7 +70,6 @@ public:
     virtual void write(const LogMessage* logMessage);
 
 protected:
-
     /**
       Handler for timer events.
       Refreshes config settings or synchronizes I/O buffer, depending on the event.
@@ -81,7 +79,6 @@ protected:
     void timerEvent(QTimerEvent* event);
 
 private:
-
     /** Configured name of the log file */
     QString fileName;
 
@@ -117,7 +114,6 @@ private:
       This method is thread-safe.
     */
     void refreshSettings();
-
 };
 
 #endif // FILELOGGER_H

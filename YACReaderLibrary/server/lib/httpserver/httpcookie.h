@@ -6,9 +6,9 @@
 #ifndef HTTPCOOKIE_H
 #define HTTPCOOKIE_H
 
-#include <QList>
-#include <QByteArray>
 #include "httpglobal.h"
+#include <QByteArray>
+#include <QList>
 
 /**
   HTTP cookie as defined in RFC 2109. This class can also parse
@@ -16,10 +16,8 @@
   2109.
 */
 
-class DECLSPEC HttpCookie
-{
+class DECLSPEC HttpCookie {
 public:
-
     /** Creates an empty cookie */
     HttpCookie();
 
@@ -34,7 +32,7 @@ public:
       @param secure If true, the cookie will be sent by the browser to the server only on secure connections
       @param httpOnly If true, the browser does not allow client-side scripts to access the cookie
     */
-    HttpCookie(const QByteArray name, const QByteArray value, const int maxAge, const QByteArray path="/", const QByteArray comment=QByteArray(), const QByteArray domain=QByteArray(), const bool secure=false, const bool httpOnly=false);
+    HttpCookie(const QByteArray name, const QByteArray value, const int maxAge, const QByteArray path = "/", const QByteArray comment = QByteArray(), const QByteArray domain = QByteArray(), const bool secure = false, const bool httpOnly = false);
 
     /**
       Create a cookie from a string.
@@ -43,7 +41,7 @@ public:
     HttpCookie(const QByteArray source);
 
     /** Convert this cookie to a string that may be used in a Set-Cookie header. */
-    QByteArray toByteArray() const ;
+    QByteArray toByteArray() const;
 
     /**
       Split a string list into parts, where each part is delimited by semicolon.
@@ -103,7 +101,6 @@ public:
     int getVersion() const;
 
 private:
-
     QByteArray name;
     QByteArray value;
     QByteArray comment;
@@ -113,7 +110,6 @@ private:
     bool secure;
     bool httpOnly;
     int version;
-
 };
 
 #endif // HTTPCOOKIE_H

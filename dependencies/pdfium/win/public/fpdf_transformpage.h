@@ -27,10 +27,10 @@ typedef void* FPDF_PAGEARCLOADER;
 * @retval None.
 */
 DLLEXPORT void STDCALL FPDFPage_SetMediaBox(FPDF_PAGE page,
-                                            float left,
-                                            float bottom,
-                                            float right,
-                                            float top);
+    float left,
+    float bottom,
+    float right,
+    float top);
 
 /**
 *  Set "CropBox" entry to the page dictionary.
@@ -42,10 +42,10 @@ DLLEXPORT void STDCALL FPDFPage_SetMediaBox(FPDF_PAGE page,
 * @retval None.
 */
 DLLEXPORT void STDCALL FPDFPage_SetCropBox(FPDF_PAGE page,
-                                           float left,
-                                           float bottom,
-                                           float right,
-                                           float top);
+    float left,
+    float bottom,
+    float right,
+    float top);
 
 /**  Get "MediaBox" entry from the page dictionary.
 * @param[in] page   - Handle to a page.
@@ -60,10 +60,10 @@ DLLEXPORT void STDCALL FPDFPage_SetCropBox(FPDF_PAGE page,
 * @retval True if success,else fail.
 */
 DLLEXPORT FPDF_BOOL STDCALL FPDFPage_GetMediaBox(FPDF_PAGE page,
-                                                 float* left,
-                                                 float* bottom,
-                                                 float* right,
-                                                 float* top);
+    float* left,
+    float* bottom,
+    float* right,
+    float* top);
 
 /**  Get "CropBox" entry from the page dictionary.
 * @param[in] page   - Handle to a page.
@@ -78,10 +78,10 @@ DLLEXPORT FPDF_BOOL STDCALL FPDFPage_GetMediaBox(FPDF_PAGE page,
 * @retval True if success,else fail.
 */
 DLLEXPORT FPDF_BOOL STDCALL FPDFPage_GetCropBox(FPDF_PAGE page,
-                                                float* left,
-                                                float* bottom,
-                                                float* right,
-                                                float* top);
+    float* left,
+    float* bottom,
+    float* right,
+    float* top);
 
 /**
 * Transform the whole page with a specified matrix, then clip the page content
@@ -94,8 +94,8 @@ DLLEXPORT FPDF_BOOL STDCALL FPDFPage_GetCropBox(FPDF_PAGE page,
 * all the objects in the page.
 */
 DLLEXPORT FPDF_BOOL STDCALL FPDFPage_TransFormWithClip(FPDF_PAGE page,
-                                                       FS_MATRIX* matrix,
-                                                       FS_RECTF* clipRect);
+    FS_MATRIX* matrix,
+    FS_RECTF* clipRect);
 
 /**
 * Transform (scale, rotate, shear, move) the clip path of page object.
@@ -111,12 +111,12 @@ DLLEXPORT FPDF_BOOL STDCALL FPDFPage_TransFormWithClip(FPDF_PAGE page,
 */
 DLLEXPORT void STDCALL
 FPDFPageObj_TransformClipPath(FPDF_PAGEOBJECT page_object,
-                              double a,
-                              double b,
-                              double c,
-                              double d,
-                              double e,
-                              double f);
+    double a,
+    double b,
+    double c,
+    double d,
+    double e,
+    double f);
 
 /**
 * Create a new clip path, with a rectangle inserted.
@@ -128,9 +128,9 @@ FPDFPageObj_TransformClipPath(FPDF_PAGEOBJECT page_object,
 * @retval a handle to the clip path.
 */
 DLLEXPORT FPDF_CLIPPATH STDCALL FPDF_CreateClipPath(float left,
-                                                    float bottom,
-                                                    float right,
-                                                    float top);
+    float bottom,
+    float right,
+    float top);
 
 /**
 * Destroy the clip path.
@@ -152,10 +152,10 @@ DLLEXPORT void STDCALL FPDF_DestroyClipPath(FPDF_CLIPPATH clipPath);
 * by this clip path.
 */
 DLLEXPORT void STDCALL FPDFPage_InsertClipPath(FPDF_PAGE page,
-                                               FPDF_CLIPPATH clipPath);
+    FPDF_CLIPPATH clipPath);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif  // PUBLIC_FPDF_TRANSFORMPAGE_H_
+#endif // PUBLIC_FPDF_TRANSFORMPAGE_H_

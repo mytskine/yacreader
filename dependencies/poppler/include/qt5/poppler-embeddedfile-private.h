@@ -23,18 +23,16 @@
 
 class FileSpec;
 
-namespace Poppler
-{
+namespace Poppler {
 
-class EmbeddedFileData
-{
+class EmbeddedFileData {
 public:
-	EmbeddedFileData(FileSpec *fs);
-	~EmbeddedFileData();
-    
-	EmbFile *embFile() const;
+    EmbeddedFileData(FileSpec* fs);
+    ~EmbeddedFileData();
 
-	FileSpec *filespec;
+    EmbFile* embFile() const;
+
+    FileSpec* filespec;
 };
 
 }

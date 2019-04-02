@@ -1,16 +1,15 @@
 #include "readinglistcontentcontroller_v2.h"
 
-#include "db_helper.h"
 #include "comic_db.h"
+#include "db_helper.h"
 
 #include "yacreader_server_data_helper.h"
 
 ReadingListContentControllerV2::ReadingListContentControllerV2()
 {
-
 }
 
-void ReadingListContentControllerV2::service(HttpRequest &request, HttpResponse &response)
+void ReadingListContentControllerV2::service(HttpRequest& request, HttpResponse& response)
 {
     response.setHeader("Content-Type", "text/plain; charset=utf-8");
 
@@ -21,17 +20,16 @@ void ReadingListContentControllerV2::service(HttpRequest &request, HttpResponse 
 
     serviceContent(libraryId, readingListId, response);
 
-    response.write("",true);
+    response.write("", true);
 }
 
-void ReadingListContentControllerV2::serviceContent(const int &library, const qulonglong &readingListId, HttpResponse &response)
+void ReadingListContentControllerV2::serviceContent(const int& library, const qulonglong& readingListId, HttpResponse& response)
 {
     QList<ComicDB> comics = DBHelper::getReadingListFullContent(library, readingListId);
 
     QJsonArray items;
 
-    for(const ComicDB &comic : comics)
-    {
+    for (const ComicDB& comic : comics) {
         items.append(YACReaderServerDataHelper::comicToJSON(library, comic));
     }
 

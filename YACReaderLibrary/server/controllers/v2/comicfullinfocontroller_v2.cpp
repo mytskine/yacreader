@@ -1,11 +1,9 @@
 #include "comicfullinfocontroller_v2.h"
 
-
-
 #include <QUrl>
 
-#include "db_helper.h"
 #include "comic_db.h"
+#include "db_helper.h"
 #include "folder.h"
 
 #include "yacreader_server_data_helper.h"
@@ -14,8 +12,6 @@
 
 #include <ctime>
 using namespace std;
-
-
 
 ComicFullinfoController_v2::ComicFullinfoController_v2() {}
 
@@ -30,11 +26,11 @@ void ComicFullinfoController_v2::service(HttpRequest& request, HttpResponse& res
 
     serviceContent(libraryId, comicId, response);
 
-    response.setStatus(200,"OK");
-    response.write("",true);
+    response.setStatus(200, "OK");
+    response.write("", true);
 }
 
-void ComicFullinfoController_v2::serviceContent(const int &libraryId, const qulonglong &comicId, HttpResponse &response)
+void ComicFullinfoController_v2::serviceContent(const int& libraryId, const qulonglong& comicId, HttpResponse& response)
 {
     ComicDB comic = DBHelper::getComicInfo(libraryId, comicId);
 

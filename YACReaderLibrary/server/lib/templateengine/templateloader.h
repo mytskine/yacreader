@@ -6,12 +6,12 @@
 #ifndef TEMPLATELOADER_H
 #define TEMPLATELOADER_H
 
-#include <QString>
-#include <QSettings>
-#include <QTextCodec>
-#include <QMutex>
-#include "templateglobal.h"
 #include "template.h"
+#include "templateglobal.h"
+#include <QMutex>
+#include <QSettings>
+#include <QString>
+#include <QTextCodec>
 
 /**
   Loads localized versions of template files. If the caller requests a file with the
@@ -39,13 +39,12 @@ class DECLSPEC TemplateLoader : public QObject {
     Q_OBJECT
     Q_DISABLE_COPY(TemplateLoader)
 public:
-
     /**
       Constructor.
       @param settings configurations settings
       @param parent parent object
     */
-    TemplateLoader(QSettings* settings, QObject* parent=0);
+    TemplateLoader(QSettings* settings, QObject* parent = 0);
 
     /** Destructor */
     virtual ~TemplateLoader();
@@ -59,10 +58,9 @@ public:
       ignored.
       @return If the template cannot be loaded, an error message is logged and an empty template is returned.
     */
-    Template getTemplate(QString templateName, QString locales=QString());
+    Template getTemplate(QString templateName, QString locales = QString());
 
 protected:
-
     /**
       Try to get a file from cache or filesystem.
       @param localizedName Name of the template with locale to find

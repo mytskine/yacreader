@@ -14,33 +14,34 @@
 // Custom deleters for using FPDF_* types with std::unique_ptr<>.
 
 struct FPDFAvailDeleter {
-  inline void operator()(FPDF_AVAIL avail) { FPDFAvail_Destroy(avail); }
+    inline void operator()(FPDF_AVAIL avail) { FPDFAvail_Destroy(avail); }
 };
 
 struct FPDFBitmapDeleter {
-  inline void operator()(FPDF_BITMAP bitmap) { FPDFBitmap_Destroy(bitmap); }
+    inline void operator()(FPDF_BITMAP bitmap) { FPDFBitmap_Destroy(bitmap); }
 };
 
 struct FPDFDocumentDeleter {
-  inline void operator()(FPDF_DOCUMENT doc) { FPDF_CloseDocument(doc); }
+    inline void operator()(FPDF_DOCUMENT doc) { FPDF_CloseDocument(doc); }
 };
 
 struct FPDFFormHandleDeleter {
-  inline void operator()(FPDF_FORMHANDLE form) {
-    FPDFDOC_ExitFormFillEnvironment(form);
-  }
+    inline void operator()(FPDF_FORMHANDLE form)
+    {
+        FPDFDOC_ExitFormFillEnvironment(form);
+    }
 };
 
 struct FPDFTextPageDeleter {
-  inline void operator()(FPDF_TEXTPAGE text) { FPDFText_ClosePage(text); }
+    inline void operator()(FPDF_TEXTPAGE text) { FPDFText_ClosePage(text); }
 };
 
 struct FPDFPageDeleter {
-  inline void operator()(FPDF_PAGE page) { FPDF_ClosePage(page); }
+    inline void operator()(FPDF_PAGE page) { FPDF_ClosePage(page); }
 };
 
 struct FPDFStructTreeDeleter {
-  inline void operator()(FPDF_STRUCTTREE tree) { FPDF_StructTree_Close(tree); }
+    inline void operator()(FPDF_STRUCTTREE tree) { FPDF_StructTree_Close(tree); }
 };
 
-#endif  // PUBLIC_CPP_FPDF_DELETERS_H_
+#endif // PUBLIC_CPP_FPDF_DELETERS_H_

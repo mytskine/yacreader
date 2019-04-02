@@ -6,10 +6,10 @@
 #ifndef STATIC_H
 #define STATIC_H
 
-#include <QString>
-#include "templatecache.h"
 #include "httpsessionstore.h"
 #include "staticfilecontroller.h"
+#include "templatecache.h"
+#include <QString>
 
 #include "yacreader_http_session_store.h"
 
@@ -17,10 +17,8 @@
   This class contains some static resources that are used by the application.
 */
 
-class Static
-{
+class Static {
 public:
-
     /**
       Search the main config file and return its full path.
       On the first call, the INI file gets searched. If not found,
@@ -59,10 +57,8 @@ public:
     static StaticFileController* staticFileController;
 
 private:
-
     /** Directory of the main config file */
     static QString configDir;
-
 };
 
 #endif // STATIC_H

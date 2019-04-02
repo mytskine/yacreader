@@ -26,20 +26,18 @@
 #ifndef QSLOG_H
 #define QSLOG_H
 
-#include "QsLogLevel.h"
 #include "QsLogDest.h"
+#include "QsLogLevel.h"
 #include <QDebug>
 #include <QString>
 
 #define QS_LOG_VERSION "2.0b3"
 
-namespace QsLogging
-{
+namespace QsLogging {
 class Destination;
 class LoggerImpl; // d pointer
 
-class QSLOG_SHARED_OBJECT Logger
-{
+class QSLOG_SHARED_OBJECT Logger {
 public:
     static Logger& instance();
     static void destroyInstance();
@@ -56,14 +54,15 @@ public:
 
     //! The helper forwards the streaming to QDebug and builds the final
     //! log message.
-    class QSLOG_SHARED_OBJECT Helper
-    {
+    class QSLOG_SHARED_OBJECT Helper {
     public:
-        explicit Helper(Level logLevel) :
-            level(logLevel),
-            qtDebug(&buffer) {}
+        explicit Helper(Level logLevel)
+            : level(logLevel)
+            , qtDebug(&buffer)
+        {
+        }
         ~Helper();
-        QDebug& stream(){ return qtDebug; }
+        QDebug& stream() { return qtDebug; }
 
     private:
         void writeToLog();
@@ -75,7 +74,7 @@ public:
 
 private:
     Logger();
-    Logger(const Logger&);            // not available
+    Logger(const Logger&); // not available
     Logger& operator=(const Logger&); // not available
 
     void enqueueWrite(const QString& message, Level level);
@@ -91,43 +90,55 @@ private:
 //! Logging macros: define QS_LOG_LINE_NUMBERS to get the file and line number
 //! in the log output.
 #ifndef QS_LOG_LINE_NUMBERS
-#define QLOG_TRACE() \
-    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::TraceLevel) {} \
-    else QsLogging::Logger::Helper(QsLogging::TraceLevel).stream()
-#define QLOG_DEBUG() \
-    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::DebugLevel) {} \
-    else QsLogging::Logger::Helper(QsLogging::DebugLevel).stream()
-#define QLOG_INFO()  \
-    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::InfoLevel) {} \
-    else QsLogging::Logger::Helper(QsLogging::InfoLevel).stream()
-#define QLOG_WARN()  \
-    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::WarnLevel) {} \
-    else QsLogging::Logger::Helper(QsLogging::WarnLevel).stream()
-#define QLOG_ERROR() \
-    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::ErrorLevel) {} \
-    else QsLogging::Logger::Helper(QsLogging::ErrorLevel).stream()
-#define QLOG_FATAL() \
-    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::FatalLevel) {} \
-    else QsLogging::Logger::Helper(QsLogging::FatalLevel).stream()
+#define QLOG_TRACE()                                                            \
+    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::TraceLevel) { \
+    } else                                                                      \
+        QsLogging::Logger::Helper(QsLogging::TraceLevel).stream()
+#define QLOG_DEBUG()                                                            \
+    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::DebugLevel) { \
+    } else                                                                      \
+        QsLogging::Logger::Helper(QsLogging::DebugLevel).stream()
+#define QLOG_INFO()                                                            \
+    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::InfoLevel) { \
+    } else                                                                     \
+        QsLogging::Logger::Helper(QsLogging::InfoLevel).stream()
+#define QLOG_WARN()                                                            \
+    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::WarnLevel) { \
+    } else                                                                     \
+        QsLogging::Logger::Helper(QsLogging::WarnLevel).stream()
+#define QLOG_ERROR()                                                            \
+    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::ErrorLevel) { \
+    } else                                                                      \
+        QsLogging::Logger::Helper(QsLogging::ErrorLevel).stream()
+#define QLOG_FATAL()                                                            \
+    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::FatalLevel) { \
+    } else                                                                      \
+        QsLogging::Logger::Helper(QsLogging::FatalLevel).stream()
 #else
-#define QLOG_TRACE() \
-    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::TraceLevel) {} \
-    else  QsLogging::Logger::Helper(QsLogging::TraceLevel).stream() << __FILE__ << '@' << __LINE__
-#define QLOG_DEBUG() \
-    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::DebugLevel) {} \
-    else QsLogging::Logger::Helper(QsLogging::DebugLevel).stream() << __FILE__ << '@' << __LINE__
-#define QLOG_INFO()  \
-    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::InfoLevel) {} \
-    else QsLogging::Logger::Helper(QsLogging::InfoLevel).stream() << __FILE__ << '@' << __LINE__
-#define QLOG_WARN()  \
-    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::WarnLevel) {} \
-    else QsLogging::Logger::Helper(QsLogging::WarnLevel).stream() << __FILE__ << '@' << __LINE__
-#define QLOG_ERROR() \
-    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::ErrorLevel) {} \
-    else QsLogging::Logger::Helper(QsLogging::ErrorLevel).stream() << __FILE__ << '@' << __LINE__
-#define QLOG_FATAL() \
-    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::FatalLevel) {} \
-    else QsLogging::Logger::Helper(QsLogging::FatalLevel).stream() << __FILE__ << '@' << __LINE__
+#define QLOG_TRACE()                                                            \
+    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::TraceLevel) { \
+    } else                                                                      \
+        QsLogging::Logger::Helper(QsLogging::TraceLevel).stream() << __FILE__ << '@' << __LINE__
+#define QLOG_DEBUG()                                                            \
+    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::DebugLevel) { \
+    } else                                                                      \
+        QsLogging::Logger::Helper(QsLogging::DebugLevel).stream() << __FILE__ << '@' << __LINE__
+#define QLOG_INFO()                                                            \
+    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::InfoLevel) { \
+    } else                                                                     \
+        QsLogging::Logger::Helper(QsLogging::InfoLevel).stream() << __FILE__ << '@' << __LINE__
+#define QLOG_WARN()                                                            \
+    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::WarnLevel) { \
+    } else                                                                     \
+        QsLogging::Logger::Helper(QsLogging::WarnLevel).stream() << __FILE__ << '@' << __LINE__
+#define QLOG_ERROR()                                                            \
+    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::ErrorLevel) { \
+    } else                                                                      \
+        QsLogging::Logger::Helper(QsLogging::ErrorLevel).stream() << __FILE__ << '@' << __LINE__
+#define QLOG_FATAL()                                                            \
+    if (QsLogging::Logger::instance().loggingLevel() > QsLogging::FatalLevel) { \
+    } else                                                                      \
+        QsLogging::Logger::Helper(QsLogging::FatalLevel).stream() << __FILE__ << '@' << __LINE__
 #endif
 
 #ifdef QS_LOG_DISABLE

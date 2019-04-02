@@ -1,9 +1,10 @@
 #include "reading_list.h"
 
-ReadingList::ReadingList(const QString &name, qulonglong id, int ordering)
-    :name(name), id(id), ordering(ordering)
+ReadingList::ReadingList(const QString& name, qulonglong id, int ordering)
+    : name(name)
+    , id(id)
+    , ordering(ordering)
 {
-
 }
 
 qulonglong ReadingList::getId() const
@@ -21,11 +22,11 @@ int ReadingList::getOrdering() const
     return ordering;
 }
 
-
-Label::Label(const QString &name, qulonglong id, YACReader::LabelColors colorid)
-    :name(name), id(id), colorid(colorid)
+Label::Label(const QString& name, qulonglong id, YACReader::LabelColors colorid)
+    : name(name)
+    , id(id)
+    , colorid(colorid)
 {
-
 }
 
 YACReader::LabelColors Label::getColorID() const

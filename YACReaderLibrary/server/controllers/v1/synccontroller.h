@@ -4,8 +4,8 @@
 #include <QObject>
 
 #include "httprequest.h"
-#include "httpresponse.h"
 #include "httprequesthandler.h"
+#include "httpresponse.h"
 
 class SyncController : public HttpRequestHandler {
     Q_OBJECT

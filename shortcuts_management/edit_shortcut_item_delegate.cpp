@@ -2,59 +2,59 @@
 
 #include <QAction>
 
-EditShortcutItemDelegate::EditShortcutItemDelegate(QObject *parent) :
-    QItemDelegate(parent)
+EditShortcutItemDelegate::EditShortcutItemDelegate(QObject* parent)
+    : QItemDelegate(parent)
 {
 }
 
-QWidget *EditShortcutItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+QWidget* EditShortcutItemDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
     Q_UNUSED(option);
     Q_UNUSED(index);
 
-    KeySequenceLineEdit * editor = new KeySequenceLineEdit(parent);
-    connect(editor,SIGNAL(editingFinished()),this,SLOT(closeShortcutEditor()));
+    KeySequenceLineEdit* editor = new KeySequenceLineEdit(parent);
+    connect(editor, SIGNAL(editingFinished()), this, SLOT(closeShortcutEditor()));
     return editor;
 }
 
-void EditShortcutItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
+void EditShortcutItemDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
 {
     QString value = index.model()->data(index, Qt::DisplayRole).toString();
 
-    KeySequenceLineEdit * lineEdit = static_cast<KeySequenceLineEdit*>(editor);
+    KeySequenceLineEdit* lineEdit = static_cast<KeySequenceLineEdit*>(editor);
     lineEdit->setText(value);
 }
 
-void EditShortcutItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
+void EditShortcutItemDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const
 {
-    KeySequenceLineEdit *lineEdit = static_cast<KeySequenceLineEdit*>(editor);
+    KeySequenceLineEdit* lineEdit = static_cast<KeySequenceLineEdit*>(editor);
 
     model->setData(index, lineEdit->text(), Qt::EditRole);
 }
 
-void EditShortcutItemDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &mi) const
+void EditShortcutItemDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& mi) const
 {
     Q_UNUSED(mi);
 
-   editor->setGeometry(option.rect);
+    editor->setGeometry(option.rect);
 }
 
 bool EditShortcutItemDelegate::eventFilter(QObject* editor, QEvent* event)
 {
-     if(event->type()==QEvent::KeyPress)
-          return false;
-     return QItemDelegate::eventFilter(editor, event);
+    if (event->type() == QEvent::KeyPress)
+        return false;
+    return QItemDelegate::eventFilter(editor, event);
 }
 
 void EditShortcutItemDelegate::closeShortcutEditor()
 {
-    emit commitData(static_cast<QWidget *>(sender()));
-    emit closeEditor(static_cast<QWidget *>(sender()),QAbstractItemDelegate::NoHint);
+    emit commitData(static_cast<QWidget*>(sender()));
+    emit closeEditor(static_cast<QWidget*>(sender()), QAbstractItemDelegate::NoHint);
 }
 
 //TODO uncoment commented code for enabling concatenated shortcuts
-KeySequenceLineEdit::KeySequenceLineEdit(QWidget *parent)
-    :QLineEdit(parent)//,numKeys(0)
+KeySequenceLineEdit::KeySequenceLineEdit(QWidget* parent)
+    : QLineEdit(parent) //,numKeys(0)
 {
     //keys[0] = keys[1] = keys[2] = keys[3] = 0;
     setAlignment(Qt::AlignRight);
@@ -80,29 +80,24 @@ KeySequenceLineEdit::KeySequenceLineEdit(QWidget *parent)
     connect(acceptButton, SIGNAL(clicked()), this, SIGNAL(editingFinished()));
 }
 
-void KeySequenceLineEdit::resizeEvent(QResizeEvent * e)
+void KeySequenceLineEdit::resizeEvent(QResizeEvent* e)
 {
     QSize szClear = clearButton->sizeHint();
     //int frameWidth = style()->pixelMetric(QStyle::PM_DefaultFrameWidth);
     int leftMargin = style()->pixelMetric(QStyle::PM_LayoutLeftMargin);
     //int topMargin = style()->pixelMetric(QStyle::PM_LayoutTopMargin);
-    clearButton->move(0 + leftMargin,(e->size().height()-19)/2); //16 is the icon height+1blank pixel
+    clearButton->move(0 + leftMargin, (e->size().height() - 19) / 2); //16 is the icon height+1blank pixel
 
-    acceptButton->move( leftMargin + szClear.width(),(e->size().height()-19)/2);
-
+    acceptButton->move(leftMargin + szClear.width(), (e->size().height() - 19) / 2);
 }
 
-void KeySequenceLineEdit::keyPressEvent(QKeyEvent * e)
+void KeySequenceLineEdit::keyPressEvent(QKeyEvent* e)
 {
     int key = e->key();
 
-
     //if ( numKeys > 3 ||
-    if ( key == Qt::Key_Control ||
-         key == Qt::Key_Shift ||
-         key == Qt::Key_Meta ||
-         key == Qt::Key_Alt )
-         return;
+    if (key == Qt::Key_Control || key == Qt::Key_Shift || key == Qt::Key_Meta || key == Qt::Key_Alt)
+        return;
 
     key |= translateModifiers(e->modifiers(), e->text());
 
@@ -129,15 +124,12 @@ void KeySequenceLineEdit::keyPressEvent(QKeyEvent * e)
 }
 
 int KeySequenceLineEdit::translateModifiers(Qt::KeyboardModifiers state,
-                                         const QString &text)
+    const QString& text)
 {
     int result = 0;
     // The shift modifier only counts when it is not used to type a symbol
     // that is only reachable using the shift key anyway
-    if ((state & Qt::ShiftModifier) && (text.size() == 0
-                                        || !text.at(0).isPrint()
-                                        || text.at(0).isLetterOrNumber()
-                                        || text.at(0).isSpace()))
+    if ((state & Qt::ShiftModifier) && (text.size() == 0 || !text.at(0).isPrint() || text.at(0).isLetterOrNumber() || text.at(0).isSpace()))
         result |= Qt::SHIFT;
     if (state & Qt::ControlModifier)
         result |= Qt::CTRL;
@@ -147,4 +139,3 @@ int KeySequenceLineEdit::translateModifiers(Qt::KeyboardModifiers state,
         result |= Qt::ALT;
     return result;
 }
-

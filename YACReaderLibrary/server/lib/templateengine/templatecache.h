@@ -1,9 +1,9 @@
 #ifndef TEMPLATECACHE_H
 #define TEMPLATECACHE_H
 
-#include <QCache>
 #include "templateglobal.h"
 #include "templateloader.h"
+#include <QCache>
 
 /**
   Caching template loader, reduces the amount of I/O and improves performance
@@ -43,16 +43,14 @@ class DECLSPEC TemplateCache : public TemplateLoader {
     Q_OBJECT
     Q_DISABLE_COPY(TemplateCache)
 public:
-
     /**
       Constructor.
       @param settings configurations settings
       @param parent Parent object
     */
-    TemplateCache(QSettings* settings, QObject* parent=0);
+    TemplateCache(QSettings* settings, QObject* parent = 0);
 
 protected:
-
     /**
       Try to get a file from cache or filesystem.
       @param localizedName Name of the template with locale to find
@@ -61,7 +59,6 @@ protected:
     virtual QString tryFile(QString localizedName);
 
 private:
-
     struct CacheEntry {
         QString document;
         qint64 created;
@@ -71,8 +68,7 @@ private:
     int cacheTimeout;
 
     /** Cache storage */
-    QCache<QString,CacheEntry> cache;
-
+    QCache<QString, CacheEntry> cache;
 };
 
 #endif // TEMPLATECACHE_H

@@ -3,24 +3,23 @@
 
 #include "yacreader_global.h"
 
-class ReadingList
-{
+class ReadingList {
 public:
-    ReadingList(const QString &name, qulonglong id, int ordering);
+    ReadingList(const QString& name, qulonglong id, int ordering);
 
     qulonglong getId() const;
     QString getName() const;
     int getOrdering() const;
+
 private:
     QString name;
     qulonglong id;
     int ordering;
 };
 
-class Label
-{
+class Label {
 public:
-    Label(const QString &name, qulonglong id, YACReader::LabelColors colorid);
+    Label(const QString& name, qulonglong id, YACReader::LabelColors colorid);
 
     YACReader::LabelColors getColorID() const;
     QString getName() const;
@@ -30,7 +29,6 @@ private:
     QString name;
     qulonglong id;
     YACReader::LabelColors colorid;
-
 };
 
 #endif // READING_LIST_H

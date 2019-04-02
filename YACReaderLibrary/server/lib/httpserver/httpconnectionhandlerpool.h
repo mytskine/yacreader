@@ -1,12 +1,12 @@
 #ifndef HTTPCONNECTIONHANDLERPOOL_H
 #define HTTPCONNECTIONHANDLERPOOL_H
 
-#include <QList>
-#include <QTimer>
-#include <QObject>
-#include <QMutex>
-#include "httpglobal.h"
 #include "httpconnectionhandler.h"
+#include "httpglobal.h"
+#include <QList>
+#include <QMutex>
+#include <QObject>
+#include <QTimer>
 
 /**
   Pool of http connection handlers. The size of the pool grows and
@@ -47,7 +47,6 @@ class DECLSPEC HttpConnectionHandlerPool : public QObject {
     Q_OBJECT
     Q_DISABLE_COPY(HttpConnectionHandlerPool)
 public:
-
     /**
       Constructor.
       @param settings Configuration settings for the HTTP server. Must not be 0.
@@ -63,7 +62,6 @@ public:
     HttpConnectionHandler* getConnectionHandler();
 
 private:
-
     /** Settings for this pool */
     QSettings* settings;
 
@@ -89,7 +87,6 @@ private slots:
 
     /** Received from the clean-up timer.  */
     void cleanup();
-
 };
 
 #endif // HTTPCONNECTIONHANDLERPOOL_H

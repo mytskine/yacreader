@@ -16,30 +16,30 @@ extern "C" {
 
 // Structure for custom file write
 typedef struct FPDF_FILEWRITE_ {
-  //
-  // Version number of the interface. Currently must be 1.
-  //
-  int version;
+    //
+    // Version number of the interface. Currently must be 1.
+    //
+    int version;
 
-  //
-  // Method: WriteBlock
-  //          Output a block of data in your custom way.
-  // Interface Version:
-  //          1
-  // Implementation Required:
-  //          Yes
-  // Comments:
-  //          Called by function FPDF_SaveDocument
-  // Parameters:
-  //          pThis       -   Pointer to the structure itself
-  //          pData       -   Pointer to a buffer to output
-  //          size        -   The size of the buffer.
-  // Return value:
-  //          Should be non-zero if successful, zero for error.
-  //
-  int (*WriteBlock)(struct FPDF_FILEWRITE_* pThis,
-                    const void* pData,
-                    unsigned long size);
+    //
+    // Method: WriteBlock
+    //          Output a block of data in your custom way.
+    // Interface Version:
+    //          1
+    // Implementation Required:
+    //          Yes
+    // Comments:
+    //          Called by function FPDF_SaveDocument
+    // Parameters:
+    //          pThis       -   Pointer to the structure itself
+    //          pData       -   Pointer to a buffer to output
+    //          size        -   The size of the buffer.
+    // Return value:
+    //          Should be non-zero if successful, zero for error.
+    //
+    int (*WriteBlock)(struct FPDF_FILEWRITE_* pThis,
+        const void* pData,
+        unsigned long size);
 } FPDF_FILEWRITE;
 
 /** @brief Incremental. */
@@ -60,8 +60,8 @@ typedef struct FPDF_FILEWRITE_ {
 //          TRUE for succeed, FALSE for failed.
 //
 DLLEXPORT FPDF_BOOL STDCALL FPDF_SaveAsCopy(FPDF_DOCUMENT document,
-                                            FPDF_FILEWRITE* pFileWrite,
-                                            FPDF_DWORD flags);
+    FPDF_FILEWRITE* pFileWrite,
+    FPDF_DWORD flags);
 
 // Function: FPDF_SaveWithVersion
 //          Same as function ::FPDF_SaveAsCopy, except the file version of the
@@ -76,12 +76,12 @@ DLLEXPORT FPDF_BOOL STDCALL FPDF_SaveAsCopy(FPDF_DOCUMENT document,
 //          TRUE if succeed, FALSE if failed.
 //
 DLLEXPORT FPDF_BOOL STDCALL FPDF_SaveWithVersion(FPDF_DOCUMENT document,
-                                                 FPDF_FILEWRITE* pFileWrite,
-                                                 FPDF_DWORD flags,
-                                                 int fileVersion);
+    FPDF_FILEWRITE* pFileWrite,
+    FPDF_DWORD flags,
+    int fileVersion);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif  // PUBLIC_FPDF_SAVE_H_
+#endif // PUBLIC_FPDF_SAVE_H_

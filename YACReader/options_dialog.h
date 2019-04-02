@@ -13,60 +13,57 @@ class QRadioButton;
 class QColorDialog;
 class YACReaderSpinSliderWidget;
 
+class OptionsDialog : public YACReaderOptionsDialog {
+    Q_OBJECT
+public:
+    OptionsDialog(QWidget* parent = 0);
 
-class OptionsDialog : public YACReaderOptionsDialog
-{
-Q_OBJECT
-	public:
-		OptionsDialog(QWidget * parent = 0);
-	private:
-		//QLabel * pathLabel;
-		QLineEdit * pathEdit;
-		QPushButton * pathFindButton;
-        QCheckBox * quickNavi;
-        QCheckBox * disableShowOnMouseOver;
+private:
+    //QLabel * pathLabel;
+    QLineEdit* pathEdit;
+    QPushButton* pathFindButton;
+    QCheckBox* quickNavi;
+    QCheckBox* disableShowOnMouseOver;
 
-		QLabel * magGlassSizeLabel;
+    QLabel* magGlassSizeLabel;
 
-		QLabel * zoomLevel;
+    QLabel* zoomLevel;
 
-		//QLabel * slideSizeLabel;
-		QSlider * slideSize;
-		
-		//QLabel * fitToWidthRatioLabel;
-		//QSlider * fitToWidthRatioS;
+    //QLabel * slideSizeLabel;
+    QSlider* slideSize;
 
-		QLabel * backgroundColor;
-		QPushButton * selectBackgroundColorButton;
+    //QLabel * fitToWidthRatioLabel;
+    //QSlider * fitToWidthRatioS;
 
-		QColorDialog * colorDialog;
+    QLabel* backgroundColor;
+    QPushButton* selectBackgroundColorButton;
 
-		YACReaderSpinSliderWidget  * brightnessS;
+    QColorDialog* colorDialog;
 
-		YACReaderSpinSliderWidget * contrastS;
+    YACReaderSpinSliderWidget* brightnessS;
 
-		YACReaderSpinSliderWidget * gammaS;
+    YACReaderSpinSliderWidget* contrastS;
 
-	public slots:
-		void saveOptions();
-		void restoreOptions(QSettings * settings);
-		void findFolder();
-		void updateColor(const QColor & color);
-		//void fitToWidthRatio(int value);
-		void brightnessChanged(int value);
-		void contrastChanged(int value);
-		void gammaChanged(int value);
-		void resetImageConfig();
-		void show();
-		void setFilters(int brightness, int contrast, int gamma);
+    YACReaderSpinSliderWidget* gammaS;
+
+public slots:
+    void saveOptions();
+    void restoreOptions(QSettings* settings);
+    void findFolder();
+    void updateColor(const QColor& color);
+    //void fitToWidthRatio(int value);
+    void brightnessChanged(int value);
+    void contrastChanged(int value);
+    void gammaChanged(int value);
+    void resetImageConfig();
+    void show();
+    void setFilters(int brightness, int contrast, int gamma);
 
 signals:
-		void changedOptions();
-		void changedImageOptions();
-		void changedFilters(int brightness, int contrast, int gamma);
-		//void fitToWidthRatioChanged(float ratio);
-
+    void changedOptions();
+    void changedImageOptions();
+    void changedFilters(int brightness, int contrast, int gamma);
+    //void fitToWidthRatioChanged(float ratio);
 };
-
 
 #endif

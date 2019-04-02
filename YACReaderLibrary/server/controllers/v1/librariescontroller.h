@@ -2,19 +2,18 @@
 #define LIBRARIESCONTROLLER_H
 
 #include "httprequest.h"
-#include "httpresponse.h"
 #include "httprequesthandler.h"
+#include "httpresponse.h"
 
 /**
   This controller displays a HTML form and dumps the submitted input.
 */
 
-
 class LibrariesController : public HttpRequestHandler {
     Q_OBJECT
     Q_DISABLE_COPY(LibrariesController);
-public:
 
+public:
     /** Constructor */
     LibrariesController();
 

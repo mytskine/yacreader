@@ -28,12 +28,11 @@
 
 class OCGs;
 
-namespace Poppler
-{
-  class Document;
-  class OptContentModelPrivate;
+namespace Poppler {
+class Document;
+class OptContentModelPrivate;
 
-  /**
+/**
    * \brief Model for optional content
    *
    * OptContentModel is an item model representing the optional content items
@@ -44,34 +43,33 @@ namespace Poppler
    *
    * \since 0.8
    */
-  class POPPLER_QT5_EXPORT OptContentModel : public QAbstractItemModel
-  {
+class POPPLER_QT5_EXPORT OptContentModel : public QAbstractItemModel {
     friend class Document;
 
     Q_OBJECT
 
-    public:
+public:
     virtual ~OptContentModel();
 
-    QModelIndex index(int row, int column, const QModelIndex &parent) const;
-    QModelIndex parent(const QModelIndex &child) const;
+    QModelIndex index(int row, int column, const QModelIndex& parent) const;
+    QModelIndex parent(const QModelIndex& child) const;
 
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    int columnCount(const QModelIndex &parent) const;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const;
+    int columnCount(const QModelIndex& parent) const;
 
-    QVariant data(const QModelIndex &index, int role) const;
-    virtual bool setData ( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
+    QVariant data(const QModelIndex& index, int role) const;
+    virtual bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
 
-    Qt::ItemFlags flags ( const QModelIndex & index ) const;
+    Qt::ItemFlags flags(const QModelIndex& index) const;
 
-    virtual QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
+    virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
-    private:
-    OptContentModel( OCGs *optContent, QObject *parent = 0);
+private:
+    OptContentModel(OCGs* optContent, QObject* parent = 0);
 
     friend class OptContentModelPrivate;
-    OptContentModelPrivate *d;
-  };
+    OptContentModelPrivate* d;
+};
 }
 
 #endif

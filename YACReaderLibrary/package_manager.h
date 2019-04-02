@@ -3,22 +3,22 @@
 
 #include <QProcess>
 
-class PackageManager : public QObject
-{
-	Q_OBJECT
+class PackageManager : public QObject {
+    Q_OBJECT
 public:
-	PackageManager();
-	void createPackage(const QString & libraryPath,const QString & dest);
-	void extractPackage(const QString & packagePath,const QString & destDir);
-	public slots:
-	void cancel();
+    PackageManager();
+    void createPackage(const QString& libraryPath, const QString& dest);
+    void extractPackage(const QString& packagePath, const QString& destDir);
+public slots:
+    void cancel();
+
 private:
-	bool creating;
-	QProcess * _7z;
+    bool creating;
+    QProcess* _7z;
 
 signals:
-	void exported();
-	void imported();
+    void exported();
+    void imported();
 };
 
 #endif

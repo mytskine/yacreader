@@ -2,8 +2,8 @@
 #define TAGCONTENTCONTROLLER_V2_H
 
 #include "httprequest.h"
-#include "httpresponse.h"
 #include "httprequesthandler.h"
+#include "httpresponse.h"
 
 class TagContentControllerV2 : public HttpRequestHandler {
     Q_OBJECT
@@ -16,7 +16,7 @@ public:
     void service(HttpRequest& request, HttpResponse& response);
 
 private:
-    void serviceContent(const int &library, const qulonglong &tagId, HttpResponse &response);
+    void serviceContent(const int& library, const qulonglong& tagId, HttpResponse& response);
 };
 
 #endif // TAGCONTENTCONTROLLER_H

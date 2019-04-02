@@ -27,28 +27,29 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif  // __cplusplus
+#endif // __cplusplus
 
 // Interface for checking whether sections of the file are available.
 typedef struct _FX_FILEAVAIL {
-  // Version number of the interface. Must be 1.
-  int version;
+    // Version number of the interface. Must be 1.
+    int version;
 
-  // Reports if the specified data section is currently available. A section is
-  // available if all bytes in the section are available.
-  //
-  // Interface Version: 1
-  // Implementation Required: Yes
-  //
-  //   pThis  - pointer to the interface structure.
-  //   offset - the offset of the data section in the file.
-  //   size   - the size of the data section.
-  //
-  // Returns true if the specified data section at |offset| of |size|
-  // is available.
-  FPDF_BOOL (*IsDataAvail)(struct _FX_FILEAVAIL* pThis,
-                           size_t offset,
-                           size_t size);
+    // Reports if the specified data section is currently available. A section is
+    // available if all bytes in the section are available.
+    //
+    // Interface Version: 1
+    // Implementation Required: Yes
+    //
+    //   pThis  - pointer to the interface structure.
+    //   offset - the offset of the data section in the file.
+    //   size   - the size of the data section.
+    //
+    // Returns true if the specified data section at |offset| of |size|
+    // is available.
+    FPDF_BOOL (*IsDataAvail)
+    (struct _FX_FILEAVAIL* pThis,
+        size_t offset,
+        size_t size);
 } FX_FILEAVAIL;
 typedef void* FPDF_AVAIL;
 
@@ -61,7 +62,7 @@ typedef void* FPDF_AVAIL;
 //
 // |FPDFAvail_Destroy| must be called when done with the availability provider.
 DLLEXPORT FPDF_AVAIL STDCALL FPDFAvail_Create(FX_FILEAVAIL* file_avail,
-                                              FPDF_FILEACCESS* file);
+    FPDF_FILEACCESS* file);
 
 // Destroy the |avail| document availability provider.
 //
@@ -70,24 +71,24 @@ DLLEXPORT void STDCALL FPDFAvail_Destroy(FPDF_AVAIL avail);
 
 // Download hints interface. Used to receive hints for further downloading.
 typedef struct _FX_DOWNLOADHINTS {
-  // Version number of the interface. Must be 1.
-  int version;
+    // Version number of the interface. Must be 1.
+    int version;
 
-  // Add a section to be downloaded.
-  //
-  // Interface Version: 1
-  // Implementation Required: Yes
-  //
-  //   pThis  - pointer to the interface structure.
-  //   offset - the offset of the hint reported to be downloaded.
-  //   size   - the size of the hint reported to be downloaded.
-  //
-  // The |offset| and |size| of the section may not be unique. Part of the
-  // section might be already available. The download manager must deal with
-  // overlapping sections.
-  void (*AddSegment)(struct _FX_DOWNLOADHINTS* pThis,
-                     size_t offset,
-                     size_t size);
+    // Add a section to be downloaded.
+    //
+    // Interface Version: 1
+    // Implementation Required: Yes
+    //
+    //   pThis  - pointer to the interface structure.
+    //   offset - the offset of the hint reported to be downloaded.
+    //   size   - the size of the hint reported to be downloaded.
+    //
+    // The |offset| and |size| of the section may not be unique. Part of the
+    // section might be already available. The download manager must deal with
+    // overlapping sections.
+    void (*AddSegment)(struct _FX_DOWNLOADHINTS* pThis,
+        size_t offset,
+        size_t size);
 } FX_DOWNLOADHINTS;
 
 // Checks if the document is ready for loading, if not, gets download hints.
@@ -119,7 +120,7 @@ FPDFAvail_IsDocAvail(FPDF_AVAIL avail, FX_DOWNLOADHINTS* hints);
 // When |FPDFAvail_IsDocAvail| returns TRUE, call |FPDFAvail_GetDocument| to
 // retrieve the document handle.
 DLLEXPORT FPDF_DOCUMENT STDCALL FPDFAvail_GetDocument(FPDF_AVAIL avail,
-                                                      FPDF_BYTESTRING password);
+    FPDF_BYTESTRING password);
 
 // Get the page number for the first available page in a linearized PDF.
 //
@@ -151,8 +152,8 @@ DLLEXPORT int STDCALL FPDFAvail_GetFirstPageNum(FPDF_DOCUMENT doc);
 // |PDF_DATA_ERROR| or |PDF_DATA_AVAIL|. Applications can then perform page
 // loading.
 DLLEXPORT int STDCALL FPDFAvail_IsPageAvail(FPDF_AVAIL avail,
-                                            int page_index,
-                                            FX_DOWNLOADHINTS* hints);
+    int page_index,
+    FX_DOWNLOADHINTS* hints);
 
 // Check if form data is ready for initialization, if not, get the
 // |FX_DOWNLOADHINTS|.
@@ -174,7 +175,7 @@ DLLEXPORT int STDCALL FPDFAvail_IsPageAvail(FPDF_AVAIL avail,
 // Applications can then perform page loading. It is recommend to call
 // |FPDFDOC_InitFormFillEnvironment| when |PDF_FORM_AVAIL| is returned.
 DLLEXPORT int STDCALL FPDFAvail_IsFormAvail(FPDF_AVAIL avail,
-                                            FX_DOWNLOADHINTS* hints);
+    FX_DOWNLOADHINTS* hints);
 
 // Check whether a document is a linearized PDF.
 //
@@ -192,7 +193,7 @@ DLLEXPORT int STDCALL FPDFAvail_IsFormAvail(FPDF_AVAIL avail,
 DLLEXPORT int STDCALL FPDFAvail_IsLinearized(FPDF_AVAIL avail);
 
 #ifdef __cplusplus
-}  // extern "C"
-#endif  // __cplusplus
+} // extern "C"
+#endif // __cplusplus
 
-#endif  // PUBLIC_FPDF_DATAAVAIL_H_
+#endif // PUBLIC_FPDF_DATAAVAIL_H_

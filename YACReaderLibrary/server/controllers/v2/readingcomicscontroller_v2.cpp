@@ -1,16 +1,15 @@
 #include "readingcomicscontroller_v2.h"
 
-#include "db_helper.h"
 #include "comic_db.h"
+#include "db_helper.h"
 
 #include "yacreader_server_data_helper.h"
 
 ReadingComicsControllerV2::ReadingComicsControllerV2()
 {
-
 }
 
-void ReadingComicsControllerV2::service(HttpRequest &request, HttpResponse &response)
+void ReadingComicsControllerV2::service(HttpRequest& request, HttpResponse& response)
 {
     response.setHeader("Content-Type", "application/json");
 
@@ -20,18 +19,17 @@ void ReadingComicsControllerV2::service(HttpRequest &request, HttpResponse &resp
 
     serviceContent(libraryId, response);
 
-    response.setStatus(200,"OK");
-    response.write("",true);
+    response.setStatus(200, "OK");
+    response.write("", true);
 }
 
-void ReadingComicsControllerV2::serviceContent(const int &library, HttpResponse &response)
+void ReadingComicsControllerV2::serviceContent(const int& library, HttpResponse& response)
 {
     QList<ComicDB> readingComics = DBHelper::getReading(library);
 
     QJsonArray comics;
 
-    for(const ComicDB &comic : readingComics)
-    {
+    for (const ComicDB& comic : readingComics) {
         comics.append(YACReaderServerDataHelper::comicToJSON(library, comic));
     }
 

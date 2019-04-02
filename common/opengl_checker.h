@@ -3,12 +3,12 @@
 
 #include <QOpenGLContext>
 
-class OpenGLChecker
-{
+class OpenGLChecker {
 public:
     OpenGLChecker();
     bool hasCompatibleOpenGLVersion();
     QString textVersionDescription();
+
 private:
     QString description;
     bool compatibleOpenGLVersion;

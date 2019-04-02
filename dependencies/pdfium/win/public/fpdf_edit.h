@@ -12,9 +12,8 @@
 // NOLINTNEXTLINE(build/include)
 #include "fpdfview.h"
 
-#define FPDF_ARGB(a, r, g, b)                                      \
-  ((uint32_t)(((uint32_t)(b)&0xff) | (((uint32_t)(g)&0xff) << 8) | \
-              (((uint32_t)(r)&0xff) << 16) | (((uint32_t)(a)&0xff) << 24)))
+#define FPDF_ARGB(a, r, g, b) \
+    ((uint32_t)(((uint32_t)(b)&0xff) | (((uint32_t)(g)&0xff) << 8) | (((uint32_t)(r)&0xff) << 16) | (((uint32_t)(a)&0xff) << 24)))
 #define FPDF_GetBValue(argb) ((uint8_t)(argb))
 #define FPDF_GetGValue(argb) ((uint8_t)(((uint16_t)(argb)) >> 8))
 #define FPDF_GetRValue(argb) ((uint8_t)((argb) >> 16))
@@ -29,7 +28,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif  // __cplusplus
+#endif // __cplusplus
 
 // Create a new PDF document.
 //
@@ -50,9 +49,9 @@ DLLEXPORT FPDF_DOCUMENT STDCALL FPDF_CreateNewDocument();
 // The page should be closed with CPDF_ClosePage() when finished as
 // with any other page in the document.
 DLLEXPORT FPDF_PAGE STDCALL FPDFPage_New(FPDF_DOCUMENT document,
-                                         int page_index,
-                                         double width,
-                                         double height);
+    int page_index,
+    double width,
+    double height);
 
 // Delete the page at |page_index|.
 //
@@ -87,7 +86,7 @@ DLLEXPORT void STDCALL FPDFPage_SetRotation(FPDF_PAGE page, int rotate);
 //   page_obj - handle to a page object. The |page_obj| will be automatically
 //              freed.
 DLLEXPORT void STDCALL FPDFPage_InsertObject(FPDF_PAGE page,
-                                             FPDF_PAGEOBJECT page_obj);
+    FPDF_PAGEOBJECT page_obj);
 
 // Get number of page objects inside |page|.
 //
@@ -144,12 +143,12 @@ FPDFPageObj_HasTransparency(FPDF_PAGEOBJECT pageObject);
 //   |b d f|
 // and can be used to scale, rotate, shear and translate the |page_object|.
 DLLEXPORT void STDCALL FPDFPageObj_Transform(FPDF_PAGEOBJECT page_object,
-                                             double a,
-                                             double b,
-                                             double c,
-                                             double d,
-                                             double e,
-                                             double f);
+    double a,
+    double b,
+    double c,
+    double d,
+    double e,
+    double f);
 
 // Transform all annotations in |page|.
 //
@@ -166,12 +165,12 @@ DLLEXPORT void STDCALL FPDFPageObj_Transform(FPDF_PAGEOBJECT page_object,
 //   |b d f|
 // and can be used to scale, rotate, shear and translate the |page| annotations.
 DLLEXPORT void STDCALL FPDFPage_TransformAnnots(FPDF_PAGE page,
-                                                double a,
-                                                double b,
-                                                double c,
-                                                double d,
-                                                double e,
-                                                double f);
+    double a,
+    double b,
+    double c,
+    double d,
+    double e,
+    double f);
 
 // Create a new image object.
 //
@@ -197,9 +196,9 @@ FPDFPageObj_NewImgeObj(FPDF_DOCUMENT document);
 // valid |pages| value.
 DLLEXPORT FPDF_BOOL STDCALL
 FPDFImageObj_LoadJpegFile(FPDF_PAGE* pages,
-                          int nCount,
-                          FPDF_PAGEOBJECT image_object,
-                          FPDF_FILEACCESS* fileAccess);
+    int nCount,
+    FPDF_PAGEOBJECT image_object,
+    FPDF_FILEACCESS* fileAccess);
 
 // Load an image from a JPEG image file and then set it into |image_object|.
 //
@@ -219,9 +218,9 @@ FPDFImageObj_LoadJpegFile(FPDF_PAGE* pages,
 // data to be deleted after this function returns.
 DLLEXPORT FPDF_BOOL STDCALL
 FPDFImageObj_LoadJpegFileInline(FPDF_PAGE* pages,
-                                int nCount,
-                                FPDF_PAGEOBJECT image_object,
-                                FPDF_FILEACCESS* fileAccess);
+    int nCount,
+    FPDF_PAGEOBJECT image_object,
+    FPDF_FILEACCESS* fileAccess);
 
 // Set the transform matrix of |image_object|.
 //
@@ -240,12 +239,12 @@ FPDFImageObj_LoadJpegFileInline(FPDF_PAGE* pages,
 //
 // Returns TRUE on success.
 DLLEXPORT FPDF_BOOL STDCALL FPDFImageObj_SetMatrix(FPDF_PAGEOBJECT image_object,
-                                                   double a,
-                                                   double b,
-                                                   double c,
-                                                   double d,
-                                                   double e,
-                                                   double f);
+    double a,
+    double b,
+    double c,
+    double d,
+    double e,
+    double f);
 
 // Set |bitmap| to |image_object|.
 //
@@ -256,12 +255,12 @@ DLLEXPORT FPDF_BOOL STDCALL FPDFImageObj_SetMatrix(FPDF_PAGEOBJECT image_object,
 //
 // Returns TRUE on success.
 DLLEXPORT FPDF_BOOL STDCALL FPDFImageObj_SetBitmap(FPDF_PAGE* pages,
-                                                   int nCount,
-                                                   FPDF_PAGEOBJECT image_object,
-                                                   FPDF_BITMAP bitmap);
+    int nCount,
+    FPDF_PAGEOBJECT image_object,
+    FPDF_BITMAP bitmap);
 
 #ifdef __cplusplus
-}  // extern "C"
-#endif  // __cplusplus
+} // extern "C"
+#endif // __cplusplus
 
-#endif  // PUBLIC_FPDF_EDIT_H_
+#endif // PUBLIC_FPDF_EDIT_H_

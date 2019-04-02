@@ -3,17 +3,14 @@
 
 #include <QObject>
 
-
 class ComicModel;
 
-
-class YACReaderComicInfoHelper : public QObject
-{
+class YACReaderComicInfoHelper : public QObject {
     Q_OBJECT
 public:
-    explicit YACReaderComicInfoHelper(QObject *parent = 0);
+    explicit YACReaderComicInfoHelper(QObject* parent = 0);
 
-    void setModel(ComicModel *model);
+    void setModel(ComicModel* model);
 
     Q_INVOKABLE void rate(int index, int rating);
     Q_INVOKABLE void setRead(int index, bool read);
@@ -25,7 +22,7 @@ signals:
 public slots:
 
 protected:
-    ComicModel *model;
+    ComicModel* model;
 };
 
 #endif // YACREADERCOMICINFOHELPER_H

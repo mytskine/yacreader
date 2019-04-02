@@ -7,26 +7,26 @@
 #define HTTPCONNECTIONHANDLER_H
 
 #ifndef QT_NO_OPENSSL
-   #include <QSslConfiguration>
+#include <QSslConfiguration>
 #endif
-#include <QTcpSocket>
-#include <QSettings>
-#include <QTimer>
-#include <QThread>
 #include "httpglobal.h"
 #include "httprequest.h"
 #include "httprequesthandler.h"
+#include <QSettings>
+#include <QTcpSocket>
+#include <QThread>
+#include <QTimer>
 
 /** Alias type definition, for compatibility to different Qt versions */
 #if QT_VERSION >= 0x050000
-    typedef qintptr tSocketDescriptor;
+typedef qintptr tSocketDescriptor;
 #else
-    typedef int tSocketDescriptor;
+typedef int tSocketDescriptor;
 #endif
 
 /** Alias for QSslConfiguration if OpenSSL is not supported */
 #ifdef QT_NO_OPENSSL
-  #define QSslConfiguration QObject
+#define QSslConfiguration QObject
 #endif
 
 /**
@@ -49,14 +49,13 @@ class DECLSPEC HttpConnectionHandler : public QThread {
     Q_DISABLE_COPY(HttpConnectionHandler)
 
 public:
-
     /**
       Constructor.
       @param settings Configuration settings of the HTTP webserver
       @param requestHandler Handler that will process each incoming HTTP request
       @param sslConfiguration SSL (HTTPS) will be used if not NULL
     */
-    HttpConnectionHandler(QSettings* settings, HttpRequestHandler* requestHandler, QSslConfiguration* sslConfiguration=NULL);
+    HttpConnectionHandler(QSettings* settings, HttpRequestHandler* requestHandler, QSslConfiguration* sslConfiguration = NULL);
 
     /** Destructor */
     virtual ~HttpConnectionHandler();
@@ -68,7 +67,6 @@ public:
     void setBusy();
 
 private:
-
     /** Configuration settings */
     QSettings* settings;
 
@@ -114,7 +112,6 @@ private slots:
 
     /** Received from the socket when a connection has been closed */
     void disconnected();
-
 };
 
 #endif // HTTPCONNECTIONHANDLER_H

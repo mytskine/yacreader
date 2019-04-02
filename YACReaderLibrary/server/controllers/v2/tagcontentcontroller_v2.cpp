@@ -1,7 +1,7 @@
 #include "tagcontentcontroller_v2.h"
 
-#include "db_helper.h"
 #include "comic_db.h"
+#include "db_helper.h"
 
 #include "yacreader_server_data_helper.h"
 
@@ -9,10 +9,9 @@
 
 TagContentControllerV2::TagContentControllerV2()
 {
-
 }
 
-void TagContentControllerV2::service(HttpRequest &request, HttpResponse &response)
+void TagContentControllerV2::service(HttpRequest& request, HttpResponse& response)
 {
     response.setHeader("Content-Type", "text/plain; charset=utf-8");
 
@@ -23,21 +22,20 @@ void TagContentControllerV2::service(HttpRequest &request, HttpResponse &respons
 
     serviceContent(libraryId, tagId, response);
 
-    response.write("",true);
+    response.write("", true);
 }
 
-void TagContentControllerV2::serviceContent(const int &library, const qulonglong &tagId, HttpResponse &response)
+void TagContentControllerV2::serviceContent(const int& library, const qulonglong& tagId, HttpResponse& response)
 {
     QList<ComicDB> comics = DBHelper::getLabelComics(library, tagId);
-    
+
     QJsonArray items;
-    
-    for(const ComicDB &comic : comics)
-    {
+
+    for (const ComicDB& comic : comics) {
         items.append(YACReaderServerDataHelper::comicToJSON(library, comic));
     }
-    
+
     QJsonDocument output(items);
-    
+
     response.write(output.toJson(QJsonDocument::Compact));
 }

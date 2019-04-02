@@ -1,18 +1,18 @@
 #include "grid_comics_view.h"
 
-#include <QtQuick>
 #include <QQuickWidget>
+#include <QtQuick>
 #include <QtWidgets>
 
-#include "comic.h"
-#include "comic_files_manager.h"
 #include "QsLog.h"
+#include "comic.h"
+#include "comic_db.h"
+#include "comic_files_manager.h"
+#include "current_comic_view_helper.h"
+#include "yacreader_comic_info_helper.h"
+#include "yacreader_comics_selection_helper.h"
 #include "yacreader_global.h"
 #include "yacreader_tool_bar_stretch.h"
-#include "comic_db.h"
-#include "yacreader_comics_selection_helper.h"
-#include "yacreader_comic_info_helper.h"
-#include "current_comic_view_helper.h"
 
 //values relative to visible cells
 const unsigned int YACREADER_MIN_GRID_ZOOM_WIDTH = 156;
@@ -30,29 +30,26 @@ const unsigned int YACREADER_MIN_COVER_WIDTH = YACREADER_MIN_GRID_ZOOM_WIDTH;
 const unsigned int YACREADER_MIN_ITEM_HEIGHT = YACREADER_MAX_COVER_HEIGHT + 51; //51 is the height of the bottom rectangle used for title and other info
 const unsigned int YACREADER_MIN_ITEM_WIDTH = YACREADER_MIN_COVER_WIDTH;
 
-
-GridComicsView::GridComicsView(QWidget *parent) :
-    ComicsView(parent), filterEnabled(false)
+GridComicsView::GridComicsView(QWidget* parent)
+    : ComicsView(parent)
+    , filterEnabled(false)
 {
-    settings = new QSettings(YACReader::getSettingsPath()+"/YACReaderLibrary.ini", QSettings::IniFormat, this);
+    settings = new QSettings(YACReader::getSettingsPath() + "/YACReaderLibrary.ini", QSettings::IniFormat, this);
     settings->beginGroup("libraryConfig");
 
-    qmlRegisterType<ComicModel>("com.yacreader.ComicModel",1,0,"ComicModel");
-    qmlRegisterType<ComicDB>("com.yacreader.ComicDB",1,0,"ComicDB");
-    qmlRegisterType<ComicInfo>("com.yacreader.ComicInfo",1,0,"ComicInfo");
+    qmlRegisterType<ComicModel>("com.yacreader.ComicModel", 1, 0, "ComicModel");
+    qmlRegisterType<ComicDB>("com.yacreader.ComicDB", 1, 0, "ComicDB");
+    qmlRegisterType<ComicInfo>("com.yacreader.ComicInfo", 1, 0, "ComicInfo");
 
     view = new QQuickWidget(this);
     view->setResizeMode(QQuickWidget::SizeRootObjectToView);
     connect(
         view, &QQuickWidget::statusChanged,
-        [=] (QQuickWidget::Status status)
-        {
-            if (status == QQuickWidget::Error)
-            {
+        [=](QQuickWidget::Status status) {
+            if (status == QQuickWidget::Error) {
                 QLOG_ERROR() << view->errors();
             }
-        }
-      );
+        });
 
     //view->setFocusPolicy(Qt::TabFocus);
 
@@ -61,17 +58,16 @@ GridComicsView::GridComicsView(QWidget *parent) :
 
     comicInfoHelper = new YACReaderComicInfoHelper(this);
 
-    QQmlContext *ctxt = view->rootContext();
+    QQmlContext* ctxt = view->rootContext();
 
     LibraryUITheme theme;
-    #ifdef Q_OS_MAC
+#ifdef Q_OS_MAC
     theme = Light;
-    #else
+#else
     theme = Dark;
-    #endif
+#endif
 
-    if(theme == Light)
-    {
+    if (theme == Light) {
         ctxt->setContextProperty("backgroundColor", "#F6F6F6");
         ctxt->setContextProperty("cellColor", "#FFFFFF");
         ctxt->setContextProperty("selectedColor", "#FFFFFF");
@@ -101,9 +97,7 @@ GridComicsView::GridComicsView(QWidget *parent) :
 
         ctxt->setContextProperty("readTickUncheckedColor", "#DEDEDE");
         ctxt->setContextProperty("readTickCheckedColor", "#E84852");
-    }
-    else
-    {
+    } else {
         ctxt->setContextProperty("backgroundColor", "#2A2A2A");
         ctxt->setContextProperty("cellColor", "#212121");
         ctxt->setContextProperty("selectedColor", "#121212");
@@ -111,10 +105,10 @@ GridComicsView::GridComicsView(QWidget *parent) :
         ctxt->setContextProperty("borderColor", "#121212");
         ctxt->setContextProperty("titleColor", "#FFFFFF");
         ctxt->setContextProperty("textColor", "#A8A8A8");
-        ctxt->setContextProperty("dropShadow",false);
+        ctxt->setContextProperty("dropShadow", false);
         //fonts settings
         int fontSize = QApplication::font().pointSize();
-        if(fontSize == -1)
+        if (fontSize == -1)
             fontSize = QApplication::font().pixelSize();
         ctxt->setContextProperty("fontSize", fontSize);
         ctxt->setContextProperty("fontFamily", QApplication::font().family());
@@ -141,7 +135,6 @@ GridComicsView::GridComicsView(QWidget *parent) :
 
 #ifdef Q_OS_MAC
 
-
 #else
 
 #endif
@@ -151,11 +144,11 @@ GridComicsView::GridComicsView(QWidget *parent) :
     ctxt->setContextProperty("backgroundBlurRadius", 0.0);
     ctxt->setContextProperty("backgroundBlurVisible", false);
 
-    ComicModel *model = new ComicModel();
+    ComicModel* model = new ComicModel();
     selectionHelper->setModel(model);
     ctxt->setContextProperty("comicsList", model);
     ctxt->setContextProperty("comicsSelection", selectionHelper->selectionModel());
-    ctxt->setContextProperty("contextMenuHelper",this);
+    ctxt->setContextProperty("contextMenuHelper", this);
     ctxt->setContextProperty("comicsSelectionHelper", selectionHelper);
     ctxt->setContextProperty("currentIndexHelper", this);
     ctxt->setContextProperty("comicRatingHelper", this);
@@ -169,25 +162,25 @@ GridComicsView::GridComicsView(QWidget *parent) :
 
     view->setSource(QUrl("qrc:/qml/GridComicsView.qml"));
 
-    QObject *rootObject = dynamic_cast<QObject*>(view->rootObject());
-    QObject *infoContainer = rootObject->findChild<QObject*>("infoContainer");
+    QObject* rootObject = dynamic_cast<QObject*>(view->rootObject());
+    QObject* infoContainer = rootObject->findChild<QObject*>("infoContainer");
 
     QQmlProperty(infoContainer, "width").write(settings->value(COMICS_GRID_INFO_WIDTH, 350));
 
-    showInfoAction = new QAction(tr("Show info"),this);
+    showInfoAction = new QAction(tr("Show info"), this);
     showInfoAction->setIcon(QIcon(":/images/comics_view_toolbar/show_comic_info.png"));
     showInfoAction->setCheckable(true);
     showInfoAction->setChecked(showInfo);
     connect(showInfoAction, &QAction::toggled, this, &GridComicsView::showInfo);
 
-    setShowMarks(true);//TODO save this in settings
+    setShowMarks(true); //TODO save this in settings
 
-    QVBoxLayout * l = new QVBoxLayout;
+    QVBoxLayout* l = new QVBoxLayout;
     l->addWidget(view);
     this->setLayout(l);
 
-    setContentsMargins(0,0,0,0);
-    l->setContentsMargins(0,0,0,0);
+    setContentsMargins(0, 0, 0, 0);
+    l->setContentsMargins(0, 0, 0, 0);
     l->setSpacing(0);
 
     QLOG_TRACE() << "GridComicsView";
@@ -195,7 +188,7 @@ GridComicsView::GridComicsView(QWidget *parent) :
 
 GridComicsView::~GridComicsView()
 {
-   delete view;
+    delete view;
 }
 
 void GridComicsView::createCoverSizeSliderWidget()
@@ -207,12 +200,12 @@ void GridComicsView::createCoverSizeSliderWidget()
     coverSizeSlider->setOrientation(Qt::Horizontal);
     coverSizeSlider->setRange(YACREADER_MIN_GRID_ZOOM_WIDTH, YACREADER_MAX_GRID_ZOOM_WIDTH);
 
-    QHBoxLayout * horizontalLayout = new QHBoxLayout();
-    QLabel * smallLabel = new QLabel();
+    QHBoxLayout* horizontalLayout = new QHBoxLayout();
+    QLabel* smallLabel = new QLabel();
     smallLabel->setPixmap(QPixmap(":/images/comics_view_toolbar/small_size_grid_zoom.png"));
     horizontalLayout->addWidget(smallLabel);
     horizontalLayout->addWidget(coverSizeSlider, 0, Qt::AlignVCenter);
-    QLabel * bigLabel = new QLabel();
+    QLabel* bigLabel = new QLabel();
     bigLabel->setPixmap(QPixmap(":/images/comics_view_toolbar/big_size_grid_zoom.png"));
     horizontalLayout->addWidget(bigLabel);
     horizontalLayout->addSpacing(10);
@@ -229,9 +222,9 @@ void GridComicsView::createCoverSizeSliderWidget()
     setCoversSize(coverSize);
 }
 
-void GridComicsView::setToolBar(QToolBar *toolBar)
+void GridComicsView::setToolBar(QToolBar* toolBar)
 {
-    static_cast<QVBoxLayout *>(this->layout())->insertWidget(1,toolBar);
+    static_cast<QVBoxLayout*>(this->layout())->insertWidget(1, toolBar);
     this->toolbar = toolBar;
 
     createCoverSizeSliderWidget();
@@ -242,9 +235,9 @@ void GridComicsView::setToolBar(QToolBar *toolBar)
     coverSizeSliderAction = toolBar->addWidget(coverSizeSliderWidget);
 }
 
-void GridComicsView::setModel(ComicModel *model)
+void GridComicsView::setModel(ComicModel* model)
 {
-    if(model == NULL)
+    if (model == NULL)
         return;
 
     ComicsView::setModel(model);
@@ -254,11 +247,11 @@ void GridComicsView::setModel(ComicModel *model)
     selectionHelper->setModel(model);
     comicInfoHelper->setModel(model);
 
-    QQmlContext *ctxt = view->rootContext();
+    QQmlContext* ctxt = view->rootContext();
 
     ctxt->setContextProperty("comicsList", model);
     ctxt->setContextProperty("comicsSelection", selectionHelper->selectionModel());
-    ctxt->setContextProperty("contextMenuHelper",this);
+    ctxt->setContextProperty("contextMenuHelper", this);
     ctxt->setContextProperty("comicsSelectionHelper", selectionHelper);
     ctxt->setContextProperty("currentIndexHelper", this);
     ctxt->setContextProperty("comicRatingHelper", this);
@@ -271,10 +264,9 @@ void GridComicsView::setModel(ComicModel *model)
 
     selectionHelper->clear();
 
-    if(model->rowCount()>0)
-    {
-        setCurrentIndex(model->index(0,0));
-        if(showInfoAction->isChecked())
+    if (model->rowCount() > 0) {
+        setCurrentIndex(model->index(0, 0));
+        if (showInfoAction->isChecked())
             updateInfoForIndex(0);
     }
 
@@ -285,16 +277,15 @@ void GridComicsView::setModel(ComicModel *model)
 
 void GridComicsView::updateBackgroundConfig()
 {
-    if(this->model == NULL)
+    if (this->model == NULL)
         return;
 
-    QQmlContext *ctxt = view->rootContext();
+    QQmlContext* ctxt = view->rootContext();
 
     //backgroun image configuration
     bool useBackgroundImage = settings->value(USE_BACKGROUND_IMAGE_IN_GRID_VIEW, true).toBool();
 
-    if(useBackgroundImage && this->model->rowCount() > 0)
-    {
+    if (useBackgroundImage && this->model->rowCount() > 0) {
         float opacity = settings->value(OPACITY_BACKGROUND_IMAGE_IN_GRID_VIEW, 0.2).toFloat();
         float blurRadius = settings->value(BLUR_RADIUS_BACKGROUND_IMAGE_IN_GRID_VIEW, 75).toInt();
 
@@ -304,9 +295,7 @@ void GridComicsView::updateBackgroundConfig()
         ctxt->setContextProperty("backgroundBlurOpacity", opacity);
         ctxt->setContextProperty("backgroundBlurRadius", blurRadius);
         ctxt->setContextProperty("backgroundBlurVisible", true);
-    }
-    else
-    {
+    } else {
         ctxt->setContextProperty("backgroundImage", QUrl());
         ctxt->setContextProperty("backgroundBlurOpacity", 0.0);
         ctxt->setContextProperty("backgroundBlurRadius", 0.0);
@@ -314,37 +303,37 @@ void GridComicsView::updateBackgroundConfig()
     }
 
 #ifdef Q_OS_MAC
-    ctxt->setContextProperty("cellColor", useBackgroundImage?"#99FFFFFF":"#FFFFFF");
+    ctxt->setContextProperty("cellColor", useBackgroundImage ? "#99FFFFFF" : "#FFFFFF");
     ctxt->setContextProperty("selectedColor", "#FFFFFF");
 #else
-    ctxt->setContextProperty("cellColor", useBackgroundImage?"#99212121":"#212121");
+    ctxt->setContextProperty("cellColor", useBackgroundImage ? "#99212121" : "#212121");
     ctxt->setContextProperty("selectedColor", "#121212");
 #endif
 }
 
 void GridComicsView::showInfo()
 {
-    QQmlContext *ctxt = view->rootContext();
+    QQmlContext* ctxt = view->rootContext();
     ctxt->setContextProperty("showInfo", showInfoAction->isChecked());
 
     updateInfoForIndex(currentIndex().row());
 }
 
-void GridComicsView::setCurrentIndex(const QModelIndex &index)
+void GridComicsView::setCurrentIndex(const QModelIndex& index)
 {
     selectionHelper->clear();
     selectionHelper->selectIndex(index.row());
 
-    if(settings->value(USE_SELECTED_COMIC_COVER_AS_BACKGROUND_IMAGE_IN_GRID_VIEW, false).toBool())
+    if (settings->value(USE_SELECTED_COMIC_COVER_AS_BACKGROUND_IMAGE_IN_GRID_VIEW, false).toBool())
         updateBackgroundConfig();
 
-    if(showInfoAction->isChecked())
+    if (showInfoAction->isChecked())
         updateInfoForIndex(index.row());
 }
 
 void GridComicsView::setCurrentIndex(int index)
 {
-    setCurrentIndex(model->index(index,0));
+    setCurrentIndex(model->index(index, 0));
 }
 
 QModelIndex GridComicsView::currentIndex()
@@ -352,12 +341,12 @@ QModelIndex GridComicsView::currentIndex()
     return selectionHelper->currentIndex();
 }
 
-QItemSelectionModel *GridComicsView::selectionModel()
+QItemSelectionModel* GridComicsView::selectionModel()
 {
     return selectionHelper->selectionModel();
 }
 
-void GridComicsView::scrollTo(const QModelIndex &mi, QAbstractItemView::ScrollHint hint)
+void GridComicsView::scrollTo(const QModelIndex& mi, QAbstractItemView::ScrollHint hint)
 {
     Q_UNUSED(mi);
     Q_UNUSED(hint);
@@ -373,7 +362,7 @@ void GridComicsView::toNormal()
     toolbar->show();
 }
 
-void GridComicsView::updateConfig(QSettings *settings)
+void GridComicsView::updateConfig(QSettings* settings)
 {
     Q_UNUSED(settings);
 }
@@ -382,7 +371,7 @@ void GridComicsView::enableFilterMode(bool enabled)
 {
     filterEnabled = enabled;
 
-    QQmlContext *ctxt = view->rootContext();
+    QQmlContext* ctxt = view->rootContext();
 
     if (enabled) {
         ctxt->setContextProperty("showCurrentComic", false);
@@ -409,31 +398,30 @@ void GridComicsView::triggerOpenCurrentComic()
 
 void GridComicsView::rate(int index, int rating)
 {
-    model->updateRating(rating,model->index(index,0));
+    model->updateRating(rating, model->index(index, 0));
 }
 
-void GridComicsView::requestedContextMenu(const QPoint &point)
+void GridComicsView::requestedContextMenu(const QPoint& point)
 {
     emit customContextMenuViewRequested(point);
 }
 
 void GridComicsView::setCoversSize(int width)
 {
-    QQmlContext *ctxt = view->rootContext();
+    QQmlContext* ctxt = view->rootContext();
 
-    QQuickItem * grid = view->rootObject()->findChild<QQuickItem *>(QStringLiteral("grid"));
+    QQuickItem* grid = view->rootObject()->findChild<QQuickItem*>(QStringLiteral("grid"));
 
-    if(grid != 0)
-    {
+    if (grid != 0) {
         QVariant cellCustomWidth = (width * YACREADER_MIN_CELL_CUSTOM_WIDTH) / YACREADER_MIN_GRID_ZOOM_WIDTH;
         QMetaObject::invokeMethod(grid, "calculateCellWidths",
-                                  Q_ARG(QVariant, cellCustomWidth));
+            Q_ARG(QVariant, cellCustomWidth));
     }
 
-    int cellBottomMarging = 8 * (1 + 2*(1 - (float(YACREADER_MAX_GRID_ZOOM_WIDTH - width) / (YACREADER_MAX_GRID_ZOOM_WIDTH - YACREADER_MIN_GRID_ZOOM_WIDTH))) );
+    int cellBottomMarging = 8 * (1 + 2 * (1 - (float(YACREADER_MAX_GRID_ZOOM_WIDTH - width) / (YACREADER_MAX_GRID_ZOOM_WIDTH - YACREADER_MIN_GRID_ZOOM_WIDTH))));
 
     ctxt->setContextProperty("cellCustomHeight", ((width * YACREADER_MAX_COVER_HEIGHT) / YACREADER_MIN_COVER_WIDTH) + 51 + cellBottomMarging);
-    ctxt->setContextProperty("cellCustomWidth", (width * YACREADER_MIN_CELL_CUSTOM_WIDTH) / YACREADER_MIN_COVER_WIDTH );
+    ctxt->setContextProperty("cellCustomWidth", (width * YACREADER_MIN_CELL_CUSTOM_WIDTH) / YACREADER_MIN_COVER_WIDTH);
 
     ctxt->setContextProperty("itemWidth", width);
     ctxt->setContextProperty("itemHeight", ((width * YACREADER_MAX_COVER_HEIGHT) / YACREADER_MIN_COVER_WIDTH) + 51);
@@ -444,7 +432,7 @@ void GridComicsView::setCoversSize(int width)
 
 void GridComicsView::dummyUpdater()
 {
-    QQmlContext *ctxt = view->rootContext();
+    QQmlContext* ctxt = view->rootContext();
     ctxt->setContextProperty("dummyValue", true);
 }
 
@@ -453,47 +441,42 @@ void GridComicsView::setCurrentComicIfNeeded()
     bool found;
     currentComic = currentComicFromModel(model, found);
 
-    QQmlContext *ctxt = view->rootContext();
+    QQmlContext* ctxt = view->rootContext();
 
     ComicModel::Mode mode = model->getMode();
 
-    bool showCurrentComic = found &&
-            filterEnabled == false &&
-            (mode == ComicModel::Mode::Folder || mode == ComicModel::Mode::ReadingList);
+    bool showCurrentComic = found && filterEnabled == false && (mode == ComicModel::Mode::Folder || mode == ComicModel::Mode::ReadingList);
 
     if (showCurrentComic) {
         ctxt->setContextProperty("currentComic", &currentComic);
         ctxt->setContextProperty("currentComicInfo", &(currentComic.info));
         ctxt->setContextProperty("showCurrentComic", true);
-    }
-    else
-    {
+    } else {
         ctxt->setContextProperty("currentComic", &currentComic);
         ctxt->setContextProperty("currentComicInfo", &(currentComic.info));
         ctxt->setContextProperty("showCurrentComic", false);
         //ctxt->setContextProperty("currentComic", nullptr);
-
     }
 }
 
 void GridComicsView::resetScroll()
 {
-    QObject *rootObject = dynamic_cast<QObject*>(view->rootObject());
-    QObject *scrollView = rootObject->findChild<QObject*>("topScrollView", Qt::FindChildrenRecursively);
+    QObject* rootObject = dynamic_cast<QObject*>(view->rootObject());
+    QObject* scrollView = rootObject->findChild<QObject*>("topScrollView", Qt::FindChildrenRecursively);
 
     QMetaObject::invokeMethod(scrollView, "scrollToOrigin");
 }
 
 QSize GridComicsView::sizeHint()
 {
-    return QSize(1280,768);
+    return QSize(1280, 768);
 }
 
 QByteArray GridComicsView::getMimeDataFromSelection()
 {
     QByteArray data;
 
-    QMimeData * mimeData = model->mimeData(selectionHelper->selectedIndexes());
+    QMimeData* mimeData = model->mimeData(selectionHelper->selectedIndexes());
     data = mimeData->data(YACReader::YACReaderLibrarComiscSelectionMimeDataFormat);
 
     delete mimeData;
@@ -508,46 +491,43 @@ void GridComicsView::updateCurrentComicView()
 
 void GridComicsView::startDrag()
 {
-    QDrag *drag = new QDrag(this);
+    QDrag* drag = new QDrag(this);
     drag->setMimeData(model->mimeData(selectionHelper->selectedRows()));
     drag->setPixmap(QPixmap(":/images/comics_view_toolbar/openInYACReader.png")); //TODO add better image
 
-    /*Qt::DropAction dropAction =*/ drag->exec(Qt::CopyAction | Qt::MoveAction, Qt::CopyAction);
+    /*Qt::DropAction dropAction =*/drag->exec(Qt::CopyAction | Qt::MoveAction, Qt::CopyAction);
 }
 
-bool GridComicsView::canDropUrls(const QList<QUrl> &urls, Qt::DropAction action)
+bool GridComicsView::canDropUrls(const QList<QUrl>& urls, Qt::DropAction action)
 {
-    if(action == Qt::CopyAction)
-    {
+    if (action == Qt::CopyAction) {
         QString currentPath;
-        foreach (QUrl url, urls)
-        {
+        foreach (QUrl url, urls) {
             //comics or folders are accepted, folders' content is validate in dropEvent (avoid any lag before droping)
             currentPath = url.toLocalFile();
-            if(Comic::fileIsComic(currentPath) || QFileInfo(currentPath).isDir())
+            if (Comic::fileIsComic(currentPath) || QFileInfo(currentPath).isDir())
                 return true;
         }
     }
     return false;
 }
 
-bool GridComicsView::canDropFormats(const QString &formats)
+bool GridComicsView::canDropFormats(const QString& formats)
 {
     return (formats.contains(YACReader::YACReaderLibrarComiscSelectionMimeDataFormat) && model->canBeResorted());
 }
 
-void GridComicsView::droppedFiles(const QList<QUrl> &urls, Qt::DropAction action)
+void GridComicsView::droppedFiles(const QList<QUrl>& urls, Qt::DropAction action)
 {
     bool validAction = action == Qt::CopyAction; //TODO add move
 
-    if(validAction)
-    {
-        QList<QPair<QString, QString> > droppedFiles = ComicFilesManager::getDroppedFiles(urls);
+    if (validAction) {
+        QList<QPair<QString, QString>> droppedFiles = ComicFilesManager::getDroppedFiles(urls);
         emit copyComicsToCurrentFolder(droppedFiles);
     }
 }
 
-void GridComicsView::droppedComicsForResortingAt(const QString &data, int index)
+void GridComicsView::droppedComicsForResortingAt(const QString& data, int index)
 {
     Q_UNUSED(data);
 
@@ -561,19 +541,19 @@ void GridComicsView::selectedItem(int index)
 
 void GridComicsView::setShowMarks(bool show)
 {
-    QQmlContext *ctxt = view->rootContext();
+    QQmlContext* ctxt = view->rootContext();
     ctxt->setContextProperty("show_marks", show);
 }
 
-void GridComicsView::closeEvent(QCloseEvent *event)
+void GridComicsView::closeEvent(QCloseEvent* event)
 {
     toolbar->removeAction(toolBarStretchAction);
     toolbar->removeAction(showInfoAction);
     toolbar->removeAction(showInfoSeparatorAction);
     toolbar->removeAction(coverSizeSliderAction);
 
-    QObject *rootObject = dynamic_cast<QObject*>(view->rootObject());
-    QObject *infoContainer = rootObject->findChild<QObject*>("infoContainer", Qt::FindChildrenRecursively);
+    QObject* rootObject = dynamic_cast<QObject*>(view->rootObject());
+    QObject* infoContainer = rootObject->findChild<QObject*>("infoContainer", Qt::FindChildrenRecursively);
 
     int infoWidth = QQmlProperty(infoContainer, "width").read().toInt();
 
