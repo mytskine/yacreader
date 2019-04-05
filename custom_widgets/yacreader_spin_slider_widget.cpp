@@ -18,9 +18,9 @@ YACReaderSpinSliderWidget::YACReaderSpinSliderWidget(QWidget * parent,bool strec
 	layout->addWidget(slider);
 	if(strechableSlider)
 	{
-		layout->setStretchFactor(slider,0.85);
-		layout->setStretchFactor(spinBox,0);
-		layout->setStretchFactor(label,0.15);
+		layout->setStretchFactor(slider,10);
+		layout->setStretchFactor(spinBox,1);
+		layout->setStretchFactor(label,2);
 	}
 
 	connect(spinBox, SIGNAL(valueChanged(int)), slider,  SLOT(setValue(int)));
