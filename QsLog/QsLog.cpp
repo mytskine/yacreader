@@ -233,10 +233,8 @@ void Logger::enqueueWrite(const QString& message, Level level)
 void Logger::write(const QString& message, Level level)
 {
     QMutexLocker lock(&d->logMutex);
-    for (DestinationList::iterator it = d->destList.begin(),
-                                   endIt = d->destList.end();
-         it != endIt; ++it) {
-        (*it)->write(message, level);
+    for (auto& it : d->destList) {
+        it->write(message, level);
     }
 }
 

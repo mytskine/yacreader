@@ -351,8 +351,8 @@ void PageRender::run()
         m.rotate(degrees);
         img = img.transformed(m, Qt::SmoothTransformation);
     }
-    for (int i = 0; i < filters.size(); i++) {
-        img = filters[i]->setFilter(img);
+    for (auto& filter : filters) {
+        img = filter->setFilter(img);
     }
 
     *page = img;
@@ -985,17 +985,17 @@ void Render::fillBuffer()
 //se terminan todos los hilos en ejecución y se libera la memoria (de hilos e imágenes)
 void Render::invalidate()
 {
-    for (int i = 0; i < pageRenders.size(); i++) {
-        if (pageRenders[i] != 0) {
-            pageRenders[i]->wait();
-            delete pageRenders[i];
-            pageRenders[i] = 0;
+    for (auto& pageRender : pageRenders) {
+        if (pageRender != 0) {
+            pageRender->wait();
+            delete pageRender;
+            pageRender = 0;
         }
     }
 
-    for (int i = 0; i < buffer.size(); i++) {
-        delete buffer[i];
-        buffer[i] = new QImage();
+    for (auto& i : buffer) {
+        delete i;
+        i = new QImage();
     }
 }
 

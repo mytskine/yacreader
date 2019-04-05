@@ -178,8 +178,7 @@ void GoToFlow::updateImageData()
         indexes[j * 2 + 1] = center + j + 1;
         indexes[j * 2 + 2] = center - j - 1;
     }
-    for (int c = 0; c < 2 * COUNT + 1; c++) {
-        int i = indexes[c];
+    for (int i : indexes) {
         if ((i >= 0) && (i < flow->slideCount()))
             if (!imagesLoaded[i] && imagesReady[i]) //slide(i).isNull())
             {
