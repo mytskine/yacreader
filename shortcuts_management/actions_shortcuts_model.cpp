@@ -24,28 +24,33 @@ int ActionsShortcutsModel::columnCount(const QModelIndex& parent) const
 
 QModelIndex ActionsShortcutsModel::index(int row, int column, const QModelIndex& parent) const
 {
-    if (!hasIndex(row, column, parent))
+    if (!hasIndex(row, column, parent)) {
         return QModelIndex();
+    }
 
     return createIndex(row, column, actions[row]);
 }
 
 Qt::ItemFlags ActionsShortcutsModel::flags(const QModelIndex& index) const
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return nullptr;
-    if (index.column() == KEYS)
+    }
+    if (index.column() == KEYS) {
         return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
+    }
     return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 }
 
 QVariant ActionsShortcutsModel::data(const QModelIndex& index, int role) const
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return QVariant();
+    }
 
-    if (role == Qt::DecorationRole && index.column() == ICON)
+    if (role == Qt::DecorationRole && index.column() == ICON) {
         return QVariant(actions[index.row()]->icon());
+    }
 
     if (role == Qt::TextAlignmentRole) {
         switch (index.column()) {
@@ -58,18 +63,22 @@ QVariant ActionsShortcutsModel::data(const QModelIndex& index, int role) const
         }
     }
 
-    if (role == Qt::ForegroundRole && index.column() == KEYS && actions[index.row()]->shortcut().isEmpty())
+    if (role == Qt::ForegroundRole && index.column() == KEYS && actions[index.row()]->shortcut().isEmpty()) {
         return QBrush(QColor("#AAAAAA"));
+    }
 
-    if (role != Qt::DisplayRole)
+    if (role != Qt::DisplayRole) {
         return QVariant();
+    }
 
-    if (index.column() == NAME)
+    if (index.column() == NAME) {
         return QVariant(actions[index.row()]->toolTip());
+    }
     if (index.column() == KEYS) {
         QKeySequence ks = actions[index.row()]->shortcut();
-        if (ks.isEmpty())
+        if (ks.isEmpty()) {
             return tr("None");
+        }
         return QVariant(ks.toString(QKeySequence::NativeText));
     }
 
@@ -82,9 +91,9 @@ bool ActionsShortcutsModel::setData(const QModelIndex& index, const QVariant& va
 
     if (index.column() == KEYS) {
         ShortcutsManager sm = ShortcutsManager::getShortcutsManager();
-        if (sm.checkConflicts(value.toString(), actions[index.row()]))
+        if (sm.checkConflicts(value.toString(), actions[index.row()])) {
             emit conflict(value.toString());
-        else {
+        } else {
             actions[index.row()]->setShortcut(value.toString());
             ShortcutsManager::getShortcutsManager().saveShortcut(actions[index.row()]);
             return true;

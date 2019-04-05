@@ -63,15 +63,17 @@ Viewer::Viewer(QWidget* parent)
     OpenGLChecker openGLChecker;
     bool openGLAvailable = openGLChecker.hasCompatibleOpenGLVersion();
 
-    if (openGLAvailable && !settings->contains(USE_OPEN_GL))
+    if (openGLAvailable && !settings->contains(USE_OPEN_GL)) {
         settings->setValue(USE_OPEN_GL, 2);
-    else if (!openGLAvailable)
+    } else if (!openGLAvailable) {
         settings->setValue(USE_OPEN_GL, 0);
+    }
 
-    if ((settings->value(USE_OPEN_GL).toBool() == true))
+    if ((settings->value(USE_OPEN_GL).toBool() == true)) {
         goToFlow = new GoToFlowGL(this, Configuration::getConfiguration().getFlowType());
-    else
+    } else {
         goToFlow = new GoToFlow(this, Configuration::getConfiguration().getFlowType());
+    }
 #else
     goToFlow = new GoToFlow(this, Configuration::getConfiguration().getFlowType());
 #endif
@@ -87,11 +89,13 @@ Viewer::Viewer(QWidget* parent)
     hideCursorTimer = new QTimer();
     hideCursorTimer->setSingleShot(true);
 
-    if (Configuration::getConfiguration().getDoublePage())
+    if (Configuration::getConfiguration().getDoublePage()) {
         doublePageSwitch();
+    }
 
-    if (Configuration::getConfiguration().getDoubleMangaPage())
+    if (Configuration::getConfiguration().getDoubleMangaPage()) {
         doubleMangaPageSwitch();
+    }
 
     createConnections();
 
@@ -131,8 +135,9 @@ Viewer::~Viewer()
     delete bd;
     delete notificationsLabel;
     delete mglass;
-    if (currentPage != nullptr)
+    if (currentPage != nullptr) {
         delete currentPage;
+    }
 }
 
 void Viewer::createConnections()
@@ -181,8 +186,9 @@ void Viewer::createConnections()
 //Deprecated
 void Viewer::prepareForOpening()
 {
-    if (Configuration::getConfiguration().getBookmarksAuto() && render->hasLoadedComic())
+    if (Configuration::getConfiguration().getBookmarksAuto() && render->hasLoadedComic()) {
         save();
+    }
     //bd->setBookmarks(*bm);
 
     goToFlow->reset();
@@ -268,9 +274,9 @@ void Viewer::updatePage()
 {
     QPixmap* previousPage = currentPage;
     if (doublePage) {
-        if (!doubleMangaPage)
+        if (!doubleMangaPage) {
             currentPage = render->getCurrentDoublePage();
-        else {
+        } else {
             currentPage = render->getCurrentDoubleMangaPage();
         }
         if (currentPage == nullptr) {
@@ -283,16 +289,18 @@ void Viewer::updatePage()
     updateContentSize();
     updateVerticalScrollBar();
 
-    if (goToFlow->isHidden())
+    if (goToFlow->isHidden()) {
         setFocus(Qt::ShortcutFocusReason);
-    else
+    } else {
         goToFlow->setFocus(Qt::OtherFocusReason);
+    }
     delete previousPage;
 
-    if (currentPage->isNull())
+    if (currentPage->isNull()) {
         setPageUnavailableMessage();
-    else
+    } else {
         emit(pageAvailable(true));
+    }
 
     emit backgroundChanges();
 
@@ -377,22 +385,24 @@ int Viewer::getZoomFactor()
 void Viewer::setZoomFactor(int z)
 {
     //this function is mostly used to reset the zoom after a fitmode switch
-    if (z > 500)
+    if (z > 500) {
         zoom = 500;
-    else if (z < 30)
+    } else if (z < 30) {
         zoom = 30;
-    else
+    } else {
         zoom = z;
+    }
 
     emit zoomUpdated(zoom);
 }
 
 void Viewer::updateVerticalScrollBar()
 {
-    if (direction > 0)
+    if (direction > 0) {
         verticalScrollBar()->setSliderPosition(verticalScrollBar()->minimum());
-    else
+    } else {
         verticalScrollBar()->setSliderPosition(verticalScrollBar()->maximum());
+    }
 }
 
 void Viewer::scrollDown()
@@ -465,68 +475,74 @@ void Viewer::scrollBackwardVerticalFirst()
 
 bool Viewer::isEdge(scrollDirection d)
 {
-    if (d == UP)
+    if (d == UP) {
         return verticalScrollBar()->sliderPosition() == verticalScrollBar()->minimum();
-    else if (d == DOWN)
+    } else if (d == DOWN) {
         return verticalScrollBar()->sliderPosition() == verticalScrollBar()->maximum();
-    else if (d == LEFT)
+    } else if (d == LEFT) {
         return horizontalScrollBar()->sliderPosition() == horizontalScrollBar()->minimum();
-    else // d == RIGHT
+    } else { // d == RIGHT
         return horizontalScrollBar()->sliderPosition() == horizontalScrollBar()->maximum();
+    }
 }
 
 void Viewer::scrollZigzag(scrollDirection d1, scrollDirection d2, bool forward)
 {
     if (!isEdge(d1)) {
-        if (d1 == UP)
+        if (d1 == UP) {
             scrollTo(horizontalScrollBar()->sliderPosition(),
                 verticalScrollBar()->sliderPosition() - static_cast<int>((height() * 0.80)));
-        else if (d1 == DOWN)
+        } else if (d1 == DOWN) {
             scrollTo(horizontalScrollBar()->sliderPosition(),
                 verticalScrollBar()->sliderPosition() + static_cast<int>((height() * 0.80)));
-        else if (d1 == LEFT)
+        } else if (d1 == LEFT) {
             scrollTo(horizontalScrollBar()->sliderPosition() - static_cast<int>((width() * 0.80)),
                 verticalScrollBar()->sliderPosition());
-        else // d1 == RIGHT
+        } else { // d1 == RIGHT
             scrollTo(horizontalScrollBar()->sliderPosition() + static_cast<int>((width() * 0.80)),
                 verticalScrollBar()->sliderPosition());
+        }
     } else if (!isEdge(d2)) {
         int x = 0;
         int y = 0;
 
-        if (d1 == UP)
+        if (d1 == UP) {
             y = verticalScrollBar()->maximum();
-        else if (d1 == DOWN)
+        } else if (d1 == DOWN) {
             y = verticalScrollBar()->minimum();
-        else if (d1 == LEFT)
+        } else if (d1 == LEFT) {
             x = horizontalScrollBar()->maximum();
-        else // d1 == RIGHT
+        } else { // d1 == RIGHT
             x = horizontalScrollBar()->minimum();
+        }
 
-        if (d2 == UP)
+        if (d2 == UP) {
             y = std::max(verticalScrollBar()->sliderPosition() - static_cast<int>((height() * 0.80)), verticalScrollBar()->minimum());
-        else if (d2 == DOWN)
+        } else if (d2 == DOWN) {
             y = std::min(verticalScrollBar()->sliderPosition() + static_cast<int>((height() * 0.80)), verticalScrollBar()->maximum());
-        else if (d2 == LEFT)
+        } else if (d2 == LEFT) {
             x = std::max(horizontalScrollBar()->sliderPosition() - static_cast<int>((width() * 0.80)), horizontalScrollBar()->minimum());
-        else // d2 == RIGHT
+        } else { // d2 == RIGHT
             x = std::min(horizontalScrollBar()->sliderPosition() + static_cast<int>((width() * 0.80)), horizontalScrollBar()->maximum());
+        }
 
         scrollTo(x, y);
     } else {
         // next or prev page's corner
         int savedPageNumber = getCurrentPageNumber();
 
-        if (forward)
+        if (forward) {
             next();
-        else
+        } else {
             prev();
+        }
 
         if (savedPageNumber != getCurrentPageNumber()) {
-            if (d1 == LEFT || d2 == LEFT)
+            if (d1 == LEFT || d2 == LEFT) {
                 horizontalScrollBar()->setSliderPosition(horizontalScrollBar()->maximum());
-            else
+            } else {
                 horizontalScrollBar()->setSliderPosition(horizontalScrollBar()->minimum());
+            }
             emit backgroundChanges();
         }
     }
@@ -534,8 +550,9 @@ void Viewer::scrollZigzag(scrollDirection d1, scrollDirection d2, bool forward)
 
 void Viewer::scrollTo(int x, int y)
 {
-    if (groupScroller->state() == QAbstractAnimation::Running)
+    if (groupScroller->state() == QAbstractAnimation::Running) {
         return;
+    }
     horizontalScroller->setDuration(Configuration::getConfiguration().getScrollDuration());
     horizontalScroller->setStartValue(horizontalScrollBar()->sliderPosition());
     horizontalScroller->setEndValue(x);
@@ -552,14 +569,18 @@ void Viewer::keyPressEvent(QKeyEvent* event)
         int _key = event->key();
         Qt::KeyboardModifiers modifiers = event->modifiers();
 
-        if (modifiers & Qt::ShiftModifier)
+        if (modifiers & Qt::ShiftModifier) {
             _key |= Qt::SHIFT;
-        if (modifiers & Qt::ControlModifier)
+        }
+        if (modifiers & Qt::ControlModifier) {
             _key |= Qt::CTRL;
-        if (modifiers & Qt::MetaModifier)
+        }
+        if (modifiers & Qt::MetaModifier) {
             _key |= Qt::META;
-        if (modifiers & Qt::AltModifier)
+        }
+        if (modifiers & Qt::AltModifier) {
             _key |= Qt::ALT;
+        }
 
         QKeySequence key(_key);
         /*if(goToFlow->isVisible() && event->key()!=Qt::Key_S)
@@ -607,15 +628,17 @@ void Viewer::keyPressEvent(QKeyEvent* event)
             goTo(this->render->numPages() - 1);
         }
 
-        else
+        else {
             QAbstractScrollArea::keyPressEvent(event);
+        }
 
         if (mglass->isVisible() && (key == ShortcutsManager::getShortcutsManager().getShortcut(SIZE_UP_MGLASS_ACTION_Y) || key == ShortcutsManager::getShortcutsManager().getShortcut(SIZE_DOWN_MGLASS_ACTION_Y) || key == ShortcutsManager::getShortcutsManager().getShortcut(ZOOM_IN_MGLASS_ACTION_Y) || key == ShortcutsManager::getShortcutsManager().getShortcut(ZOOM_OUT_MGLASS_ACTION_Y))) {
             QCoreApplication::sendEvent(mglass, event);
         }
 
-    } else
+    } else {
         QAbstractScrollArea::keyPressEvent(event);
+    }
 }
 
 void Viewer::wheelEvent(QWheelEvent* event)
@@ -630,8 +653,9 @@ void Viewer::wheelEvent(QWheelEvent* event)
                     wheelStop = false;
                 }
                 return;
-            } else
+            } else {
                 wheelStop = true;
+            }
         } else {
             if ((event->delta() > 0) && (verticalScrollBar()->sliderPosition() == verticalScrollBar()->minimum())) {
                 if (wheelStop) {
@@ -642,8 +666,9 @@ void Viewer::wheelEvent(QWheelEvent* event)
                         wheelStop = false;
                     }
                     return;
-                } else
+                } else {
                     wheelStop = true;
+                }
             }
         }
 
@@ -678,16 +703,18 @@ void Viewer::mouseMoveEvent(QMouseEvent* event)
     showCursor();
     hideCursorTimer->start(2500);
 
-    if (magnifyingGlassShowed)
+    if (magnifyingGlassShowed) {
         mglass->move(static_cast<int>(event->x() - float(mglass->width()) / 2), static_cast<int>(event->y() - float(mglass->height()) / 2));
+    }
 
     if (render->hasLoadedComic()) {
         if (showGoToFlowAnimation->state() != QPropertyAnimation::Running) {
             if (Configuration::getConfiguration().getDisableShowOnMouseOver() == false) {
                 if (goToFlow->isVisible()) {
                     QPoint gtfPos = goToFlow->mapFrom(this, event->pos());
-                    if (gtfPos.y() < 0 || gtfPos.x() < 0 || gtfPos.x() > goToFlow->width()) //TODO this extra check is for Mavericks (mouseMove over goToFlowGL seems to be broken)
+                    if (gtfPos.y() < 0 || gtfPos.x() < 0 || gtfPos.x() > goToFlow->width()) { //TODO this extra check is for Mavericks (mouseMove over goToFlowGL seems to be broken)
                         animateHideGoToFlow();
+                    }
                     //goToFlow->hide();
                 } else {
                     int umbral = (width() - goToFlow->width()) / 2;
@@ -819,12 +846,15 @@ void Viewer::moveCursoToGoToFlow()
     int cursorX = cursorPos.x();
     int cursorY = cursorPos.y();
 
-    if (cursorY <= y)
+    if (cursorY <= y) {
         cursorY = y + 10;
-    if (cursorX <= x1)
+    }
+    if (cursorX <= x1) {
         cursorX = x1 + 10;
-    if (cursorX >= x2)
+    }
+    if (cursorX >= x2) {
         cursorX = x2 - 10;
+    }
     cursor().setPos(mapToGlobal(QPoint(cursorX, cursorY)));
     hideCursorTimer->stop();
     showCursor();
@@ -854,8 +884,9 @@ void Viewer::setBookmark(bool set)
 
 void Viewer::save()
 {
-    if (render->hasLoadedComic())
+    if (render->hasLoadedComic()) {
         render->save();
+    }
 }
 
 void Viewer::doublePageSwitch()
@@ -905,8 +936,9 @@ void Viewer::setPageUnavailableMessage()
 void Viewer::configureContent(QString msg)
 {
     content->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    if (!(devicePixelRatio() > 1))
+    if (!(devicePixelRatio() > 1)) {
         content->setScaledContents(true);
+    }
     content->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
     content->setText(msg);
     content->setFont(QFont("courier new", 12));
@@ -925,10 +957,11 @@ void Viewer::hideCursor()
 }
 void Viewer::showCursor()
 {
-    if (drag)
+    if (drag) {
         setCursor(Qt::ClosedHandCursor);
-    else
+    } else {
         setCursor(Qt::OpenHandCursor);
+    }
 }
 
 void Viewer::updateOptions()
@@ -950,8 +983,9 @@ void Viewer::animateShowTranslator()
 {
     if (translator->isHidden() && translatorAnimation->state() != QPropertyAnimation::Running) {
         disconnect(translatorAnimation, SIGNAL(finished()), translator, SLOT(hide()));
-        if (translatorXPos == -10000)
+        if (translatorXPos == -10000) {
             translatorXPos = (width() - translator->width()) / 2;
+        }
         int x = qMax(0, qMin(translatorXPos, width() - translator->width()));
         if (translator->pos().x() < 0) {
             translatorAnimation->setStartValue(QPoint(-translator->width(), translator->pos().y()));
@@ -969,10 +1003,11 @@ void Viewer::animateHideTranslator()
     if (translator->isVisible() && translatorAnimation->state() != QPropertyAnimation::Running) {
         connect(translatorAnimation, SIGNAL(finished()), translator, SLOT(hide()));
         translatorAnimation->setStartValue(QPoint(translatorXPos = translator->pos().x(), translator->pos().y()));
-        if ((translator->width() / 2) + translator->pos().x() <= width() / 2)
+        if ((translator->width() / 2) + translator->pos().x() <= width() / 2) {
             translatorAnimation->setEndValue(QPoint(-translator->width(), translator->pos().y()));
-        else
+        } else {
             translatorAnimation->setEndValue(QPoint(width() + translator->width(), translator->pos().y()));
+        }
         translatorAnimation->start();
         this->setFocus(Qt::OtherFocusReason);
     }
@@ -1078,12 +1113,15 @@ void Viewer::updateComic(ComicDB& comic)
         Bookmarks* boomarks = render->getBookmarks();
         QList<int> boomarksList = boomarks->getBookmarkPages();
         int numBookmarks = boomarksList.size();
-        if (numBookmarks > 0)
+        if (numBookmarks > 0) {
             comic.info.bookmark1 = boomarksList[0];
-        if (numBookmarks > 1)
+        }
+        if (numBookmarks > 1) {
             comic.info.bookmark2 = boomarksList[1];
-        if (numBookmarks > 2)
+        }
+        if (numBookmarks > 2) {
             comic.info.bookmark3 = boomarksList[2];
+        }
         //set filters
         //TODO: avoid use settings for this...
         QSettings settings(YACReader::getSettingsPath() + "/YACReader.ini", QSettings::IniFormat);
@@ -1091,11 +1129,14 @@ void Viewer::updateComic(ComicDB& comic)
         int contrast = settings.value(CONTRAST, 100).toInt();
         int gamma = settings.value(GAMMA, 100).toInt();
 
-        if (brightness != 0 || comic.info.brightness != -1)
+        if (brightness != 0 || comic.info.brightness != -1) {
             comic.info.brightness = brightness;
-        if (contrast != 100 || comic.info.contrast != -1)
+        }
+        if (contrast != 100 || comic.info.contrast != -1) {
             comic.info.contrast = contrast;
-        if (gamma != 100 || comic.info.gamma != -1)
+        }
+        if (gamma != 100 || comic.info.gamma != -1) {
             comic.info.gamma = gamma;
+        }
     }
 }

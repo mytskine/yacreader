@@ -77,8 +77,9 @@ void Bookmarks::newComic(const QString& path)
     comicPath = comicID;
     lastPageIndex = b.lastPage;
     latestBookmarks = b.bookmarks;
-    for (int i = 0; i < latestBookmarks.count(); i++)
+    for (int i = 0; i < latestBookmarks.count(); i++) {
         bookmarks.insert(latestBookmarks.at(i), QImage());
+    }
     added = b.added;
 }
 
@@ -111,8 +112,9 @@ void Bookmarks::save()
     BookmarksList::Bookmark previousBookmarks;
     bool updated = ((previousBookmarks.lastPage != b.lastPage) || (previousBookmarks.bookmarks != b.bookmarks));
 
-    if (b.added.isNull() || updated)
+    if (b.added.isNull() || updated) {
         b.added = QDateTime::currentDateTime();
+    }
     list.add(comicPath, b);
     list.save();
 }
@@ -132,8 +134,9 @@ void BookmarksList::save()
     QFile f(YACReader::getSettingsPath() + "/bookmarks.yacr");
     f.open(QIODevice::WriteOnly);
     QDataStream dataS(&f);
-    if (list.count() > numMaxBookmarks)
+    if (list.count() > numMaxBookmarks) {
         deleteOldest(list.count() - numMaxBookmarks);
+    }
     dataS << list;
     f.close();
 }

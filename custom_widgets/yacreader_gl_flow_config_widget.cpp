@@ -215,10 +215,11 @@ YACReaderGLFlowConfigWidget::YACReaderGLFlowConfigWidget(QWidget* parent /* = 0 
 
 void YACReaderGLFlowConfigWidget::avancedOptionToogled(bool show)
 {
-    if (show)
+    if (show) {
         optionsGroupBox->show();
-    else
+    } else {
         optionsGroupBox->hide();
+    }
 }
 
 void YACReaderGLFlowConfigWidget::setValues(Preset preset)

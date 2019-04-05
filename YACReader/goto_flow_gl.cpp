@@ -53,14 +53,15 @@ void GoToFlowGL::centerSlide(int slide)
 
 void GoToFlowGL::setFlowType(FlowType flowType)
 {
-    if (flowType == CoverFlowLike)
+    if (flowType == CoverFlowLike) {
         flow->setPreset(presetYACReaderFlowClassicConfig);
-    else if (flowType == Strip)
+    } else if (flowType == Strip) {
         flow->setPreset(presetYACReaderFlowStripeConfig);
-    else if (flowType == StripOverlapped)
+    } else if (flowType == StripOverlapped) {
         flow->setPreset(presetYACReaderFlowOverlappedStripeConfig);
-    else
+    } else {
         flow->setPreset(defaultYACReaderFlowConfig);
+    }
 }
 
 void GoToFlowGL::setNumSlides(unsigned int slides)
@@ -130,8 +131,9 @@ void GoToFlowGL::updateConfig(QSettings* settings)
         flow->setMaxAngle(settings->value(MAX_ANGLE).toInt());
         break;
     }
-    if (Configuration::getConfiguration().getQuickNaviMode())
+    if (Configuration::getConfiguration().getQuickNaviMode()) {
         flow->setFadeOutDist(20);
+    }
 }
 
 void GoToFlowGL::keyPressEvent(QKeyEvent* event)

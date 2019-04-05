@@ -11,8 +11,9 @@ YACReaderSpinSliderWidget::YACReaderSpinSliderWidget(QWidget* parent, bool strec
 {
     QHBoxLayout* layout = new QHBoxLayout;
     layout->addWidget(label = new QLabel(this), 1);
-    if (!strechableSlider)
+    if (!strechableSlider) {
         layout->addStretch();
+    }
     spinBox = new QSpinBox(this);
     layout->addWidget(spinBox);
     slider = new QSlider(Qt::Horizontal, this);
@@ -36,21 +37,24 @@ YACReaderSpinSliderWidget::YACReaderSpinSliderWidget(QWidget* parent, bool strec
 void YACReaderSpinSliderWidget::valueWillChange(int v)
 {
     Q_UNUSED(v)
-    if (tracking)
+    if (tracking) {
         emit valueChanged(spinBox->value());
+    }
 }
 
 void YACReaderSpinSliderWidget::valueWillChangeFromSpinBox(int v)
 {
     Q_UNUSED(v)
-    if (!tracking && !slider->isSliderDown())
+    if (!tracking && !slider->isSliderDown()) {
         emit valueChanged(spinBox->value());
+    }
 }
 
 void YACReaderSpinSliderWidget::sliderRelease()
 {
-    if (!tracking)
+    if (!tracking) {
         emit valueChanged(spinBox->value());
+    }
 }
 
 void YACReaderSpinSliderWidget::setRange(int lowValue, int topValue, int step)

@@ -15,12 +15,13 @@
 template <class T>
 inline const T& kClamp(const T& x, const T& low, const T& high)
 {
-    if (x < low)
+    if (x < low) {
         return low;
-    else if (high < x)
+    } else if (high < x) {
         return high;
-    else
+    } else {
         return x;
+    }
 }
 
 inline int changeBrightness(int value, int brightness)
@@ -50,13 +51,15 @@ static QImage changeImage(const QImage& image, int value)
     im.detach();
     if (im.colorCount() == 0) /* truecolor */
     {
-        if (im.format() != QImage::Format_RGB32) /* just in case */
+        if (im.format() != QImage::Format_RGB32) { /* just in case */
             im = im.convertToFormat(QImage::Format_RGB32);
+        }
         int table[256];
         for (int i = 0;
              i < 256;
-             ++i)
+             ++i) {
             table[i] = operation(i, value);
+        }
         if (im.hasAlphaChannel()) {
             for (int y = 0;
                  y < im.height();
@@ -64,11 +67,12 @@ static QImage changeImage(const QImage& image, int value)
                 QRgb* line = reinterpret_cast<QRgb*>(im.scanLine(y));
                 for (int x = 0;
                      x < im.width();
-                     ++x)
+                     ++x) {
                     line[x] = qRgba(changeUsingTable(qRed(line[x]), table),
                         changeUsingTable(qGreen(line[x]), table),
                         changeUsingTable(qBlue(line[x]), table),
                         changeUsingTable(qAlpha(line[x]), table));
+                }
             }
         } else {
             for (int y = 0;
@@ -77,20 +81,22 @@ static QImage changeImage(const QImage& image, int value)
                 QRgb* line = reinterpret_cast<QRgb*>(im.scanLine(y));
                 for (int x = 0;
                      x < im.width();
-                     ++x)
+                     ++x) {
                     line[x] = qRgb(changeUsingTable(qRed(line[x]), table),
                         changeUsingTable(qGreen(line[x]), table),
                         changeUsingTable(qBlue(line[x]), table));
+                }
             }
         }
     } else {
         QVector<QRgb> colors = im.colorTable();
         for (int i = 0;
              i < im.colorCount();
-             ++i)
+             ++i) {
             colors[i] = qRgb(operation(qRed(colors[i]), value),
                 operation(qGreen(colors[i]), value),
                 operation(qBlue(colors[i]), value));
+        }
         im.setColorTable(colors);
     }
     return im;
@@ -99,24 +105,27 @@ static QImage changeImage(const QImage& image, int value)
 // brightness is multiplied by 100 in order to avoid floating point numbers
 QImage changeBrightness(const QImage& image, int brightness)
 {
-    if (brightness == 0) // no change
+    if (brightness == 0) { // no change
         return image;
+    }
     return changeImage<changeBrightness>(image, brightness);
 }
 
 // contrast is multiplied by 100 in order to avoid floating point numbers
 QImage changeContrast(const QImage& image, int contrast)
 {
-    if (contrast == 100) // no change
+    if (contrast == 100) { // no change
         return image;
+    }
     return changeImage<changeContrast>(image, contrast);
 }
 
 // gamma is multiplied by 100 in order to avoid floating point numbers
 QImage changeGamma(const QImage& image, int gamma)
 {
-    if (gamma == 100) // no change
+    if (gamma == 100) { // no change
         return image;
+    }
     return changeImage<changeGamma>(image, gamma);
 }
 
@@ -388,8 +397,9 @@ Render::~Render()
 
     foreach (PageRender* pr, pageRenders)
         if (pr != nullptr) {
-            if (pr->wait())
+            if (pr->wait()) {
                 delete pr;
+            }
         }
 
     //TODO move to share_ptr
@@ -406,28 +416,31 @@ void Render::render()
         if (pagesReady.size() > 0) {
             if (pagesReady[currentIndex]) {
                 pageRenders[currentPageBufferedIndex] = new PageRender(this, currentIndex, comic->getRawData()->at(currentIndex), buffer[currentPageBufferedIndex], imageRotation, filters);
-            } else
+            } else {
                 //las páginas no están listas, y se están cargando en el cómic
                 emit processingPage(); //para evitar confusiones esta señal debería llamarse de otra forma
+            }
 
             //si se ha creado un hilo para renderizar la página actual, se arranca
             if (pageRenders[currentPageBufferedIndex] != 0) {
                 //se conecta la señal pageReady del hilo, con el SLOT prepareAvailablePage
                 connect(pageRenders[currentPageBufferedIndex], SIGNAL(pageReady(int)), this, SLOT(prepareAvailablePage(int)));
                 //se emite la señal de procesando, debido a que los hilos se arrancan aquí
-                if (filters.size() > 0)
+                if (filters.size() > 0) {
                     emit processingPage();
+                }
                 pageRenders[currentPageBufferedIndex]->start();
                 pageRenders[currentPageBufferedIndex]->setPriority(QThread::TimeCriticalPriority);
-            } else
+            } else {
                 //en qué caso sería necesario hacer esto??? //TODO: IMPORTANTE, puede que no sea necesario.
                 emit processingPage();
-        } else
+            }
+        } else {
             //no hay ninguna página lista para ser renderizada, es necesario esperar.
             emit processingPage();
-    } else
-    // la página actual está lista
-    {
+        }
+    } else {
+        //The page is ready
         //emit currentPageReady();
         //make prepareAvailablePage the only function that emits currentPageReady()
         prepareAvailablePage(currentIndex);
@@ -648,22 +661,25 @@ void Render::load(const QString& path, const ComicDB& comicDB)
     for (int i = 0; i < filters.count(); i++) {
         auto filter = filters[i];
         if (typeid(*filter).hash_code() == typeid(BrightnessFilter).hash_code()) {
-            if (comicDB.info.brightness == -1)
+            if (comicDB.info.brightness == -1) {
                 filter->setLevel(0);
-            else
+            } else {
                 filter->setLevel(comicDB.info.brightness);
+            }
         }
         if (typeid(*filter).hash_code() == typeid(ContrastFilter).hash_code()) {
-            if (comicDB.info.contrast == -1)
+            if (comicDB.info.contrast == -1) {
                 filter->setLevel(100);
-            else
+            } else {
                 filter->setLevel(comicDB.info.contrast);
+            }
         }
         if (typeid(*filter).hash_code() == typeid(GammaFilter).hash_code()) {
-            if (comicDB.info.gamma == -1)
+            if (comicDB.info.gamma == -1) {
                 filter->setLevel(100);
-            else
+            } else {
                 filter->setLevel(comicDB.info.gamma);
+            }
         }
     }
     createComic(path);
@@ -739,8 +755,9 @@ void Render::startLoad()
     connect(thread, SIGNAL(started()), comic, SLOT(process()));
     connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
 
-    if (thread != nullptr)
+    if (thread != nullptr) {
         thread->start();
+    }
 
     invalidate();
     loadedComic = true;
@@ -835,8 +852,9 @@ unsigned int Render::numPages()
 
 bool Render::hasLoadedComic()
 {
-    if (comic != nullptr)
+    if (comic != nullptr) {
         return comic->loaded();
+    }
     return false;
 }
 
@@ -847,8 +865,9 @@ void Render::setNumPages(unsigned int numPages)
 
 void Render::pageRawDataReady(int page)
 {
-    if (!hasLoadedComic())
+    if (!hasLoadedComic()) {
         return;
+    }
 
     pagesEmited.push_back(page);
     if (pageRenders.size() > 0) {
@@ -859,9 +878,9 @@ void Render::pageRawDataReady(int page)
             }
 
             pagesReady[pagesEmited.at(i)] = true;
-            if (pagesEmited.at(i) == currentIndex)
+            if (pagesEmited.at(i) == currentIndex) {
                 update();
-            else {
+            } else {
                 if (((pagesEmited.at(i) < currentIndex) && (pagesEmited.at(i) > currentIndex - numLeftPages)) || ((pagesEmited.at(i) > currentIndex) && (pagesEmited.at(i) < currentIndex + numRightPages))) {
                     fillBuffer();
                 }
@@ -891,10 +910,11 @@ void Render::rotateRight()
 }
 void Render::rotateLeft()
 {
-    if (imageRotation == 0)
+    if (imageRotation == 0) {
         imageRotation = 270;
-    else
+    } else {
         imageRotation = imageRotation - 90;
+    }
     reload();
 }
 
@@ -914,15 +934,17 @@ void Render::updateBuffer()
             PageRender* pr = pageRenders.front();
             pageRenders.pop_front();
             if (pr != nullptr) {
-                if (pr->wait())
+                if (pr->wait()) {
                     delete pr;
+                }
             }
             pageRenders.push_back(0);
 
             //images
 
-            if (buffer.front() != 0)
+            if (buffer.front() != 0) {
                 delete buffer.front();
+            }
             buffer.pop_front();
             buffer.push_back(new QImage());
         }
@@ -935,16 +957,18 @@ void Render::updateBuffer()
             PageRender* pr = pageRenders.back();
             pageRenders.pop_back();
             if (pr != nullptr) {
-                if (pr->wait())
+                if (pr->wait()) {
                     delete pr;
+                }
             }
             pageRenders.push_front(0);
 
             //images
             buffer.push_front(new QImage());
             QImage* p = buffer.back();
-            if (p != nullptr)
+            if (p != nullptr) {
                 delete p;
+            }
             buffer.pop_back();
         }
     }
@@ -1015,10 +1039,11 @@ QString Render::getCurrentPagesInformation()
     QString s = QString::number(currentIndex + 1);
     if (doublePage && (currentIndex + 1 < (int)comic->numPages())) {
         if (currentPageIsDoublePage()) {
-            if (doubleMangaPage)
+            if (doubleMangaPage) {
                 s = QString::number(currentIndex + 2) + "-" + s;
-            else
+            } else {
                 s += "-" + QString::number(currentIndex + 2);
+            }
         }
     }
     s += "/" + QString::number(comic->numPages());
@@ -1057,12 +1082,15 @@ void Render::updateFilters(int brightness, int contrast, int gamma)
 {
     for (int i = 0; i < filters.count(); i++) {
         auto filter = filters[i];
-        if (typeid(*filter).hash_code() == typeid(BrightnessFilter).hash_code())
+        if (typeid(*filter).hash_code() == typeid(BrightnessFilter).hash_code()) {
             filter->setLevel(brightness);
-        if (typeid(*filter).hash_code() == typeid(ContrastFilter).hash_code())
+        }
+        if (typeid(*filter).hash_code() == typeid(ContrastFilter).hash_code()) {
             filter->setLevel(contrast);
-        if (typeid(*filter).hash_code() == typeid(GammaFilter).hash_code())
+        }
+        if (typeid(*filter).hash_code() == typeid(GammaFilter).hash_code()) {
             filter->setLevel(gamma);
+        }
     }
 
     reload();

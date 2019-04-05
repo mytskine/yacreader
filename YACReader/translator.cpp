@@ -186,8 +186,9 @@ void YACReaderTranslator::clear()
 void YACReaderTranslator::translate()
 {
     QString text = this->text->toPlainText();
-    if (text.isEmpty())
+    if (text.isEmpty()) {
         return;
+    }
     QString from = this->from->itemData(this->from->currentIndex()).toString();
     QString to = this->to->itemData(this->to->currentIndex()).toString();
 
@@ -328,8 +329,9 @@ void YACReaderTranslator::mouseReleaseEvent(QMouseEvent* event)
 
 void YACReaderTranslator::mouseMoveEvent(QMouseEvent* event)
 {
-    if (drag)
+    if (drag) {
         this->move(QPoint(mapToParent(event->pos()) - click));
+    }
     event->accept();
 }
 
@@ -372,8 +374,9 @@ void TranslationLoader::run()
 
             QString translated(utf8);
             emit(requestFinished(translated));
-        } else
+        } else {
             emit(error());
+        }
     } else {
         emit(timeOut());
     }
@@ -417,8 +420,9 @@ void TextToSpeachLoader::run()
             utf8 = utf8.replace("\\", "");
 
             emit(requestFinished(QUrl(utf8)));
-        } else
+        } else {
             emit(error());
+        }
     } else {
         emit(timeOut());
     }

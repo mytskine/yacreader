@@ -41,8 +41,9 @@ OpenGLChecker::OpenGLChecker()
 
     description = QString("%1.%2 %3").arg(majorVersion).arg(minorVersion).arg(type);
 
-    if (format.renderableType() != QSurfaceFormat::OpenGL) //Desktop OpenGL
+    if (format.renderableType() != QSurfaceFormat::OpenGL) { //Desktop OpenGL
         compatibleOpenGLVersion = false;
+    }
 
 #ifdef Q_OS_WIN //TODO check Qt version, and set this values depending on the use of QOpenGLWidget or QGLWidget
     static const int majorTargetVersion = 1;
@@ -52,10 +53,12 @@ OpenGLChecker::OpenGLChecker()
     static const int minorTargetVersion = 0;
 #endif
 
-    if (majorVersion < majorTargetVersion)
+    if (majorVersion < majorTargetVersion) {
         compatibleOpenGLVersion = false;
-    if (majorVersion == majorTargetVersion && minorVersion < minorTargetVersion)
+    }
+    if (majorVersion == majorTargetVersion && minorVersion < minorTargetVersion) {
         compatibleOpenGLVersion = false;
+    }
 }
 
 QString OpenGLChecker::textVersionDescription()

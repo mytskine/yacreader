@@ -56,12 +56,14 @@ bool HttpVersionChecker::checkNewVersion(QString sourceContent)
             if (rx.cap(i + 1).toInt() > sl.at(i).toInt()) {
                 newVersion = true;
                 break;
-            } else
+            } else {
                 sameVersion = sameVersion && rx.cap(i + 1).toInt() == sl.at(i).toInt();
+            }
         }
         if (!newVersion && sameVersion) {
-            if ((sl.size() == 3) && (rx.cap(4) != ""))
+            if ((sl.size() == 3) && (rx.cap(4) != "")) {
                 newVersion = true;
+            }
         }
     }
 

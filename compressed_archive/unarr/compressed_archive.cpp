@@ -28,11 +28,13 @@ CompressedArchive::CompressedArchive(const QString& filePath, QObject* parent)
     ar = ar_open_rar_archive(stream);
     //TODO: build unarr with 7z support and test this!
     //if (!ar) ar = ar_open_7z_archive(stream);
-    if (!ar)
+    if (!ar) {
         ar = ar_open_tar_archive(stream);
+    }
     //zip detection is costly, so it comes last...
-    if (!ar)
+    if (!ar) {
         ar = ar_open_zip_archive(stream, false);
+    }
     if (!ar) {
         return;
     }
@@ -86,8 +88,9 @@ int CompressedArchive::getNumFiles()
 
 void CompressedArchive::getAllData(const QVector<quint32>& indexes, ExtractDelegate* delegate)
 {
-    if (indexes.isEmpty())
+    if (indexes.isEmpty()) {
         return;
+    }
 
     QByteArray buffer;
 

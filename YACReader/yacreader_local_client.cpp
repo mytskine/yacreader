@@ -48,8 +48,9 @@ bool YACReaderLocalClient::requestComicInfo(quint64 libraryId, ComicDB& comic, Q
         while (written != block.size() && tries < 200) {
             written += localSocket->write(block);
             localSocket->flush();
-            if (written == previousWritten) //no bytes were written
+            if (written == previousWritten) { //no bytes were written
                 tries++;
+            }
             previousWritten = written;
         }
         if (tries == 200) {
@@ -90,10 +91,12 @@ bool YACReaderLocalClient::requestComicInfo(quint64 libraryId, ComicDB& comic, Q
         localSocket->waitForReadyRead(1000);
         while ((unsigned int)data.length() < totalSize && tries < 20) {
             data.append(localSocket->readAll());
-            if ((unsigned int)data.length() < totalSize)
+            if ((unsigned int)data.length() < totalSize) {
                 localSocket->waitForReadyRead(100);
-            if (data.length() == dataRead)
+            }
+            if (data.length() == dataRead) {
                 tries++;
+            }
             dataRead = data.length();
         }
 
@@ -134,8 +137,9 @@ bool YACReaderLocalClient::sendComicInfo(quint64 libraryId, ComicDB& comic)
         int tries = 0;
         while (written != block.size() && tries < 100) {
             written += localSocket->write(block);
-            if (written == previousWritten)
+            if (written == previousWritten) {
                 tries++;
+            }
             previousWritten = written;
         }
         localSocket->waitForBytesWritten(2000);
@@ -176,8 +180,9 @@ bool YACReaderLocalClient::sendComicInfo(quint64 libraryId, ComicDB& comic, qulo
         int tries = 0;
         while (written != block.size() && tries < 100) {
             written += localSocket->write(block);
-            if (written == previousWritten)
+            if (written == previousWritten) {
                 tries++;
+            }
             previousWritten = written;
         }
         localSocket->waitForBytesWritten(2000);

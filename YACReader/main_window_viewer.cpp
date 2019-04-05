@@ -190,17 +190,20 @@ void MainWindowViewer::setupUI()
     previousPos = pos();
     previousSize = size();
 
-    if (fullscreen)
+    if (fullscreen) {
         toFullScreen();
-    if (conf.getMaximized())
+    }
+    if (conf.getMaximized()) {
         showMaximized();
+    }
 
     setAcceptDrops(true);
 
-    if (Configuration::getConfiguration().getShowToolbars() && !Configuration::getConfiguration().getFullScreen())
+    if (Configuration::getConfiguration().getShowToolbars() && !Configuration::getConfiguration().getFullScreen()) {
         showToolBars();
-    else
+    } else {
         hideToolBars();
+    }
 }
 
 void MainWindowViewer::createActions()
@@ -812,10 +815,11 @@ void MainWindowViewer::open(QString path, ComicDB& comic, QList<ComicDB>& siblin
 
     QFileInfo fi(path);
 
-    if (!comic.info.title.isNull() && !comic.info.title.toString().isEmpty())
+    if (!comic.info.title.isNull() && !comic.info.title.toString().isEmpty()) {
         setWindowTitle("YACReader - " + comic.info.title.toString());
-    else
+    } else {
         setWindowTitle("YACReader - " + fi.fileName());
+    }
 
     viewer->open(path, comic);
     enableActions();
@@ -823,15 +827,17 @@ void MainWindowViewer::open(QString path, ComicDB& comic, QList<ComicDB>& siblin
 
     optionsDialog->setFilters(currentComicDB.info.brightness, currentComicDB.info.contrast, currentComicDB.info.gamma);
 
-    if (index > 0)
+    if (index > 0) {
         openPreviousComicAction->setDisabled(false);
-    else
+    } else {
         openPreviousComicAction->setDisabled(true);
+    }
 
-    if (index + 1 < siblings.count())
+    if (index + 1 < siblings.count()) {
         openNextComicAction->setDisabled(false);
-    else
+    } else {
         openNextComicAction->setDisabled(true);
+    }
 }
 
 void MainWindowViewer::open(QString path, qint64 comicId, qint64 libraryId)
@@ -849,8 +855,9 @@ void MainWindowViewer::open(QString path, qint64 comicId, qint64 libraryId)
     YACReaderLocalClient client;
     int tries = 1;
     bool success = false;
-    while (!(success = client.requestComicInfo(libraryId, currentComicDB, siblingComics)) && tries != 0)
+    while (!(success = client.requestComicInfo(libraryId, currentComicDB, siblingComics)) && tries != 0) {
         tries--;
+    }
 
     if (success) {
         isClient = true;
@@ -935,14 +942,16 @@ void MainWindowViewer::openFolderFromPath(QString pathDir, QString atFileName)
     qSort(list.begin(), list.end(), naturalSortLessThanCI);
     int i = 0;
     foreach (QString path, list) {
-        if (path.endsWith(atFileName))
+        if (path.endsWith(atFileName)) {
             break;
+        }
         i++;
     }
 
     int index = 0;
-    if (i < list.count())
+    if (i < list.count()) {
         index = i;
+    }
 
     viewer->open(pathDir, index);
 }
@@ -955,8 +964,9 @@ void MainWindowViewer::saveImage()
         QFileInfo fi(pathFile);
         currentDirectoryImgDest = fi.absolutePath();
         const QPixmap* p = viewer->pixmap();
-        if (p != nullptr)
+        if (p != nullptr) {
             p->save(pathFile);
+        }
     }
 }
 
@@ -1027,14 +1037,18 @@ void MainWindowViewer::keyPressEvent(QKeyEvent* event)
     int _key = event->key();
     Qt::KeyboardModifiers modifiers = event->modifiers();
 
-    if (modifiers & Qt::ShiftModifier)
+    if (modifiers & Qt::ShiftModifier) {
         _key |= Qt::SHIFT;
-    if (modifiers & Qt::ControlModifier)
+    }
+    if (modifiers & Qt::ControlModifier) {
         _key |= Qt::CTRL;
-    if (modifiers & Qt::MetaModifier)
+    }
+    if (modifiers & Qt::MetaModifier) {
         _key |= Qt::META;
-    if (modifiers & Qt::AltModifier)
+    }
+    if (modifiers & Qt::AltModifier) {
         _key |= Qt::ALT;
+    }
 
     QKeySequence key(_key);
 
@@ -1047,8 +1061,9 @@ void MainWindowViewer::keyPressEvent(QKeyEvent* event)
     } else if (key == ShortcutsManager::getShortcutsManager().getShortcut(CHANGE_FIT_ACTION_Y)) {
         toggleWidthHeight();
         event->accept();
-    } else
+    } else {
         QWidget::keyPressEvent(event);
+    }
 }
 
 void MainWindowViewer::mouseDoubleClickEvent(QMouseEvent* event)
@@ -1123,8 +1138,9 @@ void MainWindowViewer::toFullScreen()
     viewer->fullscreen = true; //TODO, change by the right use of windowState();
     setWindowState(Qt::WindowFullScreen);
     viewer->show();
-    if (viewer->magnifyingGlassIsVisible())
+    if (viewer->magnifyingGlassIsVisible()) {
         viewer->showMagnifyingGlass();
+    }
 }
 
 void MainWindowViewer::toNormal()
@@ -1133,16 +1149,19 @@ void MainWindowViewer::toNormal()
     viewer->hide();
     viewer->fullscreen = false; //TODO, change by the right use of windowState();
     //viewer->hideMagnifyingGlass();
-    if (fromMaximized)
+    if (fromMaximized) {
         showMaximized();
-    else
+    } else {
         showNormal();
+    }
 
-    if (Configuration::getConfiguration().getShowToolbars())
+    if (Configuration::getConfiguration().getShowToolbars()) {
         showToolBars();
+    }
     viewer->show();
-    if (viewer->magnifyingGlassIsVisible())
+    if (viewer->magnifyingGlassIsVisible()) {
         viewer->showMagnifyingGlass();
+    }
 }
 #endif
 
@@ -1221,10 +1240,12 @@ void MainWindowViewer::processReset()
             disableActions();
             openNextComicAction->setEnabled(openNextB);
             openPreviousComicAction->setEnabled(openPrevB);
-        } else
+        } else {
             disableActions();
-    } else
+        }
+    } else {
         disableActions();
+    }
 }
 
 void MainWindowViewer::setUpShortcutsManagement()
@@ -1438,8 +1459,9 @@ void MainWindowViewer::closeEvent(QCloseEvent* event)
 {
     Q_UNUSED(event)
 
-    if (isClient)
+    if (isClient) {
         sendComic();
+    }
 
     Configuration& conf = Configuration::getConfiguration();
     if (conf.getBookmarksAuto()) {
@@ -1460,8 +1482,9 @@ void MainWindowViewer::openPreviousComic()
         sendComic();
 
         int currentIndex = siblingComics.indexOf(currentComicDB);
-        if (currentIndex == -1)
+        if (currentIndex == -1) {
             return;
+        }
         if (currentIndex - 1 >= 0 && currentIndex - 1 < siblingComics.count()) {
             siblingComics[currentIndex] = currentComicDB; //updated
             currentComicDB = siblingComics.at(currentIndex - 1);
@@ -1480,8 +1503,9 @@ void MainWindowViewer::openNextComic()
         sendComic();
 
         int currentIndex = siblingComics.indexOf(currentComicDB);
-        if (currentIndex == -1)
+        if (currentIndex == -1) {
             return;
+        }
         if (currentIndex + 1 > 0 && currentIndex + 1 < siblingComics.count()) {
             siblingComics[currentIndex] = currentComicDB; //updated
             currentComicDB = siblingComics.at(currentIndex + 1);
@@ -1549,14 +1573,16 @@ void MainWindowViewer::getSiblingComics(QString path, QString currentComic)
     if (index > 0) {
         previousComicPath = path + "/" + list.at(index - 1);
         openPreviousComicAction->setDisabled(false);
-    } else
+    } else {
         openPreviousComicAction->setDisabled(true);
+    }
 
     if (index + 1 < list.count()) {
         nextComicPath = path + "/" + list.at(index + 1);
         openNextComicAction->setDisabled(false);
-    } else
+    } else {
         openNextComicAction->setDisabled(true);
+    }
 }
 
 void MainWindowViewer::dropEvent(QDropEvent* event)
@@ -1573,12 +1599,14 @@ void MainWindowViewer::dropEvent(QDropEvent* event)
             info.setFile(fName); // information about file
             if (info.isFile()) {
                 QStringList imageSuffixs = Comic::getSupportedImageLiteralFormats();
-                if (imageSuffixs.contains(info.suffix())) //image dropped
+                if (imageSuffixs.contains(info.suffix())) { //image dropped
                     openFolderFromPath(info.absoluteDir().absolutePath(), info.fileName());
-                else
+                } else {
                     openComicFromPath(fName); // if is file, setText
-            } else if (info.isDir())
+                }
+            } else if (info.isDir()) {
                 openFolderFromPath(fName);
+            }
 
             isClient = false;
         }
@@ -1654,11 +1682,13 @@ void MainWindowViewer::sendComic()
         ComicDB& nextComic = siblingComics[currentIndex + 1];
         nextComic.info.hasBeenOpened = true;
         int retries = 1;
-        while (!client->sendComicInfo(libraryId, currentComicDB, nextComic.id) && retries != 0)
+        while (!client->sendComicInfo(libraryId, currentComicDB, nextComic.id) && retries != 0) {
             retries--;
+        }
     } else {
         int retries = 1;
-        while (!client->sendComicInfo(libraryId, currentComicDB) && retries != 0)
+        while (!client->sendComicInfo(libraryId, currentComicDB) && retries != 0) {
             retries--;
+        }
     }
 }

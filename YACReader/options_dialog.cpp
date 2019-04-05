@@ -185,12 +185,15 @@ void OptionsDialog::saveOptions()
 
     settings->setValue(GO_TO_FLOW_SIZE, QSize(static_cast<int>(slideSize->sliderPosition() / SLIDE_ASPECT_RATIO), slideSize->sliderPosition()));
 
-    if (sw->radio1->isChecked())
+    if (sw->radio1->isChecked()) {
         settings->setValue(FLOW_TYPE_SW, 0);
-    if (sw->radio2->isChecked())
+    }
+    if (sw->radio2->isChecked()) {
         settings->setValue(FLOW_TYPE_SW, 1);
-    if (sw->radio3->isChecked())
+    }
+    if (sw->radio3->isChecked()) {
         settings->setValue(FLOW_TYPE_SW, 2);
+    }
 
     settings->setValue(PATH, pathEdit->text());
 
@@ -304,16 +307,19 @@ void OptionsDialog::show()
 
 void OptionsDialog::setFilters(int brightness, int contrast, int gamma)
 {
-    if (brightness != -1)
+    if (brightness != -1) {
         brightnessS->setValue(brightness);
-    else
+    } else {
         brightnessS->setValue(0);
-    if (contrast != -1)
+    }
+    if (contrast != -1) {
         contrastS->setValue(contrast);
-    else
+    } else {
         contrastS->setValue(100);
-    if (gamma != -1)
+    }
+    if (gamma != -1) {
         gammaS->setValue(gamma);
-    else
+    } else {
         gammaS->setValue(100);
+    }
 }

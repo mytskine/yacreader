@@ -145,15 +145,17 @@ void GoToFlow::setImageReady(int index, const QByteArray& image)
 
 void GoToFlow::preload()
 {
-    if (numImagesLoaded < imagesLoaded.size())
+    if (numImagesLoaded < imagesLoaded.size()) {
         updateTimer->start(30); //TODO comprobar rendimiento, antes era 70
+    }
 }
 
 void GoToFlow::updateImageData()
 {
     // can't do anything, wait for the next possibility
-    if (worker->busy())
+    if (worker->busy()) {
         return;
+    }
 
     // set image of last one
     int idx = worker->index();
@@ -179,7 +181,7 @@ void GoToFlow::updateImageData()
         indexes[j * 2 + 2] = center - j - 1;
     }
     for (int i : indexes) {
-        if ((i >= 0) && (i < flow->slideCount()))
+        if ((i >= 0) && (i < flow->slideCount())) {
             if (!imagesLoaded[i] && imagesReady[i]) //slide(i).isNull())
             {
                 // schedule thumbnail generation
@@ -187,6 +189,7 @@ void GoToFlow::updateImageData()
                 worker->generate(i, flow->slideSize(), rawImages[i]);
                 return;
             }
+        }
     }
 
     // no need to generate anything? stop polling...
@@ -195,10 +198,11 @@ void GoToFlow::updateImageData()
 
 void GoToFlow::wheelEvent(QWheelEvent* event)
 {
-    if (event->delta() < 0)
+    if (event->delta() < 0) {
         flow->showNext();
-    else
+    } else {
         flow->showPrevious();
+    }
     event->accept();
 }
 
@@ -237,8 +241,9 @@ void SlideInitializer::run()
     mutex->lock();
 
     _flow->clear();
-    for (int i = 0; i < _slides; i++)
+    for (int i = 0; i < _slides; i++) {
         _flow->addSlide(QImage());
+    }
     _flow->setCenterIndex(0);
 
     mutex->unlock();
@@ -278,9 +283,9 @@ void PageLoader::generate(int index, QSize size, const QByteArray& rImage)
     this->rawImage = rImage;
     mutex->unlock();
 
-    if (!isRunning())
+    if (!isRunning()) {
         start();
-    else {
+    } else {
         // already running, wake up whenever ready
         restart = true;
         condition.wakeOne();
@@ -309,8 +314,9 @@ void PageLoader::run()
 
         // put to sleep
         mutex->lock();
-        if (!this->restart)
+        if (!this->restart) {
             condition.wait(mutex);
+        }
         restart = false;
         mutex->unlock();
     }

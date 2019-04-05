@@ -110,22 +110,25 @@ void GoToFlowToolBar::setTop(int numPages)
 
 void GoToFlowToolBar::goTo()
 {
-    if (edit->text().toInt() != 0)
+    if (edit->text().toInt() != 0) {
         emit(goTo(edit->text().toInt() - 1));
+    }
 }
 
 void GoToFlowToolBar::centerSlide()
 {
-    if (edit->text().toInt() != 0)
+    if (edit->text().toInt() != 0) {
         emit(setCenter(edit->text().toInt() - 1));
+    }
 }
 
 void GoToFlowToolBar::updateOptions()
 {
-    if (Configuration::getConfiguration().getQuickNaviMode())
+    if (Configuration::getConfiguration().getQuickNaviMode()) {
         setCurrentIndex(1);
-    else
+    } else {
         setCurrentIndex(0);
+    }
 
     slider->setInvertedAppearance(Configuration::getConfiguration().getDoubleMangaPage());
 }

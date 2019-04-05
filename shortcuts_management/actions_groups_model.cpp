@@ -21,22 +21,26 @@ int ActionsGroupsModel::columnCount(const QModelIndex& parent) const
 
 QModelIndex ActionsGroupsModel::index(int row, int column, const QModelIndex& parent) const
 {
-    if (!hasIndex(row, column, parent))
+    if (!hasIndex(row, column, parent)) {
         return QModelIndex();
+    }
 
     return createIndex(row, column);
 }
 
 QVariant ActionsGroupsModel::data(const QModelIndex& index, int role) const
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return QVariant();
+    }
 
-    if (role == Qt::DecorationRole)
+    if (role == Qt::DecorationRole) {
         return QVariant(groups.at(index.row()).getIcon());
+    }
 
-    if (role != Qt::DisplayRole)
+    if (role != Qt::DisplayRole) {
         return QVariant();
+    }
 
     return QVariant(groups[index.row()].getName());
 }
@@ -57,8 +61,9 @@ void ActionsGroupsModel::addActionsGroup(const ActionsGroup& group)
 
 QList<QAction*> ActionsGroupsModel::getActions(const QModelIndex& mi)
 {
-    if (mi.isValid())
+    if (mi.isValid()) {
         return groups[mi.row()].getActions();
+    }
     return QList<QAction*>();
 }
 

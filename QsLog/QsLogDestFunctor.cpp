@@ -43,11 +43,13 @@ QsLogging::FunctorDestination::FunctorDestination(QObject* receiver, const char*
 
 void QsLogging::FunctorDestination::write(const QString& message, QsLogging::Level level)
 {
-    if (mLogFunction)
+    if (mLogFunction) {
         mLogFunction(message, level);
+    }
 
-    if (level > QsLogging::TraceLevel)
+    if (level > QsLogging::TraceLevel) {
         emit logMessageReady(message, static_cast<int>(level));
+    }
 }
 
 bool QsLogging::FunctorDestination::isValid()

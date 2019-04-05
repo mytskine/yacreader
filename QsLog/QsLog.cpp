@@ -132,8 +132,9 @@ Logger::Logger()
 
 Logger& Logger::instance()
 {
-    if (!sInstance)
+    if (!sInstance) {
         sInstance = new Logger;
+    }
 
     return *sInstance;
 }
@@ -148,24 +149,32 @@ void Logger::destroyInstance()
 // contain the conversion result.
 Level Logger::levelFromLogMessage(const QString& logMessage, bool* conversionSucceeded)
 {
-    if (conversionSucceeded)
+    if (conversionSucceeded) {
         *conversionSucceeded = true;
+    }
 
-    if (logMessage.startsWith(QLatin1String(TraceString)))
+    if (logMessage.startsWith(QLatin1String(TraceString))) {
         return TraceLevel;
-    if (logMessage.startsWith(QLatin1String(DebugString)))
+    }
+    if (logMessage.startsWith(QLatin1String(DebugString))) {
         return DebugLevel;
-    if (logMessage.startsWith(QLatin1String(InfoString)))
+    }
+    if (logMessage.startsWith(QLatin1String(InfoString))) {
         return InfoLevel;
-    if (logMessage.startsWith(QLatin1String(WarnString)))
+    }
+    if (logMessage.startsWith(QLatin1String(WarnString))) {
         return WarnLevel;
-    if (logMessage.startsWith(QLatin1String(ErrorString)))
+    }
+    if (logMessage.startsWith(QLatin1String(ErrorString))) {
         return ErrorLevel;
-    if (logMessage.startsWith(QLatin1String(FatalString)))
+    }
+    if (logMessage.startsWith(QLatin1String(FatalString))) {
         return FatalLevel;
+    }
 
-    if (conversionSucceeded)
+    if (conversionSucceeded) {
         *conversionSucceeded = false;
+    }
     return OffLevel;
 }
 

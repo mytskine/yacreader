@@ -306,8 +306,9 @@ QList<QString> Comic::findValidComicFilesInFolder(const QString& path)
 {
     QLOG_DEBUG() << "-findValidComicFilesInFolder-" << path;
 
-    if (!QFileInfo(path).isDir())
+    if (!QFileInfo(path).isDir()) {
         return QList<QString>();
+    }
 
     QList<QString> validComicFiles;
     QDir folder(path);
@@ -908,8 +909,9 @@ Comic* FactoryComic::newComic(const QString& path)
                 return nullptr;
             }
         }
-    } else
+    } else {
         return nullptr;
+    }
 }
 
 bool is_double_page(const QString& pageName, const QString& commonPrefix, const int maxExpectedDoublePagesNumberLenght)
@@ -953,8 +955,9 @@ QString get_most_common_prefix(const QList<QString>& pageNames)
         int pos = 0;
         previous = pageNames.at(i - 1).split('/').last();
         current = pageNames.at(i).split('/').last();
-        for (; pos < current.length() && previous[pos] == current[pos]; pos++)
+        for (; pos < current.length() && previous[pos] == current[pos]; pos++) {
             ;
+        }
 
         if (pos < currentPrefixLenght && pos > 0) {
             frequency.insert(previous.left(currentPrefixLenght), currentPrefixCount);

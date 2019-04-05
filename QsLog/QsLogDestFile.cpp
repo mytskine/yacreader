@@ -61,8 +61,9 @@ bool QsLogging::SizeRotationStrategy::shouldRotate()
 void QsLogging::SizeRotationStrategy::rotate()
 {
     if (!mBackupsCount) {
-        if (!QFile::remove(mFileName))
+        if (!QFile::remove(mFileName)) {
             std::cerr << "QsLog: backup delete failed " << qPrintable(mFileName);
+        }
         return;
     }
 
@@ -71,10 +72,11 @@ void QsLogging::SizeRotationStrategy::rotate()
     int lastExistingBackupIndex = 0;
     for (int i = 1; i <= mBackupsCount; ++i) {
         const QString backupFileName = logNamePattern.arg(i);
-        if (QFile::exists(backupFileName))
+        if (QFile::exists(backupFileName)) {
             lastExistingBackupIndex = qMin(i, mBackupsCount - 1);
-        else
+        } else {
             break;
+        }
     }
 
     // 2. shift up
@@ -91,8 +93,9 @@ void QsLogging::SizeRotationStrategy::rotate()
 
     // 3. rename current log file
     const QString newName = logNamePattern.arg(1);
-    if (QFile::exists(newName))
+    if (QFile::exists(newName)) {
         QFile::remove(newName);
+    }
     if (!QFile::rename(mFileName, newName)) {
         std::cerr << "QsLog: could not rename log " << qPrintable(mFileName)
                   << " to " << qPrintable(newName);
@@ -120,8 +123,9 @@ QsLogging::FileDestination::FileDestination(const QString& filePath, RotationStr
     : mRotationStrategy(rotationStrategy)
 {
     mFile.setFileName(filePath);
-    if (!mFile.open(QFile::WriteOnly | QFile::Text | mRotationStrategy->recommendedOpenModeFlag()))
+    if (!mFile.open(QFile::WriteOnly | QFile::Text | mRotationStrategy->recommendedOpenModeFlag())) {
         std::cerr << "QsLog: could not open log file " << qPrintable(filePath);
+    }
     mOutputStream.setDevice(&mFile);
     mOutputStream.setCodec(QTextCodec::codecForName("UTF-8"));
 
@@ -135,8 +139,9 @@ void QsLogging::FileDestination::write(const QString& message, Level)
         mOutputStream.setDevice(nullptr);
         mFile.close();
         mRotationStrategy->rotate();
-        if (!mFile.open(QFile::WriteOnly | QFile::Text | mRotationStrategy->recommendedOpenModeFlag()))
+        if (!mFile.open(QFile::WriteOnly | QFile::Text | mRotationStrategy->recommendedOpenModeFlag())) {
             std::cerr << "QsLog: could not reopen log file " << qPrintable(mFile.fileName());
+        }
         mRotationStrategy->setInitialInfo(mFile);
         mOutputStream.setDevice(&mFile);
     }

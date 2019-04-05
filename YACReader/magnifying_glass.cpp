@@ -85,8 +85,9 @@ void MagnifyingGlass::updateImage(int x, int y)
                 painter.drawPixmap(xOffset, yOffset, p->pixmap()->copy(xp, yp, zw, zh));
             }
             setPixmap(QPixmap().fromImage(img));
-        } else
+        } else {
             setPixmap(p->pixmap()->copy(xp, yp, zoomWidth, zoomHeight));
+        }
     } else {
         int xp = static_cast<int>(((x - p->widget()->pos().x()) * wFactor) - zoomWidth / 2);
         int yp = static_cast<int>((y + currentPos) * hFactor - zoomHeight / 2);
@@ -125,8 +126,9 @@ void MagnifyingGlass::updateImage(int x, int y)
                 painter.drawPixmap(xOffset, yOffset, p->pixmap()->copy(xp, yp, zw, zh));
             }
             setPixmap(QPixmap().fromImage(img));
-        } else
+        } else {
             setPixmap(p->pixmap()->copy(xp, yp, zoomWidth, zoomHeight));
+        }
     }
     move(static_cast<int>(x - float(width()) / 2), static_cast<int>(y - float(height()) / 2));
 }
@@ -144,31 +146,35 @@ void MagnifyingGlass::wheelEvent(QWheelEvent* event)
     switch (event->modifiers()) {
     //size
     case Qt::NoModifier:
-        if (event->delta() < 0)
+        if (event->delta() < 0) {
             sizeUp();
-        else
+        } else {
             sizeDown();
+        }
         break;
     //size height
     case Qt::ControlModifier:
-        if (event->delta() < 0)
+        if (event->delta() < 0) {
             heightUp();
-        else
+        } else {
             heightDown();
+        }
         break;
     //size width
     case Qt::AltModifier:
-        if (event->delta() < 0)
+        if (event->delta() < 0) {
             widthUp();
-        else
+        } else {
             widthDown();
+        }
         break;
     //zoom level
     case Qt::ShiftModifier:
-        if (event->delta() < 0)
+        if (event->delta() < 0) {
             zoomIn();
-        else
+        } else {
             zoomOut();
+        }
         break;
     }
     updateImage();
@@ -176,53 +182,61 @@ void MagnifyingGlass::wheelEvent(QWheelEvent* event)
 }
 void MagnifyingGlass::zoomIn()
 {
-    if (zoomLevel > 0.2f)
+    if (zoomLevel > 0.2f) {
         zoomLevel -= 0.025f;
+    }
 }
 
 void MagnifyingGlass::zoomOut()
 {
-    if (zoomLevel < 0.9f)
+    if (zoomLevel < 0.9f) {
         zoomLevel += 0.025f;
+    }
 }
 
 void MagnifyingGlass::sizeUp()
 {
     Viewer* p = (Viewer*)parent();
-    if (width() < (p->width() * 0.90f))
+    if (width() < (p->width() * 0.90f)) {
         resize(width() + 30, height() + 15);
+    }
 }
 
 void MagnifyingGlass::sizeDown()
 {
-    if (width() > 175)
+    if (width() > 175) {
         resize(width() - 30, height() - 15);
+    }
 }
 
 void MagnifyingGlass::heightUp()
 {
     Viewer* p = (Viewer*)parent();
-    if (height() < (p->height() * 0.90f))
+    if (height() < (p->height() * 0.90f)) {
         resize(width(), height() + 15);
+    }
 }
 
 void MagnifyingGlass::heightDown()
 {
-    if (height() > 80)
+    if (height() > 80) {
         resize(width(), height() - 15);
+    }
 }
 
 void MagnifyingGlass::widthUp()
 {
     Viewer* p = (Viewer*)parent();
-    if (width() < (p->width() * 0.90f))
+    if (width() < (p->width() * 0.90f)) {
         resize(width() + 30, height());
+    }
 }
 
 void MagnifyingGlass::widthDown()
 {
-    if (width() > 175)
+    if (width() > 175) {
         resize(width() - 30, height());
+    }
 }
 
 void MagnifyingGlass::keyPressEvent(QKeyEvent* event)
@@ -232,14 +246,18 @@ void MagnifyingGlass::keyPressEvent(QKeyEvent* event)
     int _key = event->key();
     Qt::KeyboardModifiers modifiers = event->modifiers();
 
-    if (modifiers & Qt::ShiftModifier)
+    if (modifiers & Qt::ShiftModifier) {
         _key |= Qt::SHIFT;
-    if (modifiers & Qt::ControlModifier)
+    }
+    if (modifiers & Qt::ControlModifier) {
         _key |= Qt::CTRL;
-    if (modifiers & Qt::MetaModifier)
+    }
+    if (modifiers & Qt::MetaModifier) {
         _key |= Qt::META;
-    if (modifiers & Qt::AltModifier)
+    }
+    if (modifiers & Qt::AltModifier) {
         _key |= Qt::ALT;
+    }
 
     QKeySequence key(_key);
 

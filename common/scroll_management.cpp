@@ -23,8 +23,9 @@ ScrollManagement::Movement ScrollManagement::getMovement(QWheelEvent* event)
     }
 
     // Accumulate the delta
-    if ((event->delta() < 0) != (wheelAccumulator < 0)) //different sign means change in direction
+    if ((event->delta() < 0) != (wheelAccumulator < 0)) { //different sign means change in direction
         wheelAccumulator = 0;
+    }
 
     wheelAccumulator += event->delta();
 
@@ -41,10 +42,11 @@ ScrollManagement::Movement ScrollManagement::getMovement(QWheelEvent* event)
     }
 
     Movement m;
-    if (wheelAccumulator < 0)
+    if (wheelAccumulator < 0) {
         m = Forward;
-    else
+    } else {
         m = Backward;
+    }
 
     event->accept();
     //Clean up

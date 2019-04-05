@@ -63,8 +63,9 @@ void GoToFlowWidget::updateSize()
     // called by parent in resizeEvent
     // no need to update width when QuickNaviMode disabled
     // height is set in updateConfig
-    if (Configuration::getConfiguration().getQuickNaviMode() && parentWidget() != nullptr)
+    if (Configuration::getConfiguration().getQuickNaviMode() && parentWidget() != nullptr) {
         resize(parentWidget()->width(), height());
+    }
 }
 
 /*bool GoToFlowWidget::eventFilter(QObject * target, QEvent * event)

@@ -16,26 +16,29 @@ PageLabelWidget::PageLabelWidget(QWidget* parent)
     setContentsMargins(0, 0, 0, 0);
 
     QSize labelSize;
-    if (verticalRes <= 1024)
+    if (verticalRes <= 1024) {
         labelSize = QSize(135, 30);
-    else if (verticalRes <= 1200)
+    } else if (verticalRes <= 1200) {
         labelSize = QSize(170, 35);
-    else
+    } else {
         labelSize = QSize(205, 45);
+    }
 
     textLabel = new QLabel(this);
     textLabel->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
-    if (verticalRes <= 1024)
+    if (verticalRes <= 1024) {
         textLabel->setStyleSheet("QLabel { color : white; font-size:12px; padding-left:8px; }");
-    else if (verticalRes <= 1200)
+    } else if (verticalRes <= 1200) {
         textLabel->setStyleSheet("QLabel { color : white; font-size:16px; padding-left:8px;}");
-    else
+    } else {
         textLabel->setStyleSheet("QLabel { color : white; font-size:20px; padding-left:8px; }");
+    }
 
     setFixedSize(labelSize);
 
-    if (parent != nullptr)
+    if (parent != nullptr) {
         move(QPoint((parent->geometry().size().width() - this->width()), -this->height()));
+    }
 
     layout->addWidget(textLabel, 0, Qt::AlignCenter);
     setLayout(layout);
@@ -93,8 +96,9 @@ void PageLabelWidget::updatePosition()
     }
 
     animation->stop();
-    if (animation->endValue().toPoint().y() == 0)
+    if (animation->endValue().toPoint().y() == 0) {
         move(QPoint((parent->geometry().size().width() - this->width()), 0));
-    else
+    } else {
         move(QPoint((parent->geometry().size().width() - this->width()), -this->height()));
+    }
 }

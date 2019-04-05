@@ -36,78 +36,102 @@ QString ComicDB::toTXT()
     txt.append(QString("contrast:%1\r\n").arg(info.contrast));
 
     //Informaci�n general
-    if (!info.coverPage.isNull())
+    if (!info.coverPage.isNull()) {
         txt.append(QString("coverPage:%1\r\n").arg(info.coverPage.toString()));
+    }
 
-    if (!info.title.isNull())
+    if (!info.title.isNull()) {
         txt.append(QString("title:%1\r\n").arg(info.title.toString()));
+    }
 
-    if (!info.number.isNull())
+    if (!info.number.isNull()) {
         txt.append(QString("number:%1\r\n").arg(info.number.toString()));
+    }
 
-    if (!info.isBis.isNull())
+    if (!info.isBis.isNull()) {
         txt.append(QString("isBis:%1\r\n").arg(info.isBis.toBool() ? "1" : "0"));
+    }
 
-    if (!info.count.isNull())
+    if (!info.count.isNull()) {
         txt.append(QString("count:%1\r\n").arg(info.count.toString()));
+    }
 
-    if (!info.volume.isNull())
+    if (!info.volume.isNull()) {
         txt.append(QString("volume:%1\r\n").arg(info.volume.toString()));
+    }
 
-    if (!info.storyArc.isNull())
+    if (!info.storyArc.isNull()) {
         txt.append(QString("storyArc:%1\r\n").arg(info.storyArc.toString()));
+    }
 
-    if (!info.arcNumber.isNull())
+    if (!info.arcNumber.isNull()) {
         txt.append(QString("arcNumber:%1\r\n").arg(info.arcNumber.toString()));
+    }
 
-    if (!info.arcCount.isNull())
+    if (!info.arcCount.isNull()) {
         txt.append(QString("arcCount:%1\r\n").arg(info.arcCount.toString()));
+    }
 
-    if (!info.genere.isNull())
+    if (!info.genere.isNull()) {
         txt.append(QString("genere:%1\r\n").arg(info.genere.toString()));
+    }
 
     //Autores
-    if (!info.writer.isNull())
+    if (!info.writer.isNull()) {
         txt.append(QString("writer:%1\r\n").arg(info.writer.toString()));
+    }
 
-    if (!info.penciller.isNull())
+    if (!info.penciller.isNull()) {
         txt.append(QString("penciller:%1\r\n").arg(info.penciller.toString()));
+    }
 
-    if (!info.inker.isNull())
+    if (!info.inker.isNull()) {
         txt.append(QString("inker:%1\r\n").arg(info.inker.toString()));
+    }
 
-    if (!info.colorist.isNull())
+    if (!info.colorist.isNull()) {
         txt.append(QString("colorist:%1\r\n").arg(info.colorist.toString()));
+    }
 
-    if (!info.letterer.isNull())
+    if (!info.letterer.isNull()) {
         txt.append(QString("letterer:%1\r\n").arg(info.letterer.toString()));
+    }
 
-    if (!info.coverArtist.isNull())
+    if (!info.coverArtist.isNull()) {
         txt.append(QString("coverArtist:%1\r\n").arg(info.coverArtist.toString()));
+    }
     //Publicaci�n
-    if (!info.date.isNull())
+    if (!info.date.isNull()) {
         txt.append(QString("date:%1\r\n").arg(info.date.toString()));
+    }
 
-    if (!info.publisher.isNull())
+    if (!info.publisher.isNull()) {
         txt.append(QString("publisher:%1\r\n").arg(info.publisher.toString()));
+    }
 
-    if (!info.format.isNull())
+    if (!info.format.isNull()) {
         txt.append(QString("format:%1\r\n").arg(info.format.toString()));
+    }
 
-    if (!info.color.isNull())
+    if (!info.color.isNull()) {
         txt.append(QString("color:%1\r\n").arg(info.color.toString()));
+    }
 
-    if (!info.ageRating.isNull())
+    if (!info.ageRating.isNull()) {
         txt.append(QString("ageRating:%1\r\n").arg(info.ageRating.toString()));
+    }
     //Argumento
-    if (!info.synopsis.isNull())
+    if (!info.synopsis.isNull()) {
         txt.append(QString("synopsis:%1\r\n").arg(info.synopsis.toString()));
+    }
 
-    if (!info.characters.isNull())
+    if (!info.characters.isNull()) {
         txt.append(QString("characters:%1\r\n").arg(info.characters.toString()));
+    }
 
-    if (!info.notes.isNull())
+    if (!info.notes.isNull()) {
         txt.append(QString("notes:%1\r\n").arg(info.notes.toString()));
+    }
 
     return txt;
 }
@@ -130,19 +154,21 @@ QString ComicDB::getFileName() const
 
 QString ComicDB::getTitleOrFileName() const
 {
-    if (!info.title.isNull() && !info.title.toString().isEmpty())
+    if (!info.title.isNull() && !info.title.toString().isEmpty()) {
         return info.title.toString();
-    else
+    } else {
         return QFileInfo(path).fileName();
+    }
 }
 
 QString ComicDB::getParentFolderName() const
 {
     QStringList paths = path.split('/');
-    if (paths.length() < 2)
+    if (paths.length() < 2) {
         return "";
-    else
+    } else {
         return paths[paths.length() - 2];
+    }
 }
 
 qulonglong ComicDB::getFileSize() const

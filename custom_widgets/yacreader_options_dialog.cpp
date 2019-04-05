@@ -238,10 +238,11 @@ void YACReaderOptionsDialog::restoreOptions(QSettings* settings)
         return;
     }
 
-    if (settings->contains(V_SYNC) && settings->value(V_SYNC).toInt() == Qt::Checked)
+    if (settings->contains(V_SYNC) && settings->value(V_SYNC).toInt() == Qt::Checked) {
         gl->vSyncCheck->setChecked(true);
-    else
+    } else {
         gl->vSyncCheck->setChecked(false);
+    }
 
     gl->performanceSlider->setValue(settings->value(PERFORMANCE).toInt());
 

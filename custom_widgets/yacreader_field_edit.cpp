@@ -32,7 +32,8 @@ void YACReaderFieldEdit::clear()
 
 void YACReaderFieldEdit::setDisabled(bool disabled)
 {
-    if (disabled)
+    if (disabled) {
         setPlaceholderText("");
+    }
     QLineEdit::setDisabled(disabled);
 }

@@ -74,8 +74,9 @@ EditShortcutsDialog::EditShortcutsDialog(QWidget* parent)
 void EditShortcutsDialog::addActionsGroup(const QString& name, const QIcon& ico, QList<QAction*>& group)
 {
     groupsModel->addActionsGroup(ActionsGroup(name, ico, group));
-    if (actionsTableView->model()->rowCount() == 0) //first group added
+    if (actionsTableView->model()->rowCount() == 0) { //first group added
         actionsGroupsListView->selectionModel()->select(groupsModel->index(0, 0), QItemSelectionModel::Select);
+    }
 }
 
 void EditShortcutsDialog::resetToDefaults()

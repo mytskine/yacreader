@@ -23,8 +23,9 @@ BookmarksDialog::BookmarksDialog(QWidget* parent)
     QGridLayout* bookmarksL = new QGridLayout();
 
     pages.push_back(new QLabel(tr("Lastest Page")));
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 3; i++) {
         pages.push_back(new QLabel("-"));
+    }
 
     QString labelsStyle = "QLabel {color:white;}";
 
@@ -48,11 +49,13 @@ BookmarksDialog::BookmarksDialog(QWidget* parent)
         images.push_back(l);
     }
 
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 3; i++) {
         bookmarksL->addWidget(pages.at(i + 1), 0, i, Qt::AlignCenter);
+    }
 
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 3; i++) {
         bookmarksL->addWidget(images.at(i + 1), 1, i, Qt::AlignCenter);
+    }
 
     //last page
     QGridLayout* lp = new QGridLayout();
@@ -155,8 +158,9 @@ bool BookmarksDialog::eventFilter(QObject* obj, QEvent* event)
 
 void BookmarksDialog::keyPressEvent(QKeyEvent* event)
 {
-    if (event->key() == Qt::Key_M)
+    if (event->key() == Qt::Key_M) {
         hide();
+    }
 }
 /*
 void BookmarksDialog::show()

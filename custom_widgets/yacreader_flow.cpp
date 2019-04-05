@@ -14,6 +14,7 @@ void YACReaderFlow::mousePressEvent(QMouseEvent* event)
 
 void YACReaderFlow::mouseDoubleClickEvent(QMouseEvent* event)
 {
-    if ((event->x() > (width() - slideSize().width()) / 2) && (event->x() < (width() + slideSize().width()) / 2))
+    if ((event->x() > (width() - slideSize().width()) / 2) && (event->x() < (width() + slideSize().width()) / 2)) {
         emit selected(centerIndex());
+    }
 }

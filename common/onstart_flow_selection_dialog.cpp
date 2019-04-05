@@ -39,10 +39,11 @@ OnStartFlowSelectionDialog::OnStartFlowSelectionDialog(QWidget* parent)
     //layout->addWidget(rejectHW);
 
     QPalette palette;
-    if (language == QLocale::Spanish)
+    if (language == QLocale::Spanish) {
         palette.setBrush(this->backgroundRole(), QBrush(QImage(":/images/onStartFlowSelection_es.png")));
-    else
+    } else {
         palette.setBrush(this->backgroundRole(), QBrush(QImage(":/images/onStartFlowSelection.png")));
+    }
 
     setPalette(palette);
 

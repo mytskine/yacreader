@@ -41,8 +41,9 @@ void EditShortcutItemDelegate::updateEditorGeometry(QWidget* editor, const QStyl
 
 bool EditShortcutItemDelegate::eventFilter(QObject* editor, QEvent* event)
 {
-    if (event->type() == QEvent::KeyPress)
+    if (event->type() == QEvent::KeyPress) {
         return false;
+    }
     return QItemDelegate::eventFilter(editor, event);
 }
 
@@ -96,8 +97,9 @@ void KeySequenceLineEdit::keyPressEvent(QKeyEvent* e)
     int key = e->key();
 
     //if ( numKeys > 3 ||
-    if (key == Qt::Key_Control || key == Qt::Key_Shift || key == Qt::Key_Meta || key == Qt::Key_Alt)
+    if (key == Qt::Key_Control || key == Qt::Key_Shift || key == Qt::Key_Meta || key == Qt::Key_Alt) {
         return;
+    }
 
     key |= translateModifiers(e->modifiers(), e->text());
 
@@ -129,13 +131,17 @@ int KeySequenceLineEdit::translateModifiers(Qt::KeyboardModifiers state,
     int result = 0;
     // The shift modifier only counts when it is not used to type a symbol
     // that is only reachable using the shift key anyway
-    if ((state & Qt::ShiftModifier) && (text.size() == 0 || !text.at(0).isPrint() || text.at(0).isLetterOrNumber() || text.at(0).isSpace()))
+    if ((state & Qt::ShiftModifier) && (text.size() == 0 || !text.at(0).isPrint() || text.at(0).isLetterOrNumber() || text.at(0).isSpace())) {
         result |= Qt::SHIFT;
-    if (state & Qt::ControlModifier)
+    }
+    if (state & Qt::ControlModifier) {
         result |= Qt::CTRL;
-    if (state & Qt::MetaModifier)
+    }
+    if (state & Qt::MetaModifier) {
         result |= Qt::META;
-    if (state & Qt::AltModifier)
+    }
+    if (state & Qt::AltModifier) {
         result |= Qt::ALT;
+    }
     return result;
 }
