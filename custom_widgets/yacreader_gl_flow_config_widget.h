@@ -14,7 +14,7 @@ class QGroupBox;
 class YACReaderGLFlowConfigWidget : public QWidget {
     Q_OBJECT
 public:
-    YACReaderGLFlowConfigWidget(QWidget* parent = 0);
+    YACReaderGLFlowConfigWidget(QWidget* parent = nullptr);
 
     //GL.........................
     QRadioButton* radioClassic;

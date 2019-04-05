@@ -9,7 +9,7 @@ class QFocusEvent;
 class YACReaderFieldEdit : public QLineEdit {
     Q_OBJECT
 public:
-    YACReaderFieldEdit(QWidget* parent = 0);
+    YACReaderFieldEdit(QWidget* parent = nullptr);
     void clear();
     void setDisabled(bool disabled);
 

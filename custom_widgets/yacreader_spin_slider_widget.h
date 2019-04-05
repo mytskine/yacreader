@@ -16,7 +16,7 @@ private:
     bool tracking;
 
 public:
-    YACReaderSpinSliderWidget(QWidget* parent = 0, bool strechableSlider = false);
+    YACReaderSpinSliderWidget(QWidget* parent = nullptr, bool strechableSlider = false);
 public slots:
     void setRange(int lowValue, int topValue, int step = 1);
     void setValue(int value);

@@ -11,8 +11,8 @@ CompressedArchive::CompressedArchive(const QString& filePath, QObject* parent)
     , tools(true)
     , valid(false)
     , numFiles(0)
-    , ar(NULL)
-    , stream(NULL)
+    , ar(nullptr)
+    , stream(nullptr)
 {
     //open file
 #ifdef Q_OS_WIN

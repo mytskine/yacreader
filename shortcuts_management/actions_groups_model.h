@@ -22,7 +22,7 @@ protected:
 class ActionsGroupsModel : public QAbstractItemModel {
     Q_OBJECT
 public:
-    explicit ActionsGroupsModel(QObject* parent = 0);
+    explicit ActionsGroupsModel(QObject* parent = nullptr);
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const;
     int columnCount(const QModelIndex& parent = QModelIndex()) const;

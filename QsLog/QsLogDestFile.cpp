@@ -134,7 +134,7 @@ void QsLogging::FileDestination::write(const QString& message, Level)
 {
     mRotationStrategy->includeMessageInCalculation(message);
     if (mRotationStrategy->shouldRotate()) {
-        mOutputStream.setDevice(NULL);
+        mOutputStream.setDevice(nullptr);
         mFile.close();
         mRotationStrategy->rotate();
         if (!mFile.open(QFile::WriteOnly | QFile::Text | mRotationStrategy->recommendedOpenModeFlag()))

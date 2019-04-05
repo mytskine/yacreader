@@ -8,7 +8,7 @@
 class ShortcutsDialog : public QDialog {
     Q_OBJECT
 public:
-    ShortcutsDialog(QWidget* parent = 0);
+    ShortcutsDialog(QWidget* parent = nullptr);
 
 private:
     QTextEdit* shortcuts;

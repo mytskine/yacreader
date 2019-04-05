@@ -179,7 +179,7 @@ protected:
 
 public:
     /*Constructor*/
-    YACReaderFlowGL(QWidget* parent = 0, struct Preset p = pressetYACReaderFlowDownConfig);
+    YACReaderFlowGL(QWidget* parent = nullptr, struct Preset p = pressetYACReaderFlowDownConfig);
     virtual ~YACReaderFlowGL();
 
     //size;
@@ -288,7 +288,7 @@ signals:
 
 class YACReaderComicFlowGL : public YACReaderFlowGL {
 public:
-    YACReaderComicFlowGL(QWidget* parent = 0, struct Preset p = defaultYACReaderFlowConfig);
+    YACReaderComicFlowGL(QWidget* parent = nullptr, struct Preset p = defaultYACReaderFlowConfig);
     void setImagePaths(QStringList paths);
     void updateImageData();
     void remove(int item);
@@ -304,7 +304,7 @@ protected:
 
 class YACReaderPageFlowGL : public YACReaderFlowGL {
 public:
-    YACReaderPageFlowGL(QWidget* parent = 0, struct Preset p = defaultYACReaderFlowConfig);
+    YACReaderPageFlowGL(QWidget* parent = nullptr, struct Preset p = defaultYACReaderFlowConfig);
     ~YACReaderPageFlowGL();
     void updateImageData();
     void populate(int n);

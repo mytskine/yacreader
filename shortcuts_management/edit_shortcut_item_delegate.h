@@ -10,7 +10,7 @@
 class KeySequenceLineEdit : public QLineEdit {
     Q_OBJECT
 public:
-    explicit KeySequenceLineEdit(QWidget* parent = 0);
+    explicit KeySequenceLineEdit(QWidget* parent = nullptr);
 
 protected:
     //int numKeys;
@@ -27,7 +27,7 @@ private:
 class EditShortcutItemDelegate : public QItemDelegate {
     Q_OBJECT
 public:
-    explicit EditShortcutItemDelegate(QObject* parent = 0);
+    explicit EditShortcutItemDelegate(QObject* parent = nullptr);
 
     QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option,
         const QModelIndex& index) const;

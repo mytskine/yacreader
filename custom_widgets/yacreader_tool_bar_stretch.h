@@ -6,7 +6,7 @@
 
 class YACReaderToolBarStretch : public QWidget {
 public:
-    YACReaderToolBarStretch(QWidget* parent = 0)
+    YACReaderToolBarStretch(QWidget* parent = nullptr)
         : QWidget(parent)
     {
         QHBoxLayout* l = new QHBoxLayout();

@@ -14,7 +14,7 @@ void YACReader::addSperator(QWidget* w)
 
 QAction* YACReader::createSeparator()
 {
-    QAction* a = new QAction(0);
+    QAction* a = new QAction(nullptr);
     a->setSeparator(true);
     return a;
 }

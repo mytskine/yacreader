@@ -9,7 +9,7 @@ class ComicDB;
 class YACReaderLocalClient : public QObject {
     Q_OBJECT
 public:
-    explicit YACReaderLocalClient(QObject* parent = 0);
+    explicit YACReaderLocalClient(QObject* parent = nullptr);
     ~YACReaderLocalClient();
 signals:
     void finished();

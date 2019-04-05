@@ -7,7 +7,7 @@
 class YACReaderBusyWidget : public QWidget {
     Q_OBJECT
 public:
-    explicit YACReaderBusyWidget(QWidget* parent = 0);
+    explicit YACReaderBusyWidget(QWidget* parent = nullptr);
     void paintEvent(QPaintEvent*);
 };
 
@@ -18,7 +18,7 @@ public:
         StyleEllipse,
         StyleArc };
 
-    explicit BusyIndicator(QWidget* parent = 0);
+    explicit BusyIndicator(QWidget* parent = nullptr);
 
     void paintEvent(QPaintEvent*);
     QSize minimumSizeHint() const;

@@ -13,7 +13,7 @@ class ActionsShortcutsModel;
 class EditShortcutsDialog : public QDialog {
     Q_OBJECT
 public:
-    explicit EditShortcutsDialog(QWidget* parent = 0);
+    explicit EditShortcutsDialog(QWidget* parent = nullptr);
     void addActionsGroup(const QString& name, const QIcon& ico, QList<QAction*>& group);
 signals:
 

@@ -9,8 +9,8 @@ class QTextBrowser;
 class HelpAboutDialog : public QDialog {
     Q_OBJECT
 public:
-    HelpAboutDialog(QWidget* parent = 0);
-    HelpAboutDialog(const QString& pathAbout, const QString& pathHelp, QWidget* parent = 0);
+    HelpAboutDialog(QWidget* parent = nullptr);
+    HelpAboutDialog(const QString& pathAbout, const QString& pathHelp, QWidget* parent = nullptr);
     ~HelpAboutDialog();
 public slots:
     void loadAboutInformation(const QString& path);

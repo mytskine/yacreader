@@ -62,7 +62,7 @@ public:
     /*!
     Creates a new PictureFlow widget.
   */
-    PictureFlow(QWidget* parent = 0, FlowType flowType = CoverFlowLike);
+    PictureFlow(QWidget* parent = nullptr, FlowType flowType = CoverFlowLike);
 
     /*!
     Destroys the widget.

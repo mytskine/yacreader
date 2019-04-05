@@ -910,11 +910,11 @@ Comic* FactoryComic::newComic(const QString& path)
             if (fi.isDir()) {
                 return new FolderComic();
             } else {
-                return NULL;
+                return nullptr;
             }
         }
     } else
-        return NULL;
+        return nullptr;
 }
 
 bool is_double_page(const QString& pageName, const QString& commonPrefix, const int maxExpectedDoublePagesNumberLenght)

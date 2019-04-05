@@ -228,9 +228,9 @@ public:
 class PictureFlowAbstractRenderer {
 public:
     PictureFlowAbstractRenderer()
-        : state(0)
+        : state(nullptr)
         , dirty(false)
-        , widget(0)
+        , widget(nullptr)
     {
     }
     virtual ~PictureFlowAbstractRenderer() {}
@@ -366,7 +366,7 @@ void PictureFlowState::reset()
 // ------------- PictureFlowAnimator  ---------------------------------------
 
 PictureFlowAnimator::PictureFlowAnimator()
-    : state(0)
+    : state(nullptr)
     , target(0)
     , step(0)
     , frame(0)
@@ -553,7 +553,7 @@ PictureFlowSoftwareRenderer::PictureFlowSoftwareRenderer()
     , size(0, 0)
     , bgcolor(0)
     , effect(-1)
-    , blankSurface(0)
+    , blankSurface(nullptr)
 {
 #ifdef PICTUREFLOW_QT3
     surfaceCache.setAutoDelete(true);
@@ -598,7 +598,7 @@ void PictureFlowSoftwareRenderer::init()
         return;
 
     surfaceCache.clear();
-    blankSurface = 0;
+    blankSurface = nullptr;
 
     size = widget->size();
     int ww = size.width();
@@ -712,11 +712,11 @@ static QImage* prepareSurface(const QImage* slideImage, int w, int h, QRgb bgcol
 QImage* PictureFlowSoftwareRenderer::surface(int slideIndex)
 {
     if (!state)
-        return 0;
+        return nullptr;
     if (slideIndex < 0)
-        return 0;
+        return nullptr;
     if (slideIndex >= (int)state->slideImages.count())
-        return 0;
+        return nullptr;
 
 #ifdef PICTUREFLOW_QT4
     int key = slideIndex;
@@ -1075,7 +1075,7 @@ void PictureFlow::setFlowRightToLeft(bool b)
 
 QImage PictureFlow::slide(int index) const
 {
-    QImage* i = 0;
+    QImage* i = nullptr;
     if ((index >= 0) && (index < slideCount()))
         i = d->state->slideImages[index];
     return i ? QImage(*i) : QImage();
@@ -1109,7 +1109,7 @@ void PictureFlow::removeSlide(int index)
 void PictureFlow::setSlide(int index, const QImage& image)
 {
     if ((index >= 0) && (index < slideCount())) {
-        QImage* i = image.isNull() ? 0 : new QImage(image);
+        QImage* i = image.isNull() ? nullptr : new QImage(image);
         delete d->state->slideImages[index];
         d->state->slideImages[index] = i;
         triggerRender();

@@ -10,14 +10,14 @@ extern "C" {
 class CompressedArchive : public QObject {
     Q_OBJECT
 public:
-    explicit CompressedArchive(const QString& filePath, QObject* parent = 0);
+    explicit CompressedArchive(const QString& filePath, QObject* parent = nullptr);
     ~CompressedArchive();
 
 signals:
 
 public slots:
     int getNumFiles();
-    void getAllData(const QVector<quint32>& indexes, ExtractDelegate* delegate = 0);
+    void getAllData(const QVector<quint32>& indexes, ExtractDelegate* delegate = nullptr);
     QByteArray getRawDataAtIndex(int index);
     QList<QString> getFileNames();
     bool isValid();

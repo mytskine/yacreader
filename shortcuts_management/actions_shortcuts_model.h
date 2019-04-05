@@ -8,7 +8,7 @@ class QAction;
 class ActionsShortcutsModel : public QAbstractItemModel {
     Q_OBJECT
 public:
-    explicit ActionsShortcutsModel(QObject* parent = 0);
+    explicit ActionsShortcutsModel(QObject* parent = nullptr);
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const;
     int columnCount(const QModelIndex& parent = QModelIndex()) const;
