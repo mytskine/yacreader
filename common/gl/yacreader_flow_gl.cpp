@@ -1455,7 +1455,6 @@ void ImageLoaderGL::generate(int index, const QString& fileName)
     mutex.lock();
     this->idx = index;
     this->fileName = fileName;
-    this->size = size;
     this->img = QImage();
     mutex.unlock();
 
@@ -1565,7 +1564,6 @@ void ImageLoaderByteArrayGL::generate(int index, const QByteArray& raw)
     mutex.lock();
     this->idx = index;
     this->rawData = raw;
-    this->size = size;
     this->img = QImage();
     mutex.unlock();
 
