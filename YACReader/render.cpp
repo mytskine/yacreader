@@ -654,19 +654,19 @@ void Render::load(const QString& path, const ComicDB& comicDB)
     //TODO prepare filters
     for (int i = 0; i < filters.count(); i++) {
         auto filter = filters[i];
-        if (typeid(*filter) == typeid(BrightnessFilter)) {
+        if (typeid(*filter).hash_code() == typeid(BrightnessFilter).hash_code()) {
             if (comicDB.info.brightness == -1)
                 filter->setLevel(0);
             else
                 filter->setLevel(comicDB.info.brightness);
         }
-        if (typeid(*filter) == typeid(ContrastFilter)) {
+        if (typeid(*filter).hash_code() == typeid(ContrastFilter).hash_code()) {
             if (comicDB.info.contrast == -1)
                 filter->setLevel(100);
             else
                 filter->setLevel(comicDB.info.contrast);
         }
-        if (typeid(*filter) == typeid(GammaFilter)) {
+        if (typeid(*filter).hash_code() == typeid(GammaFilter).hash_code()) {
             if (comicDB.info.gamma == -1)
                 filter->setLevel(100);
             else
@@ -1064,11 +1064,11 @@ void Render::updateFilters(int brightness, int contrast, int gamma)
 {
     for (int i = 0; i < filters.count(); i++) {
         auto filter = filters[i];
-        if (typeid(*filter) == typeid(BrightnessFilter))
+        if (typeid(*filter).hash_code() == typeid(BrightnessFilter).hash_code())
             filter->setLevel(brightness);
-        if (typeid(*filter) == typeid(ContrastFilter))
+        if (typeid(*filter).hash_code() == typeid(ContrastFilter).hash_code())
             filter->setLevel(contrast);
-        if (typeid(*filter) == typeid(GammaFilter))
+        if (typeid(*filter).hash_code() == typeid(GammaFilter).hash_code())
             filter->setLevel(gamma);
     }
 
