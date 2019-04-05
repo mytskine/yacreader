@@ -13,7 +13,7 @@ private:
     QLabel* label;
     QSpinBox* spinBox;
     QSlider* slider;
-    bool tracking;
+    bool tracking { true };
 
 public:
     YACReaderSpinSliderWidget(QWidget* parent = nullptr, bool strechableSlider = false);

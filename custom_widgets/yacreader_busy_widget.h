@@ -40,9 +40,9 @@ private:
     void drawArcStyle(QPainter* painter);
 
     QTimer timer;
-    int startAngle;
+    int startAngle { 0 };
 
-    IndicatorStyle m_style;
+    IndicatorStyle m_style { StyleArc };
 
     QColor fillColor;
 };

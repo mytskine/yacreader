@@ -35,7 +35,7 @@ class NotificationsLabelWidget;
 class Viewer : public QScrollArea, public ScrollManagement {
     Q_OBJECT
 public:
-    bool fullscreen; //TODO, change by the right use of windowState();
+    bool fullscreen { false }; //TODO, change by the right use of windowState();
 public slots:
     void increaseZoomFactor();
     void decreaseZoomFactor();
@@ -103,11 +103,11 @@ public slots:
     void updateZoomRatio(int ratio);
 
 private:
-    bool information;
-    bool doublePage;
-    bool doubleMangaPage;
+    bool information { false };
+    bool doublePage { false };
+    bool doubleMangaPage { false };
 
-    int zoom;
+    int zoom { 100 };
 
     PageLabelWidget* informationLabel;
     //QTimer * scroller;
@@ -123,14 +123,14 @@ private:
     //! Comic
     //Comic * comic;
     int index;
-    QPixmap* currentPage;
+    QPixmap* currentPage { nullptr };
     BookmarksDialog* bd;
-    bool wheelStop;
+    bool wheelStop { false };
     Render* render;
     QTimer* hideCursorTimer;
-    int direction;
-    bool drag;
-    int numScrollSteps;
+    int direction { 1 };
+    bool drag { false };
+    int numScrollSteps { 22 };
 
     //!Widgets
     QLabel* content;
@@ -144,14 +144,14 @@ private:
 
     NotificationsLabelWidget* notificationsLabel;
 
-    bool shouldOpenNext;
-    bool shouldOpenPrevious;
+    bool shouldOpenNext { false };
+    bool shouldOpenPrevious { false };
 
 private:
     //!Magnifying glass
     MagnifyingGlass* mglass;
-    bool magnifyingGlassShowed;
-    bool restoreMagnifyingGlass;
+    bool magnifyingGlassShowed { false };
+    bool restoreMagnifyingGlass { false };
 
     //! Manejadores de evento:
     void keyPressEvent(QKeyEvent* event);

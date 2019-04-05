@@ -7,8 +7,8 @@
 
 class Folder : public LibraryItem {
 public:
-    bool knownParent;
-    bool knownId;
+    bool knownParent { false };
+    bool knownId { false };
 
     Folder();
     Folder(qulonglong folderId, qulonglong parentId, const QString& folderName, const QString& folderPath);
@@ -86,7 +86,7 @@ private:
     bool finished;
     bool completed;
 
-    qint32 numChildren; //-1 for unknown number of children
+    qint32 numChildren { -1 }; //-1 for unknown number of children
     QString firstChildHash; //empty for unknown first child
     QString customImage; //empty for none custom image
 };

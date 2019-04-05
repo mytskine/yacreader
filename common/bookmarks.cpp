@@ -9,7 +9,7 @@
 #include "yacreader_global.h"
 
 Bookmarks::Bookmarks()
-    : lastPageIndex(0)
+
 {
     list.load();
 }

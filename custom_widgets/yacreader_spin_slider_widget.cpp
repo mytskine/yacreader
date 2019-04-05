@@ -7,7 +7,7 @@
 
 YACReaderSpinSliderWidget::YACReaderSpinSliderWidget(QWidget* parent, bool strechableSlider)
     : QWidget(parent)
-    , tracking(true)
+
 {
     QHBoxLayout* layout = new QHBoxLayout;
     layout->addWidget(label = new QLabel(this), 1);

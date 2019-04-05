@@ -44,7 +44,7 @@ protected:
     void hideResults();
 
     void populateCombos();
-    bool drag;
+    bool drag { false };
     QPoint click;
 
 private:

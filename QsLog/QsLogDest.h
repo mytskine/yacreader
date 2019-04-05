@@ -61,26 +61,26 @@ enum LogRotationOption {
 
 struct QSLOG_SHARED_OBJECT MaxSizeBytes {
     MaxSizeBytes()
-        : size(0)
+
     {
     }
     explicit MaxSizeBytes(qint64 size_)
         : size(size_)
     {
     }
-    qint64 size;
+    qint64 size { 0 };
 };
 
 struct QSLOG_SHARED_OBJECT MaxOldLogCount {
     MaxOldLogCount()
-        : count(0)
+
     {
     }
     explicit MaxOldLogCount(int count_)
         : count(count_)
     {
     }
-    int count;
+    int count { 0 };
 };
 
 //! Creates logging destinations/sinks. The caller shares ownership of the destinations with the logger.

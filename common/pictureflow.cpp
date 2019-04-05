@@ -184,10 +184,10 @@ public:
     void reposition();
     void reset();
 
-    QRgb backgroundColor;
-    int slideWidth;
-    int slideHeight;
-    PictureFlow::ReflectionEffect reflectionEffect;
+    QRgb backgroundColor { 0 };
+    int slideWidth { 150 };
+    int slideHeight { 200 };
+    PictureFlow::ReflectionEffect reflectionEffect { PictureFlow::BlurredReflection };
     QVector<QImage*> slideImages;
 
     QVector<YACReaderComicReadStatus> marks;
@@ -204,40 +204,38 @@ public:
     SlideInfo centerSlide;
     QVector<SlideInfo> leftSlides;
     QVector<SlideInfo> rightSlides;
-    int centerIndex;
+    int centerIndex { 0 };
 
-    bool flowRightToLeft;
+    bool flowRightToLeft { false };
 };
 
 class PictureFlowAnimator {
 public:
     PictureFlowAnimator();
-    PictureFlowState* state;
+    PictureFlowState* state { nullptr };
 
     void start(int slide);
     void stop(int slide);
     void update();
 
-    int target;
-    int step;
-    int frame;
+    int target { 0 };
+    int step { 0 };
+    int frame { 0 };
     QTimer animateTimer;
-    bool animating;
+    bool animating { false };
 };
 
 class PictureFlowAbstractRenderer {
 public:
     PictureFlowAbstractRenderer()
-        : state(nullptr)
-        , dirty(false)
-        , widget(nullptr)
+
     {
     }
     virtual ~PictureFlowAbstractRenderer() {}
 
-    PictureFlowState* state;
-    bool dirty;
-    QWidget* widget;
+    PictureFlowState* state { nullptr };
+    bool dirty { false };
+    QWidget* widget { nullptr };
 
     virtual void init() = 0;
     virtual void paint() = 0;
@@ -254,11 +252,11 @@ public:
 
 private:
     QSize size;
-    QRgb bgcolor;
-    int effect;
+    QRgb bgcolor { 0 };
+    int effect { -1 };
     QImage buffer;
     QVector<PFreal> rays;
-    QImage* blankSurface;
+    QImage* blankSurface { nullptr };
 #ifdef PICTUREFLOW_QT4
     QCache<int, QImage> surfaceCache;
     QHash<int, QImage*> imageHash;
@@ -280,14 +278,9 @@ private:
 // ------------- PictureFlowState ---------------------------------------
 
 PictureFlowState::PictureFlowState(int a, float sr)
-    : backgroundColor(0)
-    , slideWidth(150)
-    , slideHeight(200)
-    , reflectionEffect(PictureFlow::BlurredReflection)
-    , rawAngle(a)
+    : rawAngle(a)
     , spacingRatio(sr)
-    , centerIndex(0)
-    , flowRightToLeft(false)
+
 {
 }
 
@@ -366,11 +359,7 @@ void PictureFlowState::reset()
 // ------------- PictureFlowAnimator  ---------------------------------------
 
 PictureFlowAnimator::PictureFlowAnimator()
-    : state(nullptr)
-    , target(0)
-    , step(0)
-    , frame(0)
-    , animating(false)
+
 {
 }
 
@@ -551,9 +540,7 @@ void PictureFlowAnimator::update()
 PictureFlowSoftwareRenderer::PictureFlowSoftwareRenderer()
     : PictureFlowAbstractRenderer()
     , size(0, 0)
-    , bgcolor(0)
-    , effect(-1)
-    , blankSurface(nullptr)
+
 {
 #ifdef PICTUREFLOW_QT3
     surfaceCache.setAutoDelete(true);

@@ -1,9 +1,7 @@
 #include "folder.h"
 
 Folder::Folder()
-    : knownParent(false)
-    , knownId(false)
-    , numChildren(-1)
+
 {
 }
 

@@ -11,7 +11,7 @@ public:
 
 private:
     QString description;
-    bool compatibleOpenGLVersion;
+    bool compatibleOpenGLVersion { true };
 };
 
 #endif // OPENGL_CHECKER_H

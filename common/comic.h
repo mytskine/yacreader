@@ -25,20 +25,20 @@ protected:
     QStringList _fileNames;
     QMap<QString, int> _newOrder;
     QList<QString> _order;
-    int _index;
+    int _index { 0 };
     QString _path;
-    bool _loaded;
+    bool _loaded { false };
 
     int _cfi;
 
     //open the comic at this point
     int _firstPage;
 
-    bool _isPDF;
+    bool _isPDF { false };
 
-    bool _invalidated;
+    bool _invalidated { false };
 
-    bool _errorOpening;
+    bool _errorOpening { false };
 
 public:
     static const QStringList imageExtensions;

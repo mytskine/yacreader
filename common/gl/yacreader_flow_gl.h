@@ -134,18 +134,18 @@ protected:
     void timerEvent(QTimerEvent*);
 
     //number of Covers
-    int numObjects;
-    int lazyPopulateObjects;
+    int numObjects { 0 };
+    int lazyPopulateObjects { -1 };
     bool showMarks;
     QVector<bool> loaded;
     QVector<YACReaderComicReadStatus> marks;
 
     QVector<YACReader3DImage> images;
 
-    bool hasBeenInitialized;
+    bool hasBeenInitialized { false };
 
     Performance performance;
-    bool bUseVSync;
+    bool bUseVSync { false };
 
     /*** Animation Settings ***/
     Preset config;
@@ -172,7 +172,7 @@ protected:
     static int updateInterval;
 
     // sets flow direction right-to-left (manga mode)
-    bool flowRightToLeft;
+    bool flowRightToLeft { false };
 
     void startAnimationTimer();
     void stopAnimationTimer();

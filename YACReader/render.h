@@ -191,24 +191,24 @@ signals:
     void bookmarksUpdated();
 
 private:
-    Comic* comic;
-    bool doublePage;
-    bool doubleMangaPage;
+    Comic* comic { nullptr };
+    bool doublePage { false };
+    bool doubleMangaPage { false };
     int previousIndex;
-    int currentIndex;
+    int currentIndex { 0 };
     //QPixmap * currentPage;
     int currentPageBufferedIndex;
-    int numLeftPages;
-    int numRightPages;
+    int numLeftPages { 4 };
+    int numRightPages { 4 };
     QList<PageRender*> pageRenders;
     QList<QImage*> buffer;
     void loadAll();
     void updateRightPages();
     void updateLeftPages();
-    bool loadedComic;
+    bool loadedComic { false };
     QList<int> pagesEmited;
     QVector<bool> pagesReady;
-    int imageRotation;
+    int imageRotation { 0 };
     QVector<ImageFilter*> filters;
     QMutex mutex;
 

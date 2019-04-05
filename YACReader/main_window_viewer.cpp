@@ -70,12 +70,9 @@ public:
 
 MainWindowViewer::MainWindowViewer()
     : QMainWindow()
-    , fullscreen(false)
-    , toolbars(true)
-    , alwaysOnTop(false)
     , currentDirectory(".")
     , currentDirectoryImgDest(".")
-    , isClient(false)
+
 {
     loadConfiguration();
     setupUI();

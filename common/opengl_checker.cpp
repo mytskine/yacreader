@@ -3,7 +3,7 @@
 #include "QsLog.h"
 
 OpenGLChecker::OpenGLChecker()
-    : compatibleOpenGLVersion(true)
+
 {
     QOpenGLContext* openGLContext = new QOpenGLContext();
     openGLContext->create();

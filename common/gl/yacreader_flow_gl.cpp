@@ -201,11 +201,7 @@ struct Preset pressetYACReaderFlowDownConfig = {
 /*Constructor*/
 YACReaderFlowGL::YACReaderFlowGL(QWidget* parent, struct Preset p)
     : QOpenGLWidget(/*QOpenGLWidget migration QGLFormat(QGL::SampleBuffers),*/ parent)
-    , numObjects(0)
-    , lazyPopulateObjects(-1)
-    , hasBeenInitialized(false)
-    , bUseVSync(false)
-    , flowRightToLeft(false)
+
 {
     updateCount = 0;
     config = p;

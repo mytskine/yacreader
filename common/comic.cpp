@@ -85,12 +85,7 @@ const QStringList Comic::literalComicExtensions = LiteralComicArchiveExtensions;
 Comic::Comic()
     : _pages()
     , _loadedPages()
-    , _index(0)
     , _path()
-    , _loaded(false)
-    , _isPDF(false)
-    , _invalidated(false)
-    , _errorOpening(false)
     , bm(new Bookmarks())
 {
     setup();

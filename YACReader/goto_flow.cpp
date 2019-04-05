@@ -27,7 +27,7 @@
 
 GoToFlow::GoToFlow(QWidget* parent, FlowType flowType)
     : GoToFlowWidget(parent)
-    , ready(false)
+
 {
     updateTimer = new QTimer;
     connect(updateTimer, SIGNAL(timeout()), this, SLOT(updateImageData()));

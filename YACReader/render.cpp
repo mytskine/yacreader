@@ -365,14 +365,7 @@ void PageRender::run()
 //-----------------------------------------------------------------------------
 
 Render::Render()
-    : comic(nullptr)
-    , doublePage(false)
-    , doubleMangaPage(false)
-    , currentIndex(0)
-    , numLeftPages(4)
-    , numRightPages(4)
-    , loadedComic(false)
-    , imageRotation(0)
+
 {
     int size = numLeftPages + numRightPages + 1;
     currentPageBufferedIndex = numLeftPages;

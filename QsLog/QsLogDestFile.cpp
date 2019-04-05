@@ -36,9 +36,7 @@ QsLogging::RotationStrategy::~RotationStrategy()
 }
 
 QsLogging::SizeRotationStrategy::SizeRotationStrategy()
-    : mCurrentSizeInBytes(0)
-    , mMaxSizeInBytes(0)
-    , mBackupsCount(0)
+
 {
 }
 

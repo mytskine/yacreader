@@ -9,11 +9,10 @@
 class BookmarksList {
 public:
     struct Bookmark {
-        int lastPage;
+        int lastPage { 0 };
         QList<int> bookmarks;
         QDateTime added;
-        Bookmark()
-            : lastPage(0) {};
+        Bookmark() {};
         friend QDataStream& operator<<(QDataStream& out, const Bookmark& bm)
         {
             out << bm.lastPage;
@@ -30,7 +29,7 @@ public:
         }
     };
     BookmarksList()
-        : numMaxBookmarks(400)
+
     {
     }
     void load();
@@ -43,7 +42,7 @@ protected:
     void deleteOldest(int num);
 
 private:
-    int numMaxBookmarks;
+    int numMaxBookmarks { 400 };
 };
 
 class Bookmarks : public QObject {
@@ -55,7 +54,7 @@ protected:
     QMap<int, QImage> bookmarks;
     QList<int> latestBookmarks;
     //last page readed
-    int lastPageIndex;
+    int lastPageIndex { 0 };
     QImage lastPage;
     BookmarksList list;
     QDateTime added;

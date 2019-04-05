@@ -71,9 +71,9 @@ public:
 
 private:
     QString mFileName;
-    qint64 mCurrentSizeInBytes;
-    qint64 mMaxSizeInBytes;
-    int mBackupsCount;
+    qint64 mCurrentSizeInBytes { 0 };
+    qint64 mMaxSizeInBytes { 0 };
+    int mBackupsCount { 0 };
 };
 
 typedef QSharedPointer<RotationStrategy> RotationStrategyPtr;

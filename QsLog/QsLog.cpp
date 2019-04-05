@@ -96,7 +96,7 @@ public:
     QThreadPool threadPool;
 #endif
     QMutex logMutex;
-    Level level;
+    Level level { InfoLevel };
     DestinationList destList;
 };
 
@@ -115,7 +115,7 @@ void LogWriterRunnable::run()
 #endif
 
 LoggerImpl::LoggerImpl()
-    : level(InfoLevel)
+
 {
     // assume at least file + console
     destList.reserve(2);

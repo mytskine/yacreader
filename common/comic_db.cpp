@@ -164,16 +164,7 @@ QString ComicDB::getTitleIncludingNumber() const
 //COMIC_INFO-------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 ComicInfo::ComicInfo()
-    : existOnDb(false)
-    , rating(0)
-    , hasBeenOpened(false)
-    , currentPage(1)
-    , bookmark1(-1)
-    , bookmark2(-1)
-    , bookmark3(-1)
-    , brightness(-1)
-    , contrast(-1)
-    , gamma(-1)
+
 {
 }
 

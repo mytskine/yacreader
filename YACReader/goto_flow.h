@@ -31,7 +31,7 @@ class GoToFlow : public GoToFlowWidget {
 public:
     GoToFlow(QWidget* parent = nullptr, FlowType flowType = CoverFlowLike);
     ~GoToFlow();
-    bool ready; //comic is ready for read.
+    bool ready { false }; //comic is ready for read.
 private:
     YACReaderFlow* flow;
     void keyPressEvent(QKeyEvent* event);

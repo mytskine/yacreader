@@ -25,8 +25,7 @@ void YACReaderBusyWidget::paintEvent(QPaintEvent* event)
 
 BusyIndicator::BusyIndicator(QWidget* parent)
     : QWidget(parent)
-    , startAngle(0)
-    , m_style(StyleArc)
+
 {
     QSizePolicy policy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     policy.setHeightForWidth(true);

@@ -35,7 +35,7 @@
 
 YACReaderTranslator::YACReaderTranslator(QWidget* parent)
     : QWidget(parent)
-    , drag(false)
+
 {
     QString scrollBarStyle = "QScrollBar:vertical { border: none; background: #404040; width: 7px; margin: 0 3px 0 0; }"
                              "QScrollBar::handle:vertical { background: #DDDDDD; width: 7px; min-height: 20px; }"

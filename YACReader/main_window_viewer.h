@@ -77,9 +77,9 @@ public slots:
 
 private:
     //!State
-    bool fullscreen;
-    bool toolbars;
-    bool alwaysOnTop;
+    bool fullscreen { false };
+    bool toolbars { true };
+    bool alwaysOnTop { false };
     bool fromMaximized;
 
     //QTBUG-41883
@@ -165,7 +165,7 @@ private:
 
     ComicDB currentComicDB;
     QList<ComicDB> siblingComics;
-    bool isClient;
+    bool isClient { false };
     QString startComicPath;
     quint64 libraryId;
 

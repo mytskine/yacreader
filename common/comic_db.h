@@ -28,20 +28,20 @@ public:
     bool read;
     bool edited;
     QString hash;
-    bool existOnDb;
+    bool existOnDb { false };
 
-    int rating;
+    int rating { 0 };
 
-    bool hasBeenOpened;
+    bool hasBeenOpened { false };
 
     //viewer
-    int currentPage;
-    int bookmark1;
-    int bookmark2;
-    int bookmark3;
-    int brightness;
-    int contrast;
-    int gamma;
+    int currentPage { 1 };
+    int bookmark1 { -1 };
+    int bookmark2 { -1 };
+    int bookmark3 { -1 };
+    int brightness { -1 };
+    int contrast { -1 };
+    int gamma { -1 };
     //-----------------
 
     QVariant title; //string
