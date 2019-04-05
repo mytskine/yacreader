@@ -131,7 +131,7 @@ YACReaderTranslator::YACReaderTranslator(QWidget * parent)
 	resultText = new QLabel();
 	resultText->setWordWrap(true);
 	resultText->setStyleSheet("QLabel {color:white;font-size:12px;}");
-	resultText->setText("ñlkas lakj dflkaj lasd jflie lkajd fie kljads ijef lasei afsliej ljse f");
+    resultText->setText("nlkas lakj dflkaj lasd jflie lkajd fie kljads ijef lasei afsliej ljse f");
 	layout->addWidget(resultText);
 
 	layout->addStretch();
