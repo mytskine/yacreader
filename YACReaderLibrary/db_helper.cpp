@@ -151,7 +151,7 @@ QList<QString> DBHelper::getLibrariesNames()
 {
     QStringList names = getLibraries().getNames();
     qSort(names.begin(), names.end(), naturalSortLessThanCI);
-    return names;
+    return std::move(names);
 }
 QString DBHelper::getLibraryName(int id)
 {
