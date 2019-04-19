@@ -30,6 +30,7 @@ private:
     int progressCount;
     void closeEvent(QCloseEvent* e);
     YACReaderLibraries libraries;
+    using QDialog::open;
 public slots:
     void add();
     void findPath();

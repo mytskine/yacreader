@@ -90,7 +90,7 @@ void ImportLibraryDialog::setupUI()
 void ImportLibraryDialog::open(const YACReaderLibraries& libs)
 {
     libraries = libs;
-    QDialog::open();
+    this->open();
 }
 
 void ImportLibraryDialog::add()

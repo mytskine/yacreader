@@ -78,7 +78,7 @@ void CreateLibraryDialog::setupUI()
 void CreateLibraryDialog::open(const YACReaderLibraries& libs)
 {
     libraries = libs;
-    QDialog::open();
+    this->open();
 }
 
 void CreateLibraryDialog::create()
@@ -142,7 +142,7 @@ void CreateLibraryDialog::setDataAndStart(QString name, QString path)
 {
     this->path->setText(path);
     this->nameEdit->setText(name);
-    QDialog::open();
+    this->open();
     create();
 }
 //-----------------------------------------------------------------------------

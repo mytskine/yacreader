@@ -27,6 +27,7 @@ private:
     QPushButton* cancel;
     YACReaderLibraries libraries;
     void setupUI();
+    using QDialog::open;
 public slots:
     void create();
     void findPath();
