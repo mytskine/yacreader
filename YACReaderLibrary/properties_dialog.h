@@ -109,7 +109,7 @@ private:
     void setDisableUniqueValues(bool disabled);
 
     QList<ComicDB> comics;
-    void closeEvent(QCloseEvent* e);
+    void closeEvent(QCloseEvent* e) override;
     void updateCoverPageNumberLabel(int n);
 
     bool coverChanged;
