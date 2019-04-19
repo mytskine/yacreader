@@ -20,7 +20,7 @@ ComicsViewTransition::ComicsViewTransition(QWidget* parent)
 #endif
 }
 
-QSize ComicsViewTransition::sizeHint()
+QSize ComicsViewTransition::sizeHint() const
 {
     return QSize(450, 350);
 }

@@ -466,7 +466,7 @@ void GridComicsView::resetScroll()
     QMetaObject::invokeMethod(scrollView, "scrollToOrigin");
 }
 
-QSize GridComicsView::sizeHint()
+QSize GridComicsView::sizeHint() const
 {
     return QSize(1280, 768);
 }

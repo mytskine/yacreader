@@ -120,8 +120,8 @@ public:
     PropertiesDialog(QWidget* parent = 0);
     QString databasePath;
     QString basePath;
-    QSize sizeHint();
-    void paintEvent(QPaintEvent* event);
+    QSize sizeHint() const override;
+    void paintEvent(QPaintEvent* event) override;
 
 public slots:
     void setComics(QList<ComicDB> comics);

@@ -7,7 +7,7 @@ class ComicsViewTransition : public QWidget {
     Q_OBJECT
 public:
     explicit ComicsViewTransition(QWidget* parent = 0);
-    QSize sizeHint();
+    QSize sizeHint() const override;
 
 protected:
     void paintEvent(QPaintEvent*);
